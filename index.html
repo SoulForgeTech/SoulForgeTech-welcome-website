@@ -13,10 +13,15 @@
         <div class="container">
             <a href="#" class="logo">SoulForge Tech</a>
             <ul class="nav-links">
-                <li><a href="#home">首页</a></li>
-                <li><a href="#about">关于我们</a></li>
-                <li><a href="#services">服务</a></li>
-                <li><a href="#contact">联系我们</a></li>
+                <li><a href="#home" data-i18n="nav.home">首页</a></li>
+                <li><a href="#about" data-i18n="nav.about">关于我们</a></li>
+                <li><a href="#services" data-i18n="nav.services">服务</a></li>
+                <li><a href="#contact" data-i18n="nav.contact">联系我们</a></li>
+                <li>
+                    <button class="lang-switch" id="langSwitch" title="Switch Language">
+                        <span class="lang-text">EN</span>
+                    </button>
+                </li>
             </ul>
         </div>
     </nav>
@@ -24,33 +29,33 @@
     <!-- 主横幅区域 -->
     <section id="home" class="hero">
         <div class="container">
-            <h1>铸造数字灵魂</h1>
-            <h2>锻造科技未来</h2>
-            <p>SoulForge Tech 致力于为企业提供创新的技术解决方案</p>
-            <a href="#contact" class="btn">联系我们</a>
+            <h1 data-i18n="hero.title">铸造数字灵魂</h1>
+            <h2 data-i18n="hero.subtitle">锻造科技未来</h2>
+            <p data-i18n="hero.description">SoulForge Tech 致力于为企业提供创新的技术解决方案</p>
+            <a href="#contact" class="btn" data-i18n="hero.cta">联系我们</a>
         </div>
     </section>
 
     <!-- 关于我们 -->
     <section id="about" class="about">
         <div class="container">
-            <h2>关于我们</h2>
-            <p>SoulForge Tech 是一家专注于技术创新的公司。我们相信技术的力量可以改变世界，通过不断探索和创新，为客户创造真正的价值。</p>
+            <h2 data-i18n="about.title">关于我们</h2>
+            <p data-i18n="about.description">SoulForge Tech 是一家专注于技术创新的公司。我们相信技术的力量可以改变世界，通过不断探索和创新，为客户创造真正的价值。</p>
             <div class="features">
                 <div class="feature">
                     <div class="feature-icon">&#128161;</div>
-                    <h3>创新驱动</h3>
-                    <p>持续探索前沿技术，为客户带来创新解决方案</p>
+                    <h3 data-i18n="about.feature1.title">创新驱动</h3>
+                    <p data-i18n="about.feature1.desc">持续探索前沿技术，为客户带来创新解决方案</p>
                 </div>
                 <div class="feature">
                     <div class="feature-icon">&#128640;</div>
-                    <h3>高效交付</h3>
-                    <p>专业团队确保项目高质量、按时交付</p>
+                    <h3 data-i18n="about.feature2.title">高效交付</h3>
+                    <p data-i18n="about.feature2.desc">专业团队确保项目高质量、按时交付</p>
                 </div>
                 <div class="feature">
                     <div class="feature-icon">&#129309;</div>
-                    <h3>客户至上</h3>
-                    <p>深入理解客户需求，提供定制化服务</p>
+                    <h3 data-i18n="about.feature3.title">客户至上</h3>
+                    <p data-i18n="about.feature3.desc">深入理解客户需求，提供定制化服务</p>
                 </div>
             </div>
         </div>
@@ -59,23 +64,23 @@
     <!-- 服务 -->
     <section id="services" class="services">
         <div class="container">
-            <h2>我们的服务</h2>
+            <h2 data-i18n="services.title">我们的服务</h2>
             <div class="service-grid">
                 <div class="service-card">
-                    <h3>软件开发</h3>
-                    <p>定制化软件开发服务，满足您的业务需求</p>
+                    <h3 data-i18n="services.service1.title">软件开发</h3>
+                    <p data-i18n="services.service1.desc">定制化软件开发服务，满足您的业务需求</p>
                 </div>
                 <div class="service-card">
-                    <h3>技术咨询</h3>
-                    <p>专业的技术咨询，助您做出明智决策</p>
+                    <h3 data-i18n="services.service2.title">技术咨询</h3>
+                    <p data-i18n="services.service2.desc">专业的技术咨询，助您做出明智决策</p>
                 </div>
                 <div class="service-card">
-                    <h3>系统集成</h3>
-                    <p>整合各类系统，提升企业运营效率</p>
+                    <h3 data-i18n="services.service3.title">系统集成</h3>
+                    <p data-i18n="services.service3.desc">整合各类系统，提升企业运营效率</p>
                 </div>
                 <div class="service-card">
-                    <h3>云服务</h3>
-                    <p>云端解决方案，让您的业务更灵活</p>
+                    <h3 data-i18n="services.service4.title">云服务</h3>
+                    <p data-i18n="services.service4.desc">云端解决方案，让您的业务更灵活</p>
                 </div>
             </div>
         </div>
@@ -84,16 +89,12 @@
     <!-- 联系我们 -->
     <section id="contact" class="contact">
         <div class="container">
-            <h2>联系我们</h2>
-            <p>如有任何问题或合作意向，欢迎与我们联系</p>
+            <h2 data-i18n="contact.title">联系我们</h2>
+            <p data-i18n="contact.description">如有任何问题或合作意向，欢迎与我们联系</p>
             <div class="contact-info">
                 <div class="contact-item">
-                    <strong>邮箱</strong>
-                    <p>contact@soulforgetech.com</p>
-                </div>
-                <div class="contact-item">
-                    <strong>地址</strong>
-                    <p>待更新</p>
+                    <strong data-i18n="contact.email">邮箱</strong>
+                    <p><a href="mailto:contact@soulforgetech.com">contact@soulforgetech.com</a></p>
                 </div>
             </div>
         </div>
@@ -105,5 +106,188 @@
             <p>&copy; 2025 SoulForge Tech. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        // 国际化文本配置
+        const i18n = {
+            zh: {
+                'nav.home': '首页',
+                'nav.about': '关于我们',
+                'nav.services': '服务',
+                'nav.contact': '联系我们',
+                'hero.title': '铸造数字灵魂',
+                'hero.subtitle': '锻造科技未来',
+                'hero.description': 'SoulForge Tech 致力于为企业提供创新的技术解决方案',
+                'hero.cta': '联系我们',
+                'about.title': '关于我们',
+                'about.description': 'SoulForge Tech 是一家专注于技术创新的公司。我们相信技术的力量可以改变世界，通过不断探索和创新，为客户创造真正的价值。',
+                'about.feature1.title': '创新驱动',
+                'about.feature1.desc': '持续探索前沿技术，为客户带来创新解决方案',
+                'about.feature2.title': '高效交付',
+                'about.feature2.desc': '专业团队确保项目高质量、按时交付',
+                'about.feature3.title': '客户至上',
+                'about.feature3.desc': '深入理解客户需求，提供定制化服务',
+                'services.title': '我们的服务',
+                'services.service1.title': '软件开发',
+                'services.service1.desc': '定制化软件开发服务，满足您的业务需求',
+                'services.service2.title': '技术咨询',
+                'services.service2.desc': '专业的技术咨询，助您做出明智决策',
+                'services.service3.title': '系统集成',
+                'services.service3.desc': '整合各类系统，提升企业运营效率',
+                'services.service4.title': '云服务',
+                'services.service4.desc': '云端解决方案，让您的业务更灵活',
+                'contact.title': '联系我们',
+                'contact.description': '如有任何问题或合作意向，欢迎与我们联系',
+                'contact.email': '邮箱'
+            },
+            en: {
+                'nav.home': 'Home',
+                'nav.about': 'About',
+                'nav.services': 'Services',
+                'nav.contact': 'Contact',
+                'hero.title': 'Forging Digital Souls',
+                'hero.subtitle': 'Shaping the Future of Technology',
+                'hero.description': 'SoulForge Tech is dedicated to providing innovative technology solutions for enterprises',
+                'hero.cta': 'Contact Us',
+                'about.title': 'About Us',
+                'about.description': 'SoulForge Tech is a company focused on technological innovation. We believe in the power of technology to change the world, creating real value for our clients through continuous exploration and innovation.',
+                'about.feature1.title': 'Innovation Driven',
+                'about.feature1.desc': 'Continuously exploring cutting-edge technology to bring innovative solutions',
+                'about.feature2.title': 'Efficient Delivery',
+                'about.feature2.desc': 'Professional team ensures high-quality, on-time project delivery',
+                'about.feature3.title': 'Customer First',
+                'about.feature3.desc': 'Deep understanding of customer needs, providing customized services',
+                'services.title': 'Our Services',
+                'services.service1.title': 'Software Development',
+                'services.service1.desc': 'Customized software development services to meet your business needs',
+                'services.service2.title': 'Technical Consulting',
+                'services.service2.desc': 'Professional technical consulting to help you make informed decisions',
+                'services.service3.title': 'System Integration',
+                'services.service3.desc': 'Integrating various systems to improve operational efficiency',
+                'services.service4.title': 'Cloud Services',
+                'services.service4.desc': 'Cloud solutions to make your business more flexible',
+                'contact.title': 'Contact Us',
+                'contact.description': 'For any questions or cooperation intentions, please feel free to contact us',
+                'contact.email': 'Email'
+            }
+        };
+
+        let currentLang = 'zh';
+
+        // 切换语言
+        function switchLanguage() {
+            currentLang = currentLang === 'zh' ? 'en' : 'zh';
+            document.documentElement.lang = currentLang === 'zh' ? 'zh-CN' : 'en';
+            document.getElementById('langSwitch').querySelector('.lang-text').textContent = currentLang === 'zh' ? 'EN' : '中文';
+
+            // 更新页面标题
+            document.title = currentLang === 'zh' ? 'SoulForge Tech | 铸造数字灵魂' : 'SoulForge Tech | Forging Digital Souls';
+
+            // 更新所有带有 data-i18n 属性的元素
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[currentLang][key]) {
+                    el.textContent = i18n[currentLang][key];
+                }
+            });
+
+            // 保存语言偏好
+            localStorage.setItem('preferredLang', currentLang);
+        }
+
+        // 平滑滚动到目标区域
+        function smoothScrollTo(targetId) {
+            const target = document.querySelector(targetId);
+            if (!target) return;
+
+            const navbarHeight = document.querySelector('.navbar').offsetHeight;
+            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+            const startPosition = window.pageYOffset;
+            const distance = targetPosition - startPosition;
+            const duration = 600;
+            let startTime = null;
+
+            function easeInOutCubic(t) {
+                return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            }
+
+            function animation(currentTime) {
+                if (startTime === null) startTime = currentTime;
+                const timeElapsed = currentTime - startTime;
+                const progress = Math.min(timeElapsed / duration, 1);
+                const ease = easeInOutCubic(progress);
+
+                window.scrollTo(0, startPosition + distance * ease);
+
+                if (timeElapsed < duration) {
+                    requestAnimationFrame(animation);
+                }
+            }
+
+            requestAnimationFrame(animation);
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 检查保存的语言偏好
+            const savedLang = localStorage.getItem('preferredLang');
+            if (savedLang && savedLang !== currentLang) {
+                switchLanguage();
+            }
+
+            // 语言切换按钮点击事件
+            document.getElementById('langSwitch').addEventListener('click', switchLanguage);
+
+            // 导航链接点击事件 - 使用自定义平滑滚动
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    smoothScrollTo(targetId);
+                });
+            });
+
+            // 导航栏滚动效果
+            let lastScrollTop = 0;
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+                if (scrollTop > 100) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+
+                lastScrollTop = scrollTop;
+            });
+
+            // 高亮当前活动的导航项
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+
+            function highlightNav() {
+                const scrollPos = window.pageYOffset + 150;
+
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.offsetHeight;
+                    const sectionId = section.getAttribute('id');
+
+                    if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === '#' + sectionId) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', highlightNav);
+            highlightNav();
+        });
+    </script>
 </body>
 </html>
