@@ -751,16 +751,12 @@ body {
 }
 
 .team-avatar {
-    width: 72px;
-    height: 72px;
+    width: 96px;
+    height: 96px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--primary), var(--accent));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    font-weight: 700;
-    color: white;
+    object-fit: cover;
+    display: block;
     margin: 0 auto 16px;
 }
 
