@@ -507,10 +507,89 @@ function initSmoothScroll() {
 }
 
 // ==========================================
+// Theme Toggle (Dark / Light)
+// ==========================================
+
+function initThemeToggle() {
+    const toggle = document.getElementById('themeToggle');
+    if (!toggle) return;
+
+    // Load saved theme or default to dark
+    try {
+        const saved = localStorage.getItem('soulforge-theme');
+        if (saved === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+    } catch (e) {}
+
+    toggle.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme');
+        const next = current === 'light' ? 'dark' : 'light';
+
+        if (next === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+        }
+
+        // CSS handles the rotate crossfade between sun/moon icons automatically
+
+        try {
+            localStorage.setItem('soulforge-theme', next);
+        } catch (e) {}
+    });
+}
+
+// ==========================================
+// Starfield — individual stars with independent twinkling
+// ==========================================
+
+function initStarfield() {
+    const starfield = document.querySelector('.starfield');
+    if (!starfield) return;
+
+    const animations = ['twinkle-a', 'twinkle-b', 'twinkle-c', 'twinkle-d'];
+    const count = 60; // number of individual stars
+
+    for (let i = 0; i < count; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+
+        // Random position
+        star.style.left = (Math.random() * 100) + '%';
+        star.style.top = (Math.random() * 100) + '%';
+
+        // Random size: 1px, 1.5px, or 2px
+        const sizes = [1, 1, 1.5, 1.5, 2];
+        const size = sizes[Math.floor(Math.random() * sizes.length)];
+        star.style.width = size + 'px';
+        star.style.height = size + 'px';
+
+        // ~15% of stars are purple-tinted
+        if (Math.random() < 0.15) {
+            star.classList.add('purple');
+        }
+
+        // Random twinkle animation, duration, and delay — every star is unique
+        const anim = animations[Math.floor(Math.random() * animations.length)];
+        const dur = (2 + Math.random() * 4).toFixed(1); // 2s to 6s
+        const delay = (Math.random() * 5).toFixed(1);    // 0s to 5s
+
+        star.style.setProperty('--twinkle-anim', anim);
+        star.style.setProperty('--twinkle-dur', dur + 's');
+        star.style.setProperty('--twinkle-delay', delay + 's');
+
+        starfield.appendChild(star);
+    }
+}
+
+// ==========================================
 // Initialize
 // ==========================================
 
 document.addEventListener('DOMContentLoaded', () => {
+    initThemeToggle();
+    initStarfield();
     initNav();
     initReveal();
     initForms();
