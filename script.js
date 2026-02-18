@@ -471,16 +471,19 @@ function initLangSwitcher() {
         });
     });
 
-    // Load saved preference
+    // Load saved preference or detect browser language
     try {
         const saved = localStorage.getItem('soulforge-lang');
         if (saved && translations[saved]) {
             setLanguage(saved);
         } else {
-            setLanguage('zh-CN');
+            // Detect browser/system language, default to English
+            const browserLang = navigator.language || navigator.userLanguage || 'en';
+            const detectedLang = browserLang.startsWith('zh') ? 'zh-CN' : 'en';
+            setLanguage(detectedLang);
         }
     } catch (e) {
-        setLanguage('zh-CN');
+        setLanguage('en');
     }
 }
 
