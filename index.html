@@ -3,302 +3,330 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SoulForge Tech - 锻造灵魂，连接未来</title>
+    <title>SoulForge Tech</title>
+    <meta name="description" content="SoulForge Tech - AI Companion & Game Mod Studio. Building meaningful digital connections through AI.">
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Orbitron:wght@400;700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- 液态玻璃导航栏 -->
-    <nav class="glass-nav">
-        <div class="nav-container">
-            <div class="logo">
-                <span class="logo-icon">⚒️</span>
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="#hero" class="nav-logo">
+                <span class="logo-icon">&#9878;</span>
                 <span class="logo-text">SoulForge Tech</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="#products" class="nav-link" data-i18n="nav.products">Products</a>
+                <a href="#technology" class="nav-link" data-i18n="nav.technology">Technology</a>
+                <a href="#roadmap" class="nav-link" data-i18n="nav.roadmap">Roadmap</a>
+                <a href="#team" class="nav-link" data-i18n="nav.team">Team</a>
+                <a href="#contact" class="nav-link" data-i18n="nav.contact">Contact</a>
             </div>
-            <div class="nav-buttons">
-                <button class="nav-btn active" data-page="home">
-                    <span class="btn-glow"></span>
-                    <span class="btn-text">主页</span>
-                </button>
-                <button class="nav-btn" data-page="stardew">
-                    <span class="btn-glow"></span>
-                    <span class="btn-text">星露谷Mod</span>
-                </button>
-                <button class="nav-btn" data-page="aicompanion">
-                    <span class="btn-glow"></span>
-                    <span class="btn-text">AI陪伴</span>
-                </button>
-                <button class="nav-btn" data-page="contact">
-                    <span class="btn-glow"></span>
-                    <span class="btn-text">联系我们</span>
-                </button>
+            <div class="nav-actions">
+                <div class="lang-switch">
+                    <button class="lang-btn active" data-lang="zh-CN">CN</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                </div>
+                <a href="https://prototype.soulforgetech.com" target="_blank" class="nav-cta" data-i18n="nav.cta">Try SoulLink</a>
             </div>
+            <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </nav>
 
-    <!-- 页面容器 -->
-    <main class="page-container">
-        <!-- 主页 -->
-        <section class="page home-page active" id="home">
-            <div class="hero-section">
-                <div class="floating-shapes">
-                    <div class="shape shape-1"></div>
-                    <div class="shape shape-2"></div>
-                    <div class="shape shape-3"></div>
+    <!-- Hero Section -->
+    <section class="section hero" id="hero">
+        <div class="hero-bg"></div>
+        <div class="container hero-content">
+            <div class="hero-badge reveal" data-i18n="hero.badge">$200K Seed Round | AI Companion Pioneer</div>
+            <h1 class="hero-title reveal">
+                <span class="title-line" data-i18n="hero.title1">AI That Understands</span>
+                <span class="title-line gradient-text" data-i18n="hero.title2">Companionship That Lasts</span>
+            </h1>
+            <p class="hero-subtitle reveal" data-i18n="hero.subtitle">SoulLink creates a personalized AI companion based on your unique personality — someone who remembers everything, grows with you, and is always there.</p>
+            <div class="hero-stats reveal">
+                <div class="stat">
+                    <span class="stat-value">$28.2B</span>
+                    <span class="stat-label" data-i18n="hero.stat1">TAM: Global AI Companion</span>
                 </div>
-                <div class="hero-content">
-                    <h1 class="hero-title">
-                        <span class="title-line">锻造灵魂</span>
-                        <span class="title-line highlight">连接未来</span>
-                    </h1>
-                    <p class="hero-subtitle">SoulForge Tech 致力于用技术温暖每一个孤独的灵魂</p>
-                    <div class="hero-cards">
-                        <div class="intro-card">
-                            <div class="card-icon">🎮</div>
-                            <h3>游戏Mod开发</h3>
-                            <p>为热爱的游戏注入新的灵魂，创造独特的游戏体验</p>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-value">$2.7B</span>
+                    <span class="stat-label" data-i18n="hero.stat2">SAM: US Market (18-30)</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-value">$54M</span>
+                    <span class="stat-label" data-i18n="hero.stat3">SOM: 5-Year Target</span>
+                </div>
+            </div>
+            <div class="hero-actions reveal">
+                <a href="https://prototype.soulforgetech.com" target="_blank" class="btn btn-primary" data-i18n="hero.cta1">Try SoulLink Beta</a>
+                <a href="#products" class="btn btn-outline" data-i18n="hero.cta2">Learn More</a>
+            </div>
+            <p class="hero-source reveal" data-i18n="hero.source">Sources: Grand View Research 2024, Market.us, Statista</p>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="section" id="products">
+        <div class="container">
+            <h2 class="section-title reveal" data-i18n="products.title">Our Products</h2>
+            <p class="section-subtitle reveal" data-i18n="products.subtitle">From game mods to AI companions, we create digital souls with warmth.</p>
+
+            <div class="products-grid">
+                <!-- SoulLink AI Companion -->
+                <div class="product-card reveal">
+                    <div class="product-icon">&#129302;</div>
+                    <div class="product-badge" data-i18n="products.ai.badge">Live Beta</div>
+                    <h3 data-i18n="products.ai.title">SoulLink AI Companion</h3>
+                    <p class="product-desc" data-i18n="products.ai.desc">A personalized AI companion generated based on YOUR personality test — someone who remembers everything, grows with you, and is always there when you need to talk.</p>
+                    <ul class="product-features">
+                        <li data-i18n="products.ai.f1">Personality-based AI generation</li>
+                        <li data-i18n="products.ai.f2">Long-term memory across all conversations</li>
+                        <li data-i18n="products.ai.f3">$9.99/mo Premium with full history</li>
+                    </ul>
+                    <a href="https://prototype.soulforgetech.com" target="_blank" class="btn btn-primary" data-i18n="products.ai.cta">Try Now</a>
+                </div>
+
+                <!-- Stardew Valley Mod -->
+                <div class="product-card reveal">
+                    <div class="product-icon">&#127806;</div>
+                    <div class="product-badge coming" data-i18n="products.mod.badge">Coming Soon</div>
+                    <h3 data-i18n="products.mod.title">Stardew Valley AI Mod</h3>
+                    <p class="product-desc" data-i18n="products.mod.desc">Free AI-powered NPC dialogue system for Stardew Valley. Experience AI companionship in-game, then take it to the real world with our mobile app.</p>
+                    <ul class="product-features">
+                        <li data-i18n="products.mod.f1">Free user acquisition funnel</li>
+                        <li data-i18n="products.mod.f2">AI-driven NPC with emotional memory</li>
+                        <li data-i18n="products.mod.f3">Steam Workshop & Reddit community</li>
+                    </ul>
+                    <a href="#waitlist" class="btn btn-outline" data-i18n="products.mod.cta">Join Waitlist</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section class="section section-alt" id="technology">
+        <div class="container">
+            <h2 class="section-title reveal" data-i18n="tech.title">Core Technology</h2>
+            <p class="section-subtitle reveal" data-i18n="tech.subtitle">Beyond simple retrieval - our AI understands causality, not just similarity.</p>
+
+            <div class="tech-grid">
+                <div class="tech-card reveal">
+                    <div class="tech-icon">&#129504;</div>
+                    <h3 data-i18n="tech.causal.title">Causal Reasoning Engine</h3>
+                    <p data-i18n="tech.causal.desc">Unlike traditional vector databases that match by similarity, our causal graph understands why events happen and predicts emotional trajectories.</p>
+                </div>
+                <div class="tech-card reveal">
+                    <div class="tech-icon">&#127917;</div>
+                    <h3 data-i18n="tech.personality.title">Personality Profiling</h3>
+                    <p data-i18n="tech.personality.desc">Our tarot-based personality test maps users into unique profiles. The AI adapts its behavior, tone, and suggestions based on who you truly are.</p>
+                </div>
+                <div class="tech-card reveal">
+                    <div class="tech-icon">&#128274;</div>
+                    <h3 data-i18n="tech.privacy.title">Privacy-First Architecture</h3>
+                    <p data-i18n="tech.privacy.desc">End-to-end encryption, individual knowledge bases per user, and a roadmap toward fully local on-device AI processing.</p>
+                </div>
+                <div class="tech-card reveal">
+                    <div class="tech-icon">&#127760;</div>
+                    <h3 data-i18n="tech.cross.title">Cross-Platform Memory</h3>
+                    <p data-i18n="tech.cross.desc">Your AI companion's memory follows you across platforms - from Stardew Valley mods to mobile apps, maintaining a unified understanding of you.</p>
+                </div>
+            </div>
+
+            <!-- Tech Comparison -->
+            <div class="tech-compare reveal">
+                <div class="compare-side old">
+                    <h4 data-i18n="tech.compare.old">Traditional AI</h4>
+                    <p data-i18n="tech.compare.old.desc">Vector search: "You mentioned stress before"</p>
+                </div>
+                <div class="compare-vs">VS</div>
+                <div class="compare-side new">
+                    <h4 data-i18n="tech.compare.new">SoulLink AI</h4>
+                    <p data-i18n="tech.compare.new.desc">Causal reasoning: "Work deadline caused stress, suggesting you call a friend based on past patterns"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section class="section" id="roadmap">
+        <div class="container">
+            <h2 class="section-title reveal" data-i18n="roadmap.title">12-Month Roadmap</h2>
+            <p class="section-subtitle reveal" data-i18n="roadmap.subtitle">$200K Seed &middot; 35% Product &middot; 25% Marketing &middot; 20% Growth &middot; 20% B2B & Ops</p>
+
+            <div class="timeline">
+                <div class="timeline-item reveal">
+                    <div class="timeline-marker active"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3 data-i18n="roadmap.p1.title">Full-Stack Build</h3>
+                            <span class="timeline-time">M1 - M3</span>
                         </div>
-                        <div class="intro-card">
-                            <div class="card-icon">🤖</div>
-                            <h3>AI情感陪伴</h3>
-                            <p>用AI技术打造懂你的伙伴，让科技充满温度</p>
-                        </div>
+                        <ul>
+                            <li data-i18n="roadmap.p1.m1">Core AI engine + memory system</li>
+                            <li data-i18n="roadmap.p1.m2">Stardew Valley mod development</li>
+                            <li data-i18n="roadmap.p1.m3">Mobile app MVP (iOS & Android)</li>
+                        </ul>
                     </div>
-                    <div class="scroll-hint">
-                        <span>探索更多</span>
-                        <div class="scroll-arrow"></div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3 data-i18n="roadmap.p2.title">Launch & Early Traction</h3>
+                            <span class="timeline-time">M4 - M6</span>
+                        </div>
+                        <ul>
+                            <li data-i18n="roadmap.p2.m1">Mod live on Steam Workshop</li>
+                            <li data-i18n="roadmap.p2.m2">App public launch</li>
+                            <li data-i18n="roadmap.p2.m3">5K mod downloads, 2K app downloads</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3 data-i18n="roadmap.p3.title">Growth & Optimize</h3>
+                            <span class="timeline-time">M7 - M9</span>
+                        </div>
+                        <ul>
+                            <li data-i18n="roadmap.p3.m1">Wellness report feature</li>
+                            <li data-i18n="roadmap.p3.m2">Premium subscription live</li>
+                            <li data-i18n="roadmap.p3.m3">10K app users, 1K paying subscribers</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3 data-i18n="roadmap.p4.title">B2B & Scale</h3>
+                            <span class="timeline-time">M10 - M12</span>
+                        </div>
+                        <ul>
+                            <li data-i18n="roadmap.p4.m1">B2B API & dashboard</li>
+                            <li data-i18n="roadmap.p4.m2">First enterprise contracts</li>
+                            <li data-i18n="roadmap.p4.m3">25K total users, $120K ARR</li>
+                        </ul>
                     </div>
                 </div>
             </div>
-            <div class="mission-section">
-                <h2>我们的使命</h2>
-                <p class="mission-text">在这个快节奏的数字时代，我们相信技术不仅仅是冰冷的代码。SoulForge Tech 诞生于一个简单的愿景：<strong>让每一个人都能找到属于自己的数字伙伴</strong>。无论是在星露谷的田野间与独特的NPC建立羁绊，还是在现实生活中拥有一个真正理解你的AI伙伴，我们都在努力让这一切成为可能。</p>
-            </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- 星露谷物语Mod页面 - 像素二次元风格 -->
-        <section class="page stardew-page" id="stardew">
-            <div class="pixel-bg">
-                <div class="pixel-stars"></div>
-                <div class="pixel-clouds"></div>
-            </div>
-            <div class="stardew-content">
-                <div class="pixel-title-box">
-                    <h1 class="pixel-title">🌾 星露谷物语 Mod 🌾</h1>
-                    <p class="pixel-subtitle">~ 为你的农场生活注入新活力 ~</p>
+    <!-- Team Section -->
+    <section class="section section-alt" id="team">
+        <div class="container">
+            <h2 class="section-title reveal" data-i18n="team.title">Founding Team</h2>
+            <p class="section-subtitle reveal" data-i18n="team.subtitle">Building the future with technology and passion</p>
+
+            <div class="team-grid">
+                <div class="team-card reveal">
+                    <div class="team-avatar">AS</div>
+                    <h3>Alphonse Sun</h3>
+                    <p class="team-role" data-i18n="team.ceo.role">CEO & Co-Founder</p>
+                    <div class="team-edu">
+                        <span>&#127891; UC Riverside</span>
+                        <span data-i18n="team.ceo.degree">MS Computer Engineering</span>
+                    </div>
+                    <p class="team-exp" data-i18n="team.ceo.exp">Sangfor Technologies (Cloud Computing). Microservices & Backend Architecture.</p>
+                    <div class="team-tags">
+                        <span data-i18n="team.ceo.skill1">Cloud Computing</span>
+                        <span data-i18n="team.ceo.skill2">Microservices</span>
+                        <span data-i18n="team.ceo.skill3">Backend Architecture</span>
+                    </div>
+                    <a href="https://linkedin.com/in/shaoxisun" target="_blank" rel="noopener" class="team-link">LinkedIn &rarr;</a>
                 </div>
 
-                <div class="mod-showcase">
-                    <div class="mod-card pixel-card">
-                        <div class="mod-preview">
-                            <div class="pixel-character">
-                                <div class="character-sprite npc-sprite"></div>
-                            </div>
-                        </div>
-                        <div class="mod-info">
-                            <h3 class="pixel-text">🎭 NPC深度对话系统</h3>
-                            <p>基于AI的智能对话系统，让每个NPC都拥有独特的性格和记忆。他们会记住你的选择，根据季节、天气、好感度给出不同的回应。</p>
-                            <div class="feature-tags">
-                                <span class="pixel-tag">AI驱动</span>
-                                <span class="pixel-tag">情感记忆</span>
-                                <span class="pixel-tag">动态剧情</span>
-                            </div>
-                        </div>
+                <div class="team-card reveal">
+                    <div class="team-avatar">JQ</div>
+                    <h3>Joshua (Jingbin) Qian</h3>
+                    <p class="team-role" data-i18n="team.cto.role">CTO & Co-Founder</p>
+                    <div class="team-edu">
+                        <span>&#127891; Rice University</span>
+                        <span data-i18n="team.cto.degree">MS Computer Science (AI)</span>
                     </div>
-
-                    <div class="mod-card pixel-card">
-                        <div class="mod-preview">
-                            <div class="pixel-character">
-                                <div class="character-sprite farm-sprite"></div>
-                            </div>
-                        </div>
-                        <div class="mod-info">
-                            <h3 class="pixel-text">🌱 智能农场助手</h3>
-                            <p>你的专属农场精灵！它会学习你的种植习惯，提供个性化建议，甚至能陪你聊天解闷，让漫长的农场生活不再孤单。</p>
-                            <div class="feature-tags">
-                                <span class="pixel-tag">个性化</span>
-                                <span class="pixel-tag">陪伴系统</span>
-                                <span class="pixel-tag">智能建议</span>
-                            </div>
-                        </div>
+                    <p class="team-exp" data-i18n="team.cto.exp">AI Specialization, vivo Product Planning. FutureFab.AI (RAG Systems).</p>
+                    <div class="team-tags">
+                        <span data-i18n="team.cto.skill1">AI / ML</span>
+                        <span data-i18n="team.cto.skill2">RAG Systems</span>
+                        <span data-i18n="team.cto.skill3">Product Planning</span>
                     </div>
-                </div>
-
-                <div class="pixel-cta">
-                    <div class="cta-box">
-                        <p class="pixel-text">✨ 即将发布 ✨</p>
-                        <p>关注我们获取最新动态</p>
-                    </div>
+                    <a href="https://linkedin.com/in/jingbinqian" target="_blank" rel="noopener" class="team-link">LinkedIn &rarr;</a>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- AI陪伴App页面 - 科技感 -->
-        <section class="page ai-page" id="aicompanion">
-            <div class="tech-bg">
-                <div class="grid-lines"></div>
-                <div class="floating-particles"></div>
-                <div class="circuit-lines">
-                    <svg class="circuit-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-                        <path class="circuit-path" d="M0,50 L30,50 L35,30 L65,30 L70,50 L100,50" />
-                        <path class="circuit-path" d="M0,70 L20,70 L25,80 L75,80 L80,70 L100,70" />
-                    </svg>
+    <!-- Waitlist & Contact Section -->
+    <section class="section" id="contact">
+        <div class="container">
+            <!-- Waitlist -->
+            <div class="waitlist-box reveal" id="waitlist">
+                <h2 data-i18n="waitlist.title">Get Early Access</h2>
+                <p data-i18n="waitlist.desc">Join our waitlist to be among the first to experience SoulLink AI.</p>
+                <form class="waitlist-form" id="waitlistForm">
+                    <input type="email" placeholder="your@email.com" data-i18n-placeholder="waitlist.placeholder" required>
+                    <button type="submit" data-i18n="waitlist.btn">Join Waitlist</button>
+                </form>
+                <p class="waitlist-note" data-i18n="waitlist.note">We respect your privacy. No spam, ever.</p>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="contact-grid reveal">
+                <div class="contact-item">
+                    <span class="contact-icon">&#9993;</span>
+                    <h3 data-i18n="contact.email">Email</h3>
+                    <p>contact@soulforge.tech</p>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">&#128172;</span>
+                    <h3 data-i18n="contact.social">Social</h3>
+                    <p>@SoulForgeTech</p>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">&#128205;</span>
+                    <h3 data-i18n="contact.location">Location</h3>
+                    <p data-i18n="contact.location.value">Shenzhen, China</p>
                 </div>
             </div>
-            <div class="ai-content">
-                <div class="ai-hero">
-                    <div class="hologram-container">
-                        <div class="hologram-ring ring-1"></div>
-                        <div class="hologram-ring ring-2"></div>
-                        <div class="hologram-ring ring-3"></div>
-                        <div class="ai-avatar">
-                            <span class="ai-icon">🤖</span>
-                        </div>
-                    </div>
-                    <div class="ai-title-section">
-                        <h1 class="tech-title">
-                            <span class="glitch" data-text="AI COMPANION">AI COMPANION</span>
-                        </h1>
-                        <p class="tech-subtitle">你的专属智能伙伴 | 理解你 • 陪伴你 • 成长同行</p>
-                    </div>
-                </div>
 
-                <div class="features-grid">
-                    <div class="feature-card tech-card">
-                        <div class="card-header">
-                            <div class="icon-wrapper">
-                                <span class="feature-icon">🧠</span>
-                            </div>
-                            <h3>深度理解</h3>
-                        </div>
-                        <p>基于先进的大语言模型，能够真正理解你的情感和需求，而不仅仅是机械回复。</p>
-                        <div class="tech-indicator">
-                            <div class="indicator-bar"></div>
-                        </div>
+            <!-- Contact Form -->
+            <div class="contact-form-box reveal">
+                <h3 data-i18n="contact.form.title">Send us a message</h3>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-row">
+                        <input type="text" placeholder="Name" data-i18n-placeholder="contact.form.name" required>
+                        <input type="email" placeholder="Email" data-i18n-placeholder="contact.form.email" required>
                     </div>
-
-                    <div class="feature-card tech-card">
-                        <div class="card-header">
-                            <div class="icon-wrapper">
-                                <span class="feature-icon">💝</span>
-                            </div>
-                            <h3>情感陪伴</h3>
-                        </div>
-                        <p>24/7全天候陪伴，无论深夜还是清晨，始终有一个懂你的伙伴在身边。</p>
-                        <div class="tech-indicator">
-                            <div class="indicator-bar"></div>
-                        </div>
-                    </div>
-
-                    <div class="feature-card tech-card">
-                        <div class="card-header">
-                            <div class="icon-wrapper">
-                                <span class="feature-icon">🎭</span>
-                            </div>
-                            <h3>个性定制</h3>
-                        </div>
-                        <p>创造属于你的专属AI伙伴，定制性格、声音、外观，让TA成为独一无二的存在。</p>
-                        <div class="tech-indicator">
-                            <div class="indicator-bar"></div>
-                        </div>
-                    </div>
-
-                    <div class="feature-card tech-card">
-                        <div class="card-header">
-                            <div class="icon-wrapper">
-                                <span class="feature-icon">🔒</span>
-                            </div>
-                            <h3>隐私优先</h3>
-                        </div>
-                        <p>端到端加密，你的对话只属于你。我们承诺永不出售用户数据。</p>
-                        <div class="tech-indicator">
-                            <div class="indicator-bar"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="app-preview">
-                    <div class="phone-mockup">
-                        <div class="phone-screen">
-                            <div class="chat-preview">
-                                <div class="chat-bubble ai-bubble">你今天看起来有点累，要不要聊聊？</div>
-                                <div class="chat-bubble user-bubble">是啊，工作压力好大...</div>
-                                <div class="chat-bubble ai-bubble">我理解。有时候给自己一点喘息的空间也很重要。要不我们聊点轻松的？</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="cta-section">
-                        <p class="coming-soon">🚀 即将上线</p>
-                        <p class="cta-text">加入等待列表，第一时间体验</p>
-                    </div>
-                </div>
+                    <textarea placeholder="Your message..." data-i18n-placeholder="contact.form.message" rows="4" required></textarea>
+                    <button type="submit" class="btn btn-primary" data-i18n="contact.form.submit">Send Message</button>
+                </form>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- 联系我们页面 -->
-        <section class="page contact-page" id="contact">
-            <div class="contact-bg">
-                <div class="gradient-orb orb-1"></div>
-                <div class="gradient-orb orb-2"></div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <span class="logo-icon">&#9878;</span>
+                <span class="logo-text">SoulForge Tech</span>
             </div>
-            <div class="contact-content">
-                <h1 class="contact-title">联系我们</h1>
-                <p class="contact-subtitle">期待与你建立连接</p>
-
-                <div class="contact-grid">
-                    <div class="contact-card">
-                        <div class="contact-icon">📧</div>
-                        <h3>邮箱</h3>
-                        <p>contact@soulforge.tech</p>
-                    </div>
-                    <div class="contact-card">
-                        <div class="contact-icon">💬</div>
-                        <h3>社交媒体</h3>
-                        <p>@SoulForgeTech</p>
-                    </div>
-                    <div class="contact-card">
-                        <div class="contact-icon">📍</div>
-                        <h3>位置</h3>
-                        <p>中国 • 深圳</p>
-                    </div>
-                </div>
-
-                <div class="contact-form-section">
-                    <h2>给我们留言</h2>
-                    <form class="contact-form" id="contactForm">
-                        <div class="form-group">
-                            <input type="text" id="name" placeholder="你的名字" required>
-                            <label for="name">名字</label>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" id="email" placeholder="你的邮箱" required>
-                            <label for="email">邮箱</label>
-                        </div>
-                        <div class="form-group">
-                            <textarea id="message" placeholder="想说的话..." required></textarea>
-                            <label for="message">留言</label>
-                        </div>
-                        <button type="submit" class="submit-btn">
-                            <span>发送消息</span>
-                            <span class="btn-arrow">→</span>
-                        </button>
-                    </form>
-                </div>
-
-                <footer class="site-footer">
-                    <p>© 2026 SoulForge Tech. All rights reserved.</p>
-                    <p class="footer-tagline">用技术锻造灵魂的温度</p>
-                </footer>
+            <div class="footer-links">
+                <a href="https://prototype.soulforgetech.com" target="_blank">SoulLink App</a>
+                <a href="https://github.com/SoulForgeTech" target="_blank">GitHub</a>
+                <a href="mailto:contact@soulforge.tech">Email</a>
             </div>
-        </section>
-    </main>
-
-    <!-- 页面转场遮罩 -->
-    <div class="page-transition">
-        <div class="transition-layer layer-1"></div>
-        <div class="transition-layer layer-2"></div>
-        <div class="transition-layer layer-3"></div>
-    </div>
+            <p class="footer-copy" data-i18n="footer.copy">&copy; 2026 SoulForge Tech. All rights reserved.</p>
+            <p class="footer-tagline" data-i18n="footer.tagline">Forging warmth into technology.</p>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>
