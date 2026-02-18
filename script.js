@@ -514,12 +514,35 @@ function initThemeToggle() {
     const toggle = document.getElementById('themeToggle');
     if (!toggle) return;
 
-    // Load saved theme or default to dark
+    // Load saved theme, or follow system preference
     try {
         const saved = localStorage.getItem('soulforge-theme');
-        if (saved === 'light') {
-            document.documentElement.setAttribute('data-theme', 'light');
+        if (saved === 'light' || saved === 'dark') {
+            // User has manually chosen before — respect that
+            if (saved === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        } else {
+            // No saved preference — follow system color scheme
+            const preferLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+            if (preferLight) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
         }
+    } catch (e) {}
+
+    // Listen for system theme changes (only if user hasn't manually chosen)
+    try {
+        window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
+            const saved = localStorage.getItem('soulforge-theme');
+            if (!saved) {
+                if (e.matches) {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                }
+            }
+        });
     } catch (e) {}
 
     toggle.addEventListener('click', () => {
