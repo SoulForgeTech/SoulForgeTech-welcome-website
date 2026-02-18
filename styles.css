@@ -115,7 +115,11 @@ body {
 .logo-icon {
     width: 28px;
     height: 28px;
+    max-width: 28px;
+    max-height: 28px;
     object-fit: contain;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .nav-links {
