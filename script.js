@@ -425,7 +425,7 @@ function initForms() {
             const name = nameInput.value.trim();
             const email = emailInput.value.trim();
             const message = messageInput.value.trim();
-            if (!email || !message) return;
+            if (!message) return;
 
             btn.disabled = true;
             btn.textContent = currentLang === 'zh-CN' ? '发送中...' : 'Sending...';
