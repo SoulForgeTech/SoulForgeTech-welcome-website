@@ -111,8 +111,8 @@ const translations = {
         'contact.location': '位置',
         'contact.location.value': 'Houston, TX · Riverside, CA',
         'contact.form.title': '给我们留言',
-        'contact.form.name': '你的名字',
-        'contact.form.email': '你的邮箱',
+        'contact.form.name': '你的名字（选填）',
+        'contact.form.email': '你的邮箱（选填）',
         'contact.form.message': '想说的话...',
         'contact.form.submit': '发送消息',
 
@@ -224,8 +224,8 @@ const translations = {
         'contact.location': 'Location',
         'contact.location.value': 'Houston, TX · Riverside, CA',
         'contact.form.title': 'Send us a message',
-        'contact.form.name': 'Your name',
-        'contact.form.email': 'Your email',
+        'contact.form.name': 'Your name (optional)',
+        'contact.form.email': 'Your email (optional)',
         'contact.form.message': 'Your message...',
         'contact.form.submit': 'Send Message',
 
