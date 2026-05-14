@@ -1,0 +1,643 @@
+/* ============================================================
+   SoulLink — Diary v3 sections: Soul System / Three Minds / Memory
+   ============================================================ */
+
+/* ----- Section base ----- */
+.diary .section {
+  padding: 130px 0;
+  position: relative;
+}
+/* .section.alt previously used --paper-deep to alternate section tones; now
+   the whole page sits on a single calm cream. */
+.diary .section.alt { background: transparent; }
+
+.diary .chapter-header { max-width: 800px; }
+.diary .chapter-header.center { margin: 0 auto; text-align: center; }
+
+.diary .chapter-mark.center { justify-content: center; }
+.diary .chapter-mark .diamond {
+  color: var(--seal);
+  font-size: 12px;
+  letter-spacing: 0;
+}
+.diary .chapter-mark > span:first-child {
+  color: var(--sepia);
+  font-weight: 600;
+}
+.diary .chapter-mark .roman {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
+}
+
+.diary .chapter-title {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 4.2vw, 58px);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.06;
+  margin-bottom: 24px;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+.diary .chapter-title em {
+  font-style: italic;
+  color: var(--seal);
+  position: relative;
+}
+.diary .chapter-title.center { text-align: center; }
+
+.diary .chapter-sub {
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin-bottom: 64px;
+  max-width: 560px;
+}
+.diary .chapter-header.center .chapter-sub { margin-left: auto; margin-right: auto; }
+
+/* Tighter Chinese */
+body.diary.lang-zh .chapter-title { font-size: clamp(30px, 3.6vw, 52px); line-height: 1.15; }
+body.diary.lang-zh .chapter-sub { font-size: 16px; line-height: 1.6; }
+
+/* ============== SOUL SYSTEM ============== */
+.diary .soul-system::after {
+  content: "";
+  position: absolute; left: 50%; bottom: 16%; width: 70%; height: 60%;
+  transform: translateX(-50%);
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(184, 85, 67, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.diary .tarot-spread {
+  position: relative;
+  height: 440px;
+  margin: 0 auto;
+  max-width: 920px;
+  perspective: 1400px;
+  cursor: pointer;
+}
+.diary .tarot-card {
+  position: absolute;
+  left: 50%; top: 20px;
+  width: 200px; height: 320px;
+  transform-style: preserve-3d;
+  transition: transform 0.85s cubic-bezier(.4,0,.2,1);
+}
+.diary .tarot-card.tc-1 { transform: translateX(-50%) translateX(-240px) rotate(-9deg); }
+.diary .tarot-card.tc-2 { transform: translateX(-50%) translateY(-12px); z-index: 2; }
+.diary .tarot-card.tc-3 { transform: translateX(-50%) translateX(240px) rotate(9deg); }
+.diary .tarot-card.tc-1.flipped { transform: translateX(-50%) translateX(-240px) rotate(-9deg) rotateY(180deg); }
+.diary .tarot-card.tc-2.flipped { transform: translateX(-50%) translateY(-12px) rotateY(180deg); }
+.diary .tarot-card.tc-3.flipped { transform: translateX(-50%) translateX(240px) rotate(9deg) rotateY(180deg); }
+
+.diary .tc-back, .diary .tc-face {
+  position: absolute; inset: 0;
+  border-radius: 4px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow:
+    0 22px 50px rgba(42, 38, 32, 0.25),
+    0 2px 0 rgba(0,0,0,0.04),
+    inset 0 1px 0 rgba(255,255,255,0.3);
+}
+.diary .tc-back {
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(184, 85, 67, 0.22) 0%, transparent 65%),
+    linear-gradient(160deg, #1A140E 0%, #2A1A14 100%);
+  color: #F4EFE6;
+}
+.diary .tc-back-frame {
+  border: 1px solid rgba(244, 239, 230, 0.32);
+  height: calc(100% - 24px);
+  width: calc(100% - 24px);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: space-between;
+  text-align: center;
+  padding: 24px 12px;
+}
+.diary .tc-back-sigil {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 64px;
+  color: #E8AA7A;
+  line-height: 1;
+}
+.diary .tc-back-mark {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.24em;
+  opacity: 0.65;
+  text-transform: uppercase;
+}
+.diary .tc-back-ornament {
+  color: var(--seal);
+  opacity: 0.7;
+  font-size: 14px;
+  letter-spacing: 0.4em;
+}
+
+/* Tarot card face is theme-independent — physical-object metaphor.
+   Cream paper stays cream in dark mode so the artwork inside stays readable. */
+.diary .tc-face {
+  background: #F4E6CC;
+  color: #2A2620;
+  transform: rotateY(180deg);
+  flex-direction: column;
+  padding: 18px 16px;
+  border: 1.5px solid rgba(42, 38, 32, 0.22);
+  justify-content: space-between;
+}
+.diary .tc-face::before {
+  content: "";
+  position: absolute; inset: 8px;
+  border: 1px solid rgba(42, 38, 32, 0.15);
+  pointer-events: none;
+}
+
+/* All tarot face colours are hard-coded — the card is theme-independent so
+   ink colours don't flip in dark mode. */
+.diary .tc-roman {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 26px;
+  color: #B85543;
+  letter-spacing: 0.05em;
+  z-index: 1;
+}
+.diary .tc-glyph {
+  font-family: var(--font-display);
+  font-size: 72px;
+  color: #2A2620;
+  line-height: 1;
+  margin: 6px 0 4px;
+  z-index: 1;
+}
+.diary .tc-label {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 17px;
+  color: #2A2620;
+  z-index: 1;
+}
+.diary .tc-sub {
+  font-family: var(--font-hand);
+  font-size: 17px;
+  color: #8B6F47;
+  margin-top: 4px;
+  text-align: center;
+  z-index: 1;
+}
+
+.diary .tarot-hint {
+  position: absolute; left: 50%; bottom: -8px;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  display: flex; align-items: center; gap: 8px;
+}
+.diary .tarot-hint::before,
+.diary .tarot-hint::after {
+  content: ""; width: 18px; height: 1px; background: var(--ink-faint);
+}
+
+/* Archetypes */
+.diary .archetypes {
+  margin-top: 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+.diary .archetypes-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sepia);
+}
+.diary .archetype-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 18px;
+  max-width: 780px;
+}
+.diary .arch {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 17px;
+  color: var(--ink-soft);
+  position: relative;
+}
+.diary .arch:not(:last-child)::after {
+  content: "·";
+  position: absolute;
+  right: -12px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--ink-faint);
+}
+
+/* ============== THREE MINDS ============== */
+.diary .minds-section { background: var(--paper-deep); }
+
+.diary .minds-shelf {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  align-items: stretch;
+}
+
+.diary .mind-card {
+  background: #FBF7EE;
+  border: 1px solid rgba(42, 38, 32, 0.10);
+  padding: 30px 28px 26px;
+  position: relative;
+  transition: transform .35s ease, box-shadow .35s ease;
+  box-shadow: 0 14px 32px rgba(42, 38, 32, 0.10);
+  display: flex;
+  flex-direction: column;
+}
+body.diary.theme-dark .mind-card {
+  background: #2C2922;
+  border-color: rgba(235, 227, 210, 0.12);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.4);
+}
+.diary .mind-card:hover { transform: translateY(-4px) rotate(-0.4deg); }
+.diary .mind-card.recommended {
+  border-color: var(--seal);
+  border-width: 1.5px;
+}
+
+/* Rubber stamp */
+.diary .rubber-stamp {
+  position: absolute;
+  top: 22px;
+  right: -14px;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--seal);
+  border: 2px solid var(--seal);
+  padding: 4px 12px 5px;
+  transform: rotate(9deg);
+  opacity: 0.86;
+  pointer-events: none;
+  background: rgba(244, 239, 230, 0.78);
+  white-space: nowrap;
+  box-shadow:
+    inset 0 0 0 1.5px rgba(244, 239, 230, 0.5),
+    inset 0 0 0 3px var(--seal);
+  z-index: 5;
+}
+.diary .rubber-stamp::before {
+  content: "";
+  position: absolute; inset: -4px;
+  border: 1px dashed var(--seal);
+  opacity: 0.35;
+}
+body.diary.theme-dark .rubber-stamp {
+  background: rgba(26, 24, 20, 0.7);
+  box-shadow:
+    inset 0 0 0 1.5px rgba(26, 24, 20, 0.5),
+    inset 0 0 0 3px var(--seal);
+}
+
+.diary .mind-mono {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 44px;
+  color: var(--seal);
+  letter-spacing: -0.025em;
+  line-height: 1;
+  margin-bottom: 4px;
+  display: block;
+}
+.diary .mind-meta { margin-bottom: 22px; }
+.diary .mind-name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.diary .mind-ver {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--sepia);
+  text-transform: uppercase;
+  margin-top: 5px;
+}
+.diary .mind-tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 19px;
+  line-height: 1.3;
+  color: var(--ink);
+  margin-bottom: 14px;
+  letter-spacing: -0.005em;
+}
+.diary .mind-desc {
+  font-family: var(--font-body);
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin-bottom: 22px;
+  flex: 1;
+}
+.diary .mind-tags {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  padding-top: 18px;
+  border-top: 1px dashed var(--ink-line);
+}
+.diary .mind-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sepia);
+  padding: 3px 8px;
+  background: rgba(184, 85, 67, 0.06);
+  border: 1px solid rgba(184, 85, 67, 0.20);
+  border-radius: 1px;
+}
+.diary .mind-tag.hot {
+  color: var(--seal);
+  background: rgba(184, 85, 67, 0.10);
+  border-color: rgba(184, 85, 67, 0.35);
+}
+
+/* ============== MEMORY ============== */
+.diary .memory-section { padding: 150px 0; }
+.diary .memory-grid {
+  display: grid;
+  grid-template-columns: 1fr 0.85fr;
+  gap: 64px;
+  align-items: start;
+  margin-top: 40px;
+}
+.diary .memory-copy { padding-top: 32px; }
+
+.diary .memory-lead {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 22px;
+  line-height: 1.4;
+  color: var(--ink);
+  margin-bottom: 24px;
+  letter-spacing: -0.005em;
+}
+.diary .memory-body {
+  font-family: var(--font-body);
+  font-size: 16.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin-bottom: 40px;
+}
+.diary .memory-body strong { color: var(--ink); font-weight: 500; }
+
+.diary .moat-badges {
+  display: flex;
+  gap: 36px;
+  padding-top: 28px;
+  border-top: 1px dashed var(--ink-line);
+}
+.diary .moat-badge {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.diary .moat-num {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 52px;
+  color: var(--seal);
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+}
+.diary .moat-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sepia);
+  max-width: 130px;
+  line-height: 1.4;
+}
+
+.diary .memory-visual {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-top: 18px;
+}
+.diary .paperclip {
+  position: absolute;
+  top: -4px; left: 56px;
+  color: var(--ink);
+  z-index: 8;
+  filter: drop-shadow(0 3px 4px rgba(42,38,32,0.25));
+}
+body.diary.theme-dark .paperclip { color: var(--paper); }
+
+.diary .ledger-page {
+  position: relative;
+  width: 100%;
+  background: #FBF7EE;
+  padding: 20px 24px 22px;
+  box-shadow:
+    0 18px 42px rgba(42, 38, 32, 0.16),
+    0 2px 0 rgba(0,0,0,0.04);
+  border: 1px solid rgba(42, 38, 32, 0.10);
+  border-radius: 1px;
+}
+body.diary.theme-dark .ledger-page {
+  background: #2C2922;
+  border-color: rgba(235, 227, 210, 0.14);
+  box-shadow: 0 18px 42px rgba(0,0,0,0.5);
+}
+.diary .ledger-page.page-wiki {
+  transform: rotate(-0.8deg);
+  width: 100%;
+  z-index: 3;
+  padding-bottom: 42px;
+}
+.diary .ledger-page.page-lore {
+  transform: rotate(0.8deg);
+  width: 96%;
+  align-self: flex-end;
+  z-index: 2;
+}
+
+.diary .page-corner-fold {
+  position: absolute;
+  top: 0; right: 0;
+  width: 32px; height: 32px;
+  background: linear-gradient(225deg, var(--paper-deep) 50%, transparent 50%);
+}
+body.diary.theme-dark .page-corner-fold {
+  background: linear-gradient(225deg, #1F1C16 50%, transparent 50%);
+}
+
+.diary .page-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 14px;
+  padding-bottom: 11px;
+  border-bottom: 1px solid var(--ink-line);
+}
+.diary .page-tab {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  background: var(--ink);
+  color: var(--paper);
+}
+.diary .page-tab.amber {
+  background: var(--seal);
+  color: #FFFAF0;
+}
+body.diary.theme-dark .page-tab { background: var(--paper); color: var(--ink); }
+body.diary.theme-dark .page-tab.amber { background: var(--seal); color: #FFFAF0; }
+
+.diary .page-mono {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.diary .page-body { display: flex; flex-direction: column; gap: 8px; }
+.diary .page-line {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.4;
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  column-gap: 14px;
+  align-items: baseline;
+}
+.diary .page-line.dim .page-val { color: var(--ink-faint); font-size: 12px; font-style: normal; }
+.diary .page-key {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sepia);
+  white-space: nowrap;
+  align-self: center;
+}
+.diary .page-val {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 15.5px;
+  color: var(--ink);
+}
+.diary .page-val.hl {
+  position: relative;
+  display: inline-block;
+}
+.diary .page-val.hl::after {
+  content: "";
+  position: absolute;
+  left: -3px; right: -3px; bottom: 1px;
+  height: 0.42em;
+  background: rgba(184, 85, 67, 0.24);
+  z-index: -1;
+}
+.diary .page-val.hl-blue {
+  border-bottom: 1.5px solid rgba(58, 90, 120, 0.6);
+  padding-bottom: 1px;
+}
+body.diary.theme-dark .page-val.hl-blue { border-bottom-color: rgba(143, 169, 196, 0.6); }
+
+.diary .page-stamp {
+  position: absolute;
+  bottom: 12px; right: 22px;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--seal);
+  border: 1.5px solid var(--seal);
+  padding: 3px 9px;
+  transform: rotate(-5deg);
+  opacity: 0.78;
+}
+
+.diary .lore-list { display: flex; flex-direction: column; gap: 11px; }
+.diary .lore-entry {
+  padding-bottom: 10px;
+  border-bottom: 1px dotted var(--ink-line);
+}
+.diary .lore-entry:last-child { border-bottom: none; padding-bottom: 0; }
+.diary .lore-key {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
+  color: var(--seal);
+  margin-bottom: 4px;
+}
+.diary .lore-val {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 14.5px;
+  line-height: 1.45;
+  color: var(--ink);
+}
+.diary .lore-trigger {
+  margin-top: 14px;
+  padding: 8px 12px;
+  background: rgba(58, 90, 120, 0.08);
+  border-left: 2px solid var(--pen-blue);
+  font-family: var(--font-hand);
+  font-size: 14px;
+  color: var(--pen-blue);
+  line-height: 1.3;
+}
+
+.diary .scrapbook-note.memory-note {
+  position: absolute;
+  bottom: -28px; right: -6px;
+  transform: rotate(-4deg);
+  font-family: var(--font-hand);
+  font-size: 19px;
+  color: var(--pen-blue);
+  z-index: 7;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+@media (max-width: 980px) {
+  .diary .minds-shelf { grid-template-columns: 1fr; }
+  .diary .memory-grid { grid-template-columns: 1fr; gap: 60px; }
+  .diary .moat-badges { gap: 28px; }
+  .diary .tarot-spread { transform: scale(0.82); height: 380px; }
+}

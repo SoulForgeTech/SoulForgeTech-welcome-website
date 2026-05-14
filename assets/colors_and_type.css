@@ -1,0 +1,186 @@
+/* ==========================================================================
+   SoulForge Tech — Colors & Type Foundations
+   Extracted from the welcome-site codebase, extended with SoulLink
+   brand direction (deep purples/indigos + warm amber accents).
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&display=swap');
+
+:root {
+  /* -------- Brand / Primary -------- */
+  --sf-primary:        #7c3aed;   /* violet-600, core brand purple */
+  --sf-primary-light:  #a78bfa;   /* violet-400, hover & gradient stop */
+  --sf-primary-dark:   #5b21b6;   /* violet-800, pressed / deep bg */
+  --sf-indigo-deep:    #3b0a6b;   /* night-sky indigo, custom */
+  --sf-accent-pink:    #f472b6;   /* pink-400, companion accent */
+  --sf-accent-pink-lt: #f9a8d4;   /* pink-300 */
+
+  /* -------- SoulLink warm amber (brand extension) -------- */
+  --sf-amber:          #f59e0b;   /* amber-500, warmth accent */
+  --sf-amber-light:    #fbbf24;   /* amber-400 */
+  --sf-amber-glow:     #fde68a;   /* amber-200, glow wash */
+
+  /* -------- Cyan hint (used sparingly in logo + tech sections) -------- */
+  --sf-cyan:           #22d3ee;
+
+  /* -------- Neutrals — Dark (default) -------- */
+  --sf-bg:             #0a0a12;   /* page bg, near-black indigo */
+  --sf-bg-alt:         #0f0f1e;   /* section alt */
+  --sf-bg-card:        rgba(255,255,255,0.04);
+  --sf-bg-card-hover:  rgba(255,255,255,0.08);
+  --sf-fg:             #f0f0f5;   /* primary text */
+  --sf-fg-2:           rgba(240,240,245,0.65);  /* secondary text */
+  --sf-fg-3:           rgba(240,240,245,0.40);  /* muted / captions */
+  --sf-border:         rgba(255,255,255,0.08);
+  --sf-border-hover:   rgba(255,255,255,0.15);
+  --sf-glass:          rgba(255,255,255,0.05);
+  --sf-glass-border:   rgba(255,255,255,0.10);
+
+  /* -------- Neutrals — Light theme mirror -------- */
+  --sf-bg-light:       #f5f0ff;
+  --sf-bg-alt-light:   #ede5ff;
+  --sf-fg-light:       #1a1035;
+  --sf-fg-2-light:     #4a3f63;
+  --sf-fg-3-light:     #7b6f96;
+
+  /* -------- Semantic -------- */
+  --sf-success:        #10b981;
+  --sf-danger:         #ef4444;
+  --sf-warning:        var(--sf-amber);
+  --sf-info:           var(--sf-primary-light);
+
+  /* -------- Radii -------- */
+  --sf-radius-sm:      8px;
+  --sf-radius:         12px;
+  --sf-radius-lg:      20px;
+  --sf-radius-full:    9999px;
+
+  /* -------- Shadows (dark-first, soft mystical) -------- */
+  --sf-shadow-sm:      0 1px 2px rgba(0,0,0,0.25);
+  --sf-shadow:         0 8px 24px rgba(0,0,0,0.35);
+  --sf-shadow-glow:    0 8px 24px rgba(124,58,237,0.30);
+  --sf-shadow-amber:   0 8px 24px rgba(245,158,11,0.25);
+  --sf-shadow-inner:   inset 0 1px 0 rgba(255,255,255,0.06);
+
+  /* -------- Gradients (signature) -------- */
+  --sf-grad-brand:     linear-gradient(135deg, #a78bfa 0%, #f9a8d4 100%);
+  --sf-grad-hero:      radial-gradient(ellipse at 50% 0%, rgba(124,58,237,0.25) 0%, transparent 55%),
+                       radial-gradient(ellipse at 20% 50%, rgba(139,92,246,0.10) 0%, transparent 40%),
+                       radial-gradient(ellipse at 80% 80%, rgba(88,28,135,0.15) 0%, transparent 45%);
+  --sf-grad-warm:      linear-gradient(135deg, #7c3aed 0%, #f59e0b 100%);
+  --sf-grad-soul:      linear-gradient(140deg, #3b0a6b 0%, #7c3aed 55%, #f59e0b 110%);
+
+  /* -------- Spacing scale (4px base) -------- */
+  --sf-sp-1: 4px;   --sf-sp-2: 8px;   --sf-sp-3: 12px;
+  --sf-sp-4: 16px;  --sf-sp-5: 20px;  --sf-sp-6: 24px;
+  --sf-sp-8: 32px;  --sf-sp-10: 40px; --sf-sp-12: 48px;
+  --sf-sp-16: 64px; --sf-sp-20: 80px; --sf-sp-24: 96px;
+
+  /* -------- Motion -------- */
+  --sf-ease:           cubic-bezier(0.4, 0, 0.2, 1);
+  --sf-transition:     0.3s var(--sf-ease);
+  --sf-transition-slow: 0.6s var(--sf-ease);
+
+  /* -------- Typography -------- */
+  --sf-font-sans:      'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+  --sf-font-serif:     'Fraunces', Georgia, serif; /* display / quotes only */
+  --sf-font-mono:      ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Type scale — display heavy, tight tracking on large sizes */
+  --sf-t-display:      clamp(40px, 6vw, 72px);
+  --sf-t-h1:           clamp(32px, 4.5vw, 48px);
+  --sf-t-h2:           clamp(26px, 3.2vw, 36px);
+  --sf-t-h3:           22px;
+  --sf-t-h4:           18px;
+  --sf-t-body:         16px;
+  --sf-t-body-sm:      14px;
+  --sf-t-caption:      12px;
+  --sf-t-micro:        11px;
+
+  --sf-lh-tight:       1.15;
+  --sf-lh-snug:        1.35;
+  --sf-lh-normal:      1.6;
+  --sf-lh-loose:       1.75;
+
+  --sf-tracking-tight: -0.02em;
+  --sf-tracking-wide:  0.05em;
+}
+
+/* ==========================================================================
+   Semantic element defaults
+   ========================================================================== */
+
+body {
+  font-family: var(--sf-font-sans);
+  font-size: var(--sf-t-body);
+  line-height: var(--sf-lh-normal);
+  color: var(--sf-fg);
+  background: var(--sf-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, .sf-h1 {
+  font-family: var(--sf-font-sans);
+  font-size: var(--sf-t-h1);
+  font-weight: 700;
+  line-height: var(--sf-lh-tight);
+  letter-spacing: var(--sf-tracking-tight);
+}
+
+h2, .sf-h2 {
+  font-size: var(--sf-t-h2);
+  font-weight: 700;
+  line-height: var(--sf-lh-tight);
+  letter-spacing: var(--sf-tracking-tight);
+}
+
+h3, .sf-h3 {
+  font-size: var(--sf-t-h3);
+  font-weight: 600;
+  line-height: var(--sf-lh-snug);
+}
+
+h4, .sf-h4 {
+  font-size: var(--sf-t-h4);
+  font-weight: 600;
+  line-height: var(--sf-lh-snug);
+}
+
+p, .sf-body {
+  font-size: var(--sf-t-body);
+  line-height: var(--sf-lh-normal);
+  color: var(--sf-fg-2);
+}
+
+.sf-display {
+  font-size: var(--sf-t-display);
+  font-weight: 700;
+  line-height: var(--sf-lh-tight);
+  letter-spacing: var(--sf-tracking-tight);
+}
+
+.sf-quote {
+  font-family: var(--sf-font-serif);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.01em;
+}
+
+.sf-caption {
+  font-size: var(--sf-t-caption);
+  color: var(--sf-fg-3);
+  letter-spacing: var(--sf-tracking-wide);
+  text-transform: uppercase;
+}
+
+.sf-mono, code {
+  font-family: var(--sf-font-mono);
+  font-size: 0.92em;
+}
+
+.sf-gradient-text {
+  background: var(--sf-grad-brand);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

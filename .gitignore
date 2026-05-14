@@ -1,0 +1,20 @@
+# Local env / secrets — never commit
+.env
+.env.*
+*.env.local
+
+# Node / build artifacts (defensive — no build step yet)
+node_modules/
+dist/
+build/
+
+# OS detritus
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo

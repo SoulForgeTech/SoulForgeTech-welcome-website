@@ -1,0 +1,1255 @@
+/* ============================================================
+   SoulLink — Diary / Handbook Design System
+   Step 1 preview: tokens + helpers for the new aesthetic.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Long+Cang&display=swap');
+
+/* ---------- TOKENS ---------- */
+:root {
+  /* Paper & ink */
+  --paper:        #F4EFE6;
+  --paper-deep:   #EAE3D2;
+  --paper-shadow: rgba(42, 38, 32, 0.08);
+
+  --ink:          #2A2620;
+  --ink-soft:     rgba(42, 38, 32, 0.72);
+  --ink-faint:    rgba(42, 38, 32, 0.45);
+  --ink-line:     rgba(42, 38, 32, 0.18);
+
+  /* Story colors */
+  --sepia:        #8B6F47;
+  --pen-blue:     #3A5A78;
+  --seal:         #B85543;       /* wax-seal red — NEW PRIMARY accent */
+  --faded-red:    #B85543;
+  --kraft:        #C9A87C;
+  --amber:        #D97742;       /* demoted: tertiary warm note only — not on CTAs */
+  --amber-soft:   #EAA76A;
+
+  /* Washi tape pastels */
+  --washi-pink:    rgba(230, 168, 165, 0.78);
+  --washi-mint:    rgba(184, 207, 173, 0.78);
+  --washi-kraft:   rgba(201, 168, 124, 0.85);
+  --washi-blue:    rgba(133, 162, 188, 0.72);
+
+  /* Texture */
+  --grain-opacity: 0.045;
+
+  /* Type — Latin first, then Chinese web-font fallback, then OS fallbacks. */
+  --font-display: 'Fraunces', 'Noto Serif SC', 'Songti SC', 'STSong', Georgia, 'Times New Roman', serif;
+  --font-body:    'Crimson Pro', 'Fraunces', 'Noto Serif SC', 'Songti SC', 'STSong', Georgia, serif;
+  --font-hand:    'Caveat', 'Long Cang', 'Bradley Hand', 'STKaiti', 'KaiTi', cursive;
+  --font-mono:    'IBM Plex Mono', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', ui-monospace, Menlo, monospace;
+}
+
+body.diary.theme-dark {
+  --paper:        #1A1814;
+  --paper-deep:   #221F1A;
+  --paper-shadow: rgba(0, 0, 0, 0.4);
+  --ink:          #EBE3D2;
+  --ink-soft:     rgba(235, 227, 210, 0.72);
+  --ink-faint:    rgba(235, 227, 210, 0.45);
+  --ink-line:     rgba(235, 227, 210, 0.18);
+  --sepia:        #C9A87C;
+  --pen-blue:     #8FA9C4;
+  --seal:         #D97365;       /* lifted wax-seal red for dark contrast */
+  --faded-red:    #D97365;
+  --kraft:        #D4B896;
+  --grain-opacity: 0.06;
+  --washi-pink:    rgba(230, 168, 165, 0.45);
+  --washi-mint:    rgba(184, 207, 173, 0.40);
+  --washi-kraft:   rgba(201, 168, 124, 0.55);
+  --washi-blue:    rgba(133, 162, 188, 0.45);
+}
+
+/* ---------- BASE ---------- */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+body.diary {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.55;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  transition: background .5s ease, color .5s ease;
+}
+
+/* Paper grain — global fixed overlay */
+body.diary::before {
+  content: "";
+  position: fixed; inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 1 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+  opacity: var(--grain-opacity);
+  mix-blend-mode: multiply;
+}
+body.diary.theme-dark::before { mix-blend-mode: screen; opacity: calc(var(--grain-opacity) * 1.2); }
+
+/* Soft warm wash, very subtle */
+body.diary::after {
+  content: "";
+  position: fixed; inset: 0;
+  z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse at 85% 12%, rgba(217, 119, 66, 0.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 8% 75%, rgba(58, 90, 120, 0.05) 0%, transparent 50%);
+}
+body.diary.theme-dark::after {
+  background:
+    radial-gradient(ellipse at 85% 12%, rgba(217, 119, 66, 0.10) 0%, transparent 55%),
+    radial-gradient(ellipse at 8% 75%, rgba(58, 90, 120, 0.08) 0%, transparent 50%);
+}
+
+.diary .container { max-width: 1240px; margin: 0 auto; padding: 0 36px; position: relative; z-index: 1; }
+
+/* ---------- TYPE ---------- */
+.diary h1, .diary h2, .diary h3, .diary h4 { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.018em; }
+.diary .display {
+  font-family: var(--font-display);
+  font-weight: 350;
+  font-variation-settings: "opsz" 144, "SOFT" 100;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+}
+.diary .italic { font-style: italic; font-variation-settings: "opsz" 144, "SOFT" 50; }
+.diary .hand { font-family: var(--font-hand); font-weight: 500; letter-spacing: 0.005em; }
+.diary .mono {
+  font-family: var(--font-mono);
+  font-size: 0.78em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Section eyebrow — handbook chapter style */
+.diary .chapter-mark {
+  display: flex; align-items: center; gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--sepia);
+  margin-bottom: 28px;
+}
+.diary .chapter-mark::before {
+  content: ""; width: 28px; height: 1px; background: var(--sepia);
+}
+.diary .chapter-mark .roman {
+  font-family: var(--font-display); font-style: italic; font-weight: 500;
+  font-size: 14px; letter-spacing: 0; text-transform: none;
+  color: var(--ink);
+}
+
+/* ---------- NAV ---------- */
+.diary .nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 16px 0;
+  background: rgba(244, 239, 230, 0.78);
+  backdrop-filter: blur(14px) saturate(110%);
+  -webkit-backdrop-filter: blur(14px) saturate(110%);
+  border-bottom: 1px solid var(--ink-line);
+  transition: padding .3s ease, background .3s ease;
+}
+body.diary.theme-dark .nav { background: rgba(26, 24, 20, 0.85); }
+.diary .nav.scrolled { padding: 12px 0; }
+.diary .nav-inner { max-width: 1320px; margin: 0 auto; padding: 0 36px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.diary .nav-logo {
+  display: flex; align-items: baseline; gap: 8px;
+  text-decoration: none; color: var(--ink);
+  font-family: var(--font-display); font-weight: 500;
+  font-size: 19px; letter-spacing: -0.015em;
+}
+.diary .nav-logo .mark {
+  width: 22px; height: 22px;
+  background: var(--ink); color: var(--paper);
+  border-radius: 2px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-style: italic; font-weight: 600;
+  font-size: 14px; line-height: 1;
+  transform: translateY(2px);
+}
+.diary .nav-logo img.mark {
+  width: 28px; height: 28px;
+  background: transparent;
+  border-radius: 0;
+  transform: translateY(4px);
+  object-fit: contain;
+}
+.diary .nav-logo .ver {
+  font-family: var(--font-mono); font-size: 10px;
+  color: var(--ink-faint); margin-left: 4px;
+  letter-spacing: 0.08em;
+}
+.diary .nav-links { display: flex; align-items: center; gap: 2px; }
+.diary .nav-link {
+  position: relative;
+  color: var(--ink-soft); text-decoration: none;
+  font-family: var(--font-body); font-size: 14.5px; font-weight: 400;
+  padding: 6px 10px; border-radius: 2px;
+  transition: color .2s ease;
+}
+.diary .nav-link:hover { color: var(--ink); }
+.diary .nav-link.active { color: var(--ink); }
+.diary .nav-link.platform {
+  color: var(--ink-faint);
+  font-style: italic;
+}
+.diary .nav-link.platform::after {
+  content: "↗"; margin-left: 4px; font-style: normal;
+}
+
+/* Hand-drawn pen loop around the active / hovered nav tab.
+   Anchored to the .nav-link-text wrapper so the oval hugs the actual text
+   width (not the padded nav-link box). The stroke describes the perimeter,
+   text stays crisp inside. */
+.diary .nav-link-text {
+  position: relative;
+  display: inline-block;
+}
+.diary .nav-link .nav-circle {
+  position: absolute;
+  left: -10px;
+  right: -10px;
+  top: -6px;
+  bottom: -6px;
+  width: auto;
+  height: auto;
+  color: var(--seal);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+.diary .nav-link .nav-circle path {
+  stroke-dasharray: 320;
+  stroke-dashoffset: 320;
+  transition: stroke-dashoffset .9s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.diary .nav-link:hover .nav-circle { opacity: 0.5; }
+.diary .nav-link:hover .nav-circle path { stroke-dashoffset: 0; }
+.diary .nav-link.active .nav-circle { opacity: 1; }
+.diary .nav-link.active .nav-circle path { stroke-dashoffset: 0; }
+/* No animation for the external Platform link. */
+.diary .nav-link.platform .nav-circle { display: none; }
+
+.diary .nav-actions { display: flex; align-items: center; gap: 12px; }
+.diary .lang-toggle {
+  display: flex; align-items: center;
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.06em;
+}
+.diary .lang-toggle button {
+  background: none; border: none;
+  font: inherit;
+  color: var(--ink-soft);
+  padding: 4px 6px; cursor: pointer;
+  transition: color .2s;
+}
+.diary .lang-toggle button:hover { color: var(--ink); }
+.diary .lang-toggle button.active { color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.diary .lang-toggle .slash { color: var(--ink-faint); padding: 0 2px; }
+
+.diary .theme-toggle {
+  width: 32px; height: 32px;
+  border: 1px solid var(--ink-line);
+  background: transparent; border-radius: 50%;
+  color: var(--ink-soft);
+  cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: .2s ease;
+}
+.diary .theme-toggle:hover { color: var(--ink); border-color: var(--ink); }
+
+/* Primary CTA — rubber stamp style */
+/* Primary CTA — wax-seal red stamp */
+.diary .btn-stamp {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 12px 24px;
+  background: var(--seal);
+  color: #FFFAF0;
+  text-decoration: none;
+  font-family: var(--font-display); font-weight: 500;
+  font-size: 15px; letter-spacing: 0.01em;
+  border: none; cursor: pointer; font-family: inherit;
+  border-radius: 2px;
+  transition: transform .25s ease, box-shadow .25s ease;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.16);
+  position: relative;
+  white-space: nowrap;
+}
+.diary .btn-stamp:hover { transform: translateY(-1px) rotate(-0.5deg); box-shadow: 0 6px 18px rgba(184, 85, 67, 0.30); }
+.diary .btn-stamp .arrow { transition: transform .2s ease; }
+.diary .btn-stamp:hover .arrow { transform: translateX(3px); }
+
+.diary .btn-quiet {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 18px;
+  background: transparent;
+  color: var(--ink);
+  text-decoration: none;
+  font-family: var(--font-body); font-style: italic; font-weight: 400;
+  font-size: 16px;
+  border-bottom: 1px solid var(--ink-line);
+  border-radius: 0;
+  transition: border-color .2s ease;
+}
+.diary .btn-quiet:hover { border-bottom-color: var(--ink); }
+
+/* ---------- HERO ---------- */
+.diary .hero {
+  min-height: 100vh;
+  padding: 140px 0 100px;
+  position: relative;
+  overflow: hidden;
+}
+.diary .hero-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 80px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Left column */
+.diary .hero-left { max-width: 640px; position: relative; }
+
+.diary .hero-issue {
+  display: flex; align-items: center; gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--sepia);
+  margin-bottom: 44px;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+.diary .hero-issue > span,
+.diary .hero-issue > em { white-space: nowrap; }
+.diary .hero-issue .rule { width: 36px; height: 1px; background: var(--sepia); flex-shrink: 0; }
+.diary .hero-issue .star { color: var(--amber); font-size: 12px; flex-shrink: 0; }
+.diary .hero-issue em {
+  font-family: var(--font-display); font-style: italic; font-weight: 500;
+  font-size: 12px; letter-spacing: 0; text-transform: none;
+  color: var(--ink);
+  flex-shrink: 0;
+}
+
+/* Body line-height for both languages */
+.diary .hero-sub {
+  font-family: var(--font-body);
+  font-size: 19px;
+  line-height: 1.4;
+  color: var(--ink-soft);
+  max-width: 500px;
+  margin-bottom: 24px;
+  font-weight: 400;
+}
+
+/* Headline breathing space */
+.diary .hero-title { margin-bottom: 56px; }
+
+/* Tightened Chinese headline */
+body.diary.lang-zh .hero-title {
+  font-size: clamp(48px, 6.2vw, 86px);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 60px;
+}
+body.diary.lang-zh .hero-title .word-real {
+  letter-spacing: 0;
+}
+body.diary.lang-zh .hero-sub {
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+.diary .hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(60px, 8.2vw, 116px);
+  font-variation-settings: "opsz" 144, "SOFT" 100;
+  font-weight: 350;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  margin-bottom: 36px;
+  position: relative;
+}
+.diary .hero-title .line { display: block; }
+.diary .hero-title .quiet { color: var(--ink-soft); }
+.diary .hero-title .truly {
+  font-style: italic;
+  font-weight: 350;
+  font-variation-settings: "opsz" 144, "SOFT" 30;
+  letter-spacing: -0.045em;
+  color: var(--ink);
+  position: relative;
+  display: inline-block;
+  margin-right: 0.18em;
+}
+
+/* "love" — italic pen-blue, with hand-circle around it */
+.diary .hero-title .word-love {
+  font-style: italic;
+  font-weight: 350;
+  font-variation-settings: "opsz" 144, "SOFT" 30;
+  letter-spacing: -0.04em;
+  color: var(--pen-blue);
+  position: relative;
+  display: inline-block;
+  margin: 0 0.05em;
+}
+
+/* "real" / "在" — wax-seal red + italic + hand-drawn red underline */
+.diary .hero-title .word-real {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--seal);
+  font-variation-settings: "opsz" 144, "SOFT" 30;
+  position: relative;
+  display: inline-block;
+  letter-spacing: -0.04em;
+  padding-bottom: 0.04em;
+}
+.diary .hero-title .listens {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--amber);
+  font-variation-settings: "opsz" 144, "SOFT" 30;
+  position: relative;
+}
+.diary .hero-title .period { color: var(--ink); font-style: normal; }
+
+/* hand-drawn circle around "truly" */
+.diary .hand-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 122%;
+  height: 138%;
+  pointer-events: none;
+  color: var(--pen-blue);
+  opacity: 0.85;
+  overflow: visible;
+  z-index: 1;
+}
+
+/* hand-drawn underline beneath "real" — wax-seal red */
+.diary .hand-underline {
+  position: absolute;
+  left: -4%;
+  right: -4%;
+  bottom: -10px;
+  width: 108%;
+  height: 22px;
+  pointer-events: none;
+  color: var(--seal);
+  opacity: 0.95;
+  overflow: visible;
+  z-index: 1;
+}
+.diary .hand-underline path {
+  stroke: currentColor;
+  stroke-width: 3;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
+  animation: draw-in 1.4s 0.6s cubic-bezier(.4,0,.2,1) forwards;
+}
+.diary .hand-circle path {
+  stroke: currentColor;
+  stroke-width: 2.2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 600;
+  stroke-dashoffset: 600;
+  animation: draw-in 1.6s 0.5s cubic-bezier(.4,0,.2,1) forwards;
+}
+@keyframes draw-in { to { stroke-dashoffset: 0; } }
+
+/* margin note pointing at "listens" */
+.diary .margin-note {
+  position: absolute;
+  font-family: var(--font-hand);
+  font-size: 22px; line-height: 1.15;
+  color: var(--pen-blue);
+  width: 220px;
+  white-space: normal;
+  text-align: left;
+  transform: rotate(-5deg);
+  opacity: 0;
+  animation: note-in 0.6s 2s ease-out forwards;
+  pointer-events: none;
+}
+@keyframes note-in { to { opacity: 0.92; } }
+.diary .margin-note.right { transform: rotate(4deg); }
+.diary .margin-note .arrow {
+  display: block;
+  width: 56px; height: 28px;
+  margin: 4px 0 0 -10px;
+  color: var(--pen-blue);
+}
+
+.diary .hero-sub {
+  font-family: var(--font-body);
+  font-size: 20px; line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 480px;
+  margin-bottom: 40px;
+  font-weight: 400;
+}
+.diary .hero-sub strong { color: var(--ink); font-weight: 500; }
+
+.diary .hero-tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 17px;
+  color: var(--sepia);
+  margin-bottom: 36px;
+  letter-spacing: -0.005em;
+  position: relative;
+  padding-left: 14px;
+}
+.diary .hero-tagline::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 8px; bottom: 8px;
+  width: 2px;
+  background: var(--seal);
+  opacity: 0.55;
+}
+
+.diary .hero-actions {
+  display: flex; align-items: center; gap: 22px; flex-wrap: wrap;
+  margin-bottom: 38px;
+}
+
+/* Trust line */
+.diary .trust-line {
+  display: flex; align-items: center; gap: 14px;
+  padding-top: 24px;
+  border-top: 1px dashed var(--ink-line);
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.08em;
+  color: var(--ink-faint);
+}
+.diary .trust-line .stars { color: var(--amber); font-size: 12px; letter-spacing: 0.15em; }
+.diary .trust-line .pp {
+  display: flex;
+}
+.diary .trust-line .pp span {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  margin-left: -6px;
+  border: 1.5px solid var(--paper);
+}
+.diary .trust-line .pp span:first-child { margin-left: 0; }
+.diary .pp .p1 { background: linear-gradient(135deg, #C9A87C, #8B6F47); }
+.diary .pp .p2 { background: linear-gradient(135deg, #E6A8A5, #B85543); }
+.diary .pp .p3 { background: linear-gradient(135deg, #B8CFAD, #6B8C5B); }
+.diary .pp .p4 { background: linear-gradient(135deg, #D97742, #8B4A22); }
+
+/* ---------- Right column: scrapbook cluster ---------- */
+.diary .hero-right {
+  position: relative;
+  height: 640px;
+}
+
+/* Polaroid */
+.diary .polaroid {
+  position: absolute;
+  background: #FBF7EE;
+  padding: 14px 14px 48px;
+  box-shadow:
+    0 2px 0 rgba(0,0,0,0.04),
+    0 18px 36px rgba(42, 38, 32, 0.18),
+    0 32px 64px rgba(42, 38, 32, 0.10);
+  border-radius: 1px;
+  width: 320px;
+}
+body.diary.theme-dark .polaroid {
+  background: #2C2922;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.2), 0 22px 48px rgba(0, 0, 0, 0.5);
+}
+.diary .polaroid .photo {
+  width: 100%;
+  aspect-ratio: 1 / 1.05;
+  background: var(--paper-deep);
+  position: relative;
+  overflow: hidden;
+  filter: saturate(0.85) contrast(0.96);
+}
+.diary .polaroid .photo svg {
+  width: 100%; height: 100%;
+  display: block;
+}
+.diary .polaroid .caption {
+  font-family: var(--font-hand);
+  font-size: 22px; line-height: 1;
+  color: var(--ink);
+  margin-top: 14px;
+  padding-left: 6px;
+}
+.diary .polaroid .caption .date {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-faint);
+  letter-spacing: 0.08em;
+  display: block;
+  margin-top: 4px;
+  text-transform: uppercase;
+}
+
+.diary .polaroid.main {
+  top: 30px; left: 50%;
+  transform: translateX(-58%) rotate(-4.5deg);
+  z-index: 3;
+}
+.diary .polaroid.main:hover { transform: translateX(-58%) rotate(-3.5deg) translateY(-3px); transition: transform .4s ease; }
+
+/* Washi tape strips */
+.diary .washi {
+  position: absolute;
+  width: 100px; height: 24px;
+  pointer-events: none;
+  z-index: 4;
+}
+.diary .washi.pink { background: var(--washi-pink); }
+.diary .washi.mint { background: var(--washi-mint); }
+.diary .washi.kraft { background: var(--washi-kraft);
+  background-image: repeating-linear-gradient(45deg, transparent 0 6px, rgba(0,0,0,0.06) 6px 7px);
+}
+.diary .washi.dotted {
+  background: var(--washi-blue);
+  background-image: radial-gradient(circle, rgba(0,0,0,0.18) 1.5px, transparent 1.6px);
+  background-size: 8px 8px;
+}
+.diary .washi::before,
+.diary .washi::after {
+  content: ""; position: absolute; top: 0; bottom: 0; width: 8px;
+  background: inherit;
+  -webkit-mask: radial-gradient(circle at 0 50%, transparent 0 3px, black 3.5px);
+          mask: radial-gradient(circle at 0 50%, transparent 0 3px, black 3.5px);
+}
+.diary .washi::before { left: -8px; transform: scaleX(-1); }
+.diary .washi::after { right: -8px; }
+
+.diary .polaroid.main .washi-1 {
+  top: -10px; left: 30px; transform: rotate(-8deg);
+}
+
+/* Chat-note (torn paper with handwritten message) */
+.diary .chat-note {
+  position: absolute;
+  bottom: 30px; right: 0;
+  width: 300px;
+  background: #FFFAEF;
+  padding: 22px 22px 24px;
+  transform: rotate(3.5deg);
+  box-shadow:
+    0 14px 30px rgba(42, 38, 32, 0.15),
+    0 2px 0 rgba(0,0,0,0.04);
+  z-index: 4;
+  clip-path: polygon(0% 4%, 2% 0%, 96% 1%, 100% 6%, 99% 96%, 95% 100%, 4% 99%, 0% 95%);
+}
+body.diary.theme-dark .chat-note { background: #2D2A23; box-shadow: 0 14px 30px rgba(0,0,0,0.5); }
+.diary .chat-note .label {
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--sepia);
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.diary .chat-note .label::before {
+  content: ""; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--seal);
+}
+.diary .chat-note .msg {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.4;
+  color: var(--ink);
+}
+.diary .chat-note .msg + .msg { margin-top: 10px; }
+.diary .chat-note .stamp-tag {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--seal);
+  margin-top: 14px;
+  padding: 3px 7px;
+  border: 1px dashed var(--seal);
+}
+
+/* Postage stamp (top-right of the polaroid cluster) */
+.diary .postage {
+  position: absolute;
+  top: -10px; right: 8%;
+  width: 92px; height: 110px;
+  background: var(--paper-deep);
+  padding: 6px;
+  border: 1px solid var(--ink-line);
+  transform: rotate(7deg);
+  z-index: 5;
+  --c1: var(--amber);
+  --c2: var(--faded-red);
+  /* perforated edges */
+  -webkit-mask:
+    radial-gradient(circle at 0 0, transparent 0 4px, black 4.5px) 0 0 / 11px 11px,
+    radial-gradient(circle at 100% 0, transparent 0 4px, black 4.5px) 100% 0 / 11px 11px,
+    radial-gradient(circle at 0 100%, transparent 0 4px, black 4.5px) 0 100% / 11px 11px,
+    radial-gradient(circle at 100% 100%, transparent 0 4px, black 4.5px) 100% 100% / 11px 11px;
+  -webkit-mask-composite: source-over;
+  box-shadow: 0 6px 18px rgba(42, 38, 32, 0.18);
+}
+.diary .postage-inner {
+  background: linear-gradient(160deg, #F4C2A0 0%, var(--amber) 50%, var(--faded-red) 100%);
+  height: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  color: #FFFAF0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.diary .postage-inner::before {
+  content: ""; position: absolute; inset: 4px;
+  border: 1px solid rgba(255,255,255,0.5);
+}
+.diary .postage-inner .glyph {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1;
+}
+.diary .postage-inner .country {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-top: 4px;
+  opacity: 0.92;
+}
+.diary .postage-inner .price {
+  font-family: var(--font-display); font-style: italic;
+  position: absolute; bottom: 4px; right: 6px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Ink ring / coffee stain decorations */
+.diary .ink-stain {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.18;
+  color: var(--sepia);
+}
+.diary .ink-stain.bl { bottom: -10px; left: 6%; width: 90px; }
+.diary .ink-stain.tr { top: 20px; right: -10px; width: 70px; opacity: 0.12; color: var(--faded-red); }
+
+/* Margin annotation near the polaroid */
+.diary .scrapbook-note {
+  position: absolute;
+  font-family: var(--font-hand);
+  font-size: 22px;
+  color: var(--pen-blue);
+  line-height: 1.15;
+  transform: rotate(-3deg);
+  max-width: 200px;
+  z-index: 5;
+}
+.diary .scrapbook-note.sn-1 { top: 8px; right: 40%; transform: rotate(-7deg); }
+.diary .scrapbook-note.sn-2 { bottom: 8%; left: -4%; transform: rotate(-2deg); }
+.diary .scrapbook-note .arrow { color: var(--pen-blue); display: block; margin: 4px 0 -2px 50px; }
+
+/* Page-edge index tab — top corner */
+.diary .index-tab {
+  position: absolute;
+  top: 80px; right: -1px;
+  width: 86px;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 8px 14px 10px;
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.14em;
+  text-transform: uppercase;
+  z-index: 6;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 12% 100%);
+  text-align: right;
+}
+.diary .index-tab em {
+  display: block;
+  font-family: var(--font-display); font-style: italic; font-weight: 500;
+  font-size: 13px; letter-spacing: 0; text-transform: none;
+  color: var(--amber);
+  margin-top: 2px;
+}
+
+/* Section separator — hand-drawn rule */
+.diary .rule-divider {
+  width: 100%; max-width: 1240px; margin: 0 auto;
+  padding: 0 36px;
+  display: flex; align-items: center; justify-content: center;
+}
+.diary .rule-divider svg { width: 100%; max-width: 380px; opacity: 0.55; color: var(--sepia); }
+
+/* Language helper */
+body.diary.lang-zh .en-only { display: none !important; }
+body.diary.lang-en .zh-only { display: none !important; }
+
+/* In Chinese mode, Han glyphs have no real italic — the browser fakes it by
+   slanting, which looks bad. Force upright on every italic surface and rely on
+   colour + weight for emphasis instead. */
+body.diary.lang-zh em,
+body.diary.lang-zh i,
+body.diary.lang-zh .zh-only,
+body.diary.lang-zh .zh-only em,
+body.diary.lang-zh h1,
+body.diary.lang-zh h2,
+body.diary.lang-zh h3,
+body.diary.lang-zh h4,
+body.diary.lang-zh .page-val,
+body.diary.lang-zh .lore-val,
+body.diary.lang-zh .memory-lead,
+body.diary.lang-zh .chapter-title,
+body.diary.lang-zh .voice-swatch,
+body.diary.lang-zh .roman,
+body.diary.lang-zh .caption,
+body.diary.lang-zh .scrapbook-note {
+  font-style: normal;
+}
+body.diary.lang-zh h1 em,
+body.diary.lang-zh h2 em,
+body.diary.lang-zh h3 em,
+body.diary.lang-zh .chapter-title em {
+  color: var(--seal);
+  font-weight: 600;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .diary .hand-circle path,
+  .diary .margin-note { animation: none !important; opacity: 1 !important; stroke-dashoffset: 0 !important; }
+  .diary *:hover { transform: none !important; }
+}
+
+/* Step 1 preview banner */
+.step1-banner {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  z-index: 999;
+  background: var(--ink); color: var(--paper);
+  padding: 10px 18px;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+  border-radius: 2px;
+  display: inline-flex; align-items: center; gap: 12px;
+}
+.step1-banner em { font-family: var(--font-display); font-style: italic; font-size: 13px; letter-spacing: 0; text-transform: none; color: var(--amber); }
+
+/* ============================================================
+   POLAROID WALL — three users' diary pages
+   ============================================================ */
+
+/* Override single-polaroid positioning */
+.diary .polaroid.main,
+.diary .index-tab,
+.diary .postage,
+.diary .scrapbook-note.sn-1,
+.diary .scrapbook-note.sn-2 { display: none; }
+
+.diary .polaroid.pw-1,
+.diary .polaroid.pw-2,
+.diary .polaroid.pw-3 {
+  position: absolute;
+  background: #FBF7EE;
+  padding: 12px 12px 42px;
+  box-shadow:
+    0 2px 0 rgba(0,0,0,0.04),
+    0 18px 36px rgba(42, 38, 32, 0.18),
+    0 32px 64px rgba(42, 38, 32, 0.10);
+  border-radius: 1px;
+  transition: transform .4s ease;
+}
+body.diary.theme-dark .polaroid.pw-1,
+body.diary.theme-dark .polaroid.pw-2,
+body.diary.theme-dark .polaroid.pw-3 {
+  background: #2C2922;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.2), 0 22px 48px rgba(0, 0, 0, 0.5);
+}
+
+.diary .polaroid.pw-1 {
+  width: 232px;
+  top: 8px; left: 0;
+  transform: rotate(-9deg);
+  z-index: 2;
+}
+.diary .polaroid.pw-2 {
+  width: 258px;
+  top: 36px; right: -12px;
+  transform: rotate(4deg);
+  z-index: 4;
+}
+.diary .polaroid.pw-3 {
+  width: 232px;
+  top: 340px; left: 6%;
+  transform: rotate(-3deg);
+  z-index: 3;
+}
+.diary .polaroid.pw-1:hover { transform: rotate(-7deg) translateY(-3px); }
+.diary .polaroid.pw-2:hover { transform: rotate(2deg) translateY(-3px); z-index: 6; }
+.diary .polaroid.pw-3:hover { transform: rotate(-1deg) translateY(-3px); z-index: 5; }
+
+/* Washi tape positions inside each polaroid */
+.diary .polaroid.pw-1 > .washi {
+  position: absolute;
+  top: -8px; left: 18px; width: 90px; transform: rotate(-10deg);
+  z-index: 6;
+}
+.diary .polaroid.pw-2 > .washi {
+  position: absolute;
+  top: -8px; right: 22px; width: 88px; transform: rotate(10deg);
+  z-index: 6;
+}
+.diary .polaroid.pw-3 > .washi {
+  position: absolute;
+  top: -8px; left: 50%; transform: translateX(-50%) rotate(-3deg);
+  width: 100px;
+  z-index: 6;
+}
+
+/* Photo block in each polaroid */
+.diary .polaroid.pw-1 .photo,
+.diary .polaroid.pw-2 .photo,
+.diary .polaroid.pw-3 .photo {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--paper-deep);
+  position: relative;
+  overflow: hidden;
+  filter: saturate(0.92) contrast(0.98);
+}
+.diary .polaroid.pw-1 .photo svg,
+.diary .polaroid.pw-2 .photo svg,
+.diary .polaroid.pw-3 .photo svg {
+  width: 100%; height: 100%;
+  display: block;
+}
+
+/* Caption — different "handwriting style" per polaroid */
+.diary .polaroid .caption.hand-sepia {
+  font-family: var(--font-hand);
+  font-size: 20px; line-height: 1.05;
+  color: var(--sepia);
+  margin-top: 12px;
+  padding-left: 4px;
+  letter-spacing: 0.005em;
+}
+.diary .polaroid .caption.hand-pen {
+  font-family: var(--font-hand);
+  font-size: 22px; line-height: 1.08;
+  color: var(--pen-blue);
+  margin-top: 12px;
+  padding-left: 4px;
+  font-style: italic;
+  letter-spacing: 0.01em;
+}
+.diary .polaroid .caption.hand-ink {
+  font-family: var(--font-hand), "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", serif;
+  font-size: 19px; line-height: 1.1;
+  color: var(--ink);
+  font-weight: 700;
+  margin-top: 12px;
+  padding-left: 4px;
+  letter-spacing: 0;
+  word-break: keep-all;
+}
+
+/* Slightly smaller polaroid captions when rendering Chinese, so they don't wrap into badges */
+body.diary.lang-zh .polaroid .caption.hand-sepia,
+body.diary.lang-zh .polaroid .caption.hand-pen,
+body.diary.lang-zh .polaroid .caption.hand-ink {
+  font-size: 17px;
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+  word-break: keep-all;
+}
+.diary .polaroid .caption .date {
+  display: block;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-style: normal;
+  font-size: 9.5px;
+  color: var(--ink-faint);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+
+/* poly-badge — attached "CHAPTER · ..." label */
+.diary .poly-badge {
+  position: absolute;
+  bottom: -10px; right: 10px;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 5px 11px 6px;
+  font-family: var(--font-mono);
+  font-size: 9px; letter-spacing: 0.14em;
+  text-transform: uppercase;
+  z-index: 9;
+  display: inline-flex; align-items: baseline; gap: 4px;
+}
+/* P1's badge moves to bottom-LEFT so P2 can't overlap it */
+.diary .polaroid.pw-1 .poly-badge {
+  right: auto;
+  left: 8px;
+}
+body.diary.theme-dark .poly-badge {
+  background: var(--paper);
+  color: var(--ink);
+}
+.diary .poly-badge em {
+  font-family: var(--font-display);
+  font-style: italic; font-weight: 500;
+  font-size: 11px; letter-spacing: 0;
+  text-transform: none;
+  color: var(--seal);
+}
+.diary .poly-badge.dark-amber em { color: var(--seal); }
+
+/* poly-stamp — AIR · MAIL postage attached to P2 top-right */
+.diary .poly-stamp {
+  position: absolute;
+  top: -12px; right: -16px;
+  width: 76px; height: 92px;
+  background: var(--paper-deep);
+  padding: 5px;
+  border: 1px solid var(--ink-line);
+  transform: rotate(8deg);
+  z-index: 7;
+  box-shadow: 0 6px 18px rgba(42, 38, 32, 0.20);
+  -webkit-mask:
+    radial-gradient(circle at 0 0, transparent 0 3.5px, black 4px) 0 0 / 10px 10px,
+    radial-gradient(circle at 100% 0, transparent 0 3.5px, black 4px) 100% 0 / 10px 10px,
+    radial-gradient(circle at 0 100%, transparent 0 3.5px, black 4px) 0 100% / 10px 10px,
+    radial-gradient(circle at 100% 100%, transparent 0 3.5px, black 4px) 100% 100% / 10px 10px;
+  -webkit-mask-composite: source-over;
+}
+.diary .poly-stamp-inner {
+  background: linear-gradient(160deg, #E89889 0%, var(--seal) 50%, #7A2E22 100%);
+  height: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  color: #FFFAF0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.diary .poly-stamp-inner::before {
+  content: ""; position: absolute; inset: 3px;
+  border: 1px solid rgba(255,255,255,0.5);
+}
+.diary .poly-stamp-inner .glyph {
+  font-family: var(--font-display); font-style: italic;
+  font-size: 26px; font-weight: 500; line-height: 1;
+}
+.diary .poly-stamp-inner .country {
+  font-family: var(--font-mono);
+  font-size: 7px; letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-top: 2px; opacity: 0.92;
+}
+.diary .poly-stamp-inner .price {
+  font-family: var(--font-display); font-style: italic;
+  position: absolute; bottom: 2px; right: 4px;
+  font-size: 10px; font-weight: 500;
+}
+
+/* scrapbook note — different hands / different chapters */
+.diary .scrapbook-note.diff-hands {
+  position: absolute;
+  top: 4px; left: 36%;
+  transform: rotate(-6deg);
+  font-family: var(--font-hand);
+  font-size: 20px; line-height: 1.15;
+  color: var(--pen-blue);
+  z-index: 8;
+  max-width: 180px;
+  pointer-events: none;
+}
+.diary .scrapbook-note.diff-hands .arrow {
+  display: block;
+  margin: 4px 0 0 90px;
+  color: var(--pen-blue);
+}
+
+/* Chat-note sizing — reduced ~10%, more bottom breathing room */
+.diary .chat-note {
+  position: absolute;
+  bottom: -8px; right: -8px;
+  width: 286px;
+  z-index: 5;
+  transform: rotate(2.5deg);
+  padding: 18px 20px 20px;
+}
+.diary .chat-note .label {
+  font-size: 9px;
+}
+.diary .chat-note .msg {
+  font-size: 15px;
+  line-height: 1.42;
+}
+.diary .chat-note .stamp-tag {
+  font-size: 9px;
+  padding: 2px 6px;
+}
+
+/* Hero-right grows slightly to hold extra chat-note breathing */
+.diary .hero-right { height: 700px; }
+
+/* ---------- Ticket stub (diary ephemera, replaces P3) ---------- */
+.diary .ticket-stub {
+  position: absolute;
+  top: 364px;
+  left: 0;
+  width: 252px;
+  height: 92px;
+  transform: rotate(-7deg);
+  background: #F4E6C8;
+  border: 1px solid rgba(42,38,32,0.18);
+  box-shadow:
+    0 14px 32px rgba(42, 38, 32, 0.18),
+    0 2px 0 rgba(0,0,0,0.04);
+  display: flex;
+  z-index: 4;
+  overflow: hidden;
+  transition: transform .4s ease;
+}
+body.diary.theme-dark .ticket-stub {
+  background: #2D2920;
+  border-color: rgba(235,227,210,0.18);
+  box-shadow: 0 14px 32px rgba(0,0,0,0.5);
+}
+.diary .ticket-stub:hover { transform: rotate(-5deg) translateY(-2px); }
+
+.diary .ticket-stub .stub-main {
+  flex: 1;
+  padding: 12px 14px 10px 16px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+/* perforated tear line */
+.diary .ticket-stub .stub-main::after {
+  content: "";
+  position: absolute;
+  right: 0; top: 6px; bottom: 6px;
+  width: 1px;
+  background-image: linear-gradient(to bottom,
+    rgba(42,38,32,0.5) 0 4px, transparent 4px 9px);
+  background-size: 1px 9px;
+}
+body.diary.theme-dark .ticket-stub .stub-main::after {
+  background-image: linear-gradient(to bottom,
+    rgba(235,227,210,0.4) 0 4px, transparent 4px 9px);
+}
+
+.diary .ticket-stub .stub-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: var(--sepia);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.diary .ticket-stub .stub-title {
+  font-family: var(--font-hand);
+  font-size: 22px;
+  line-height: 1;
+  color: var(--ink);
+  font-weight: 600;
+  letter-spacing: 0.005em;
+}
+.diary .ticket-stub .stub-meta {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+  margin-top: 8px;
+  display: flex; gap: 8px;
+}
+
+.diary .ticket-stub .stub-perf {
+  width: 50px;
+  background: var(--seal);
+  color: #FFFAF0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  position: relative;
+}
+.diary .ticket-stub .stub-perf::before {
+  content: "";
+  position: absolute;
+  left: -5px; top: 0; bottom: 0; width: 10px;
+  background:
+    radial-gradient(circle at 0 4px, transparent 0 3px, var(--seal) 3.5px) 0 0 / 10px 10px;
+  -webkit-mask:
+    radial-gradient(circle at 0 4px, transparent 0 3px, black 3.5px) 0 0 / 10px 10px;
+}
+.diary .ticket-stub .stub-perf::after {
+  content: "TKT · 06";
+  position: absolute;
+  bottom: 4px;
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 7px;
+  letter-spacing: 0.1em;
+  opacity: 0.85;
+}
+
+/* Reposition ink ring slightly */
+.diary .ink-stain.bl { bottom: 16px; left: 35%; width: 68px; opacity: 0.13; }
+
+/* Hero-right height for 2-polaroid + ticket layout */
+
+/* Small version stamp at bottom of Hero */
+.diary .hero-version {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-top: 40px;
+  padding-top: 22px;
+  border-top: 1px dashed var(--ink-line);
+  display: inline-block;
+}
+.diary .hero-version .pulse {
+  display: inline-block;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--seal);
+  margin-right: 8px;
+  vertical-align: 1px;
+  animation: breathe 2.4s ease-in-out infinite;
+}
+@keyframes breathe { 0%,100%{opacity:.55} 50%{opacity:1} }
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 980px) {
+  .diary .hero-grid { grid-template-columns: 1fr; gap: 60px; }
+  .diary .hero-right { height: 540px; }
+  .diary .nav-links { display: none; }
+  .diary .margin-note { display: none; }
+  .diary .index-tab { display: none; }
+}

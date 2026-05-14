@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>SoulLink — The Companion Diaries (print)</title>
+  <link rel="stylesheet" href="assets/diary.css"/>
+  <link rel="stylesheet" href="assets/sections.css"/>
+  <link rel="stylesheet" href="assets/sections2.css"/>
+  <style>
+    /* ============================================================
+       PRINT OVERRIDES — long-scroll landing → portrait page chain
+       ============================================================ */
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+
+    html, body { background: var(--paper); }
+
+    /* Force colors and gradients to print */
+    *, *::before, *::after {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
+    }
+
+    /* Hide chrome that doesn't belong in PDF */
+    .diary .nav,
+    .step1-banner,
+    .twk-fab, .twk-panel, [data-twk-panel],
+    .twk-host, .twk-root { display: none !important; }
+
+    /* Kill animations / transitions / hover transforms */
+    *, *::before, *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+    .diary .hand-underline path,
+    .diary .hand-circle path,
+    .diary .yourturn-underline path {
+      stroke-dashoffset: 0 !important;
+      animation: none !important;
+    }
+    .diary .margin-note,
+    .diary .byoc-caret { opacity: 1 !important; }
+
+    /* Disable scroll smoothing — preview rendering */
+    html { scroll-behavior: auto; }
+
+    /* Top padding tweak — the fixed nav no longer reserves space */
+    .diary .hero { padding-top: 60px; }
+
+    /* Section breaks at chapter boundaries */
+    .diary .section,
+    .diary .hero,
+    .diary .colophon {
+      break-before: page;
+      page-break-before: always;
+      break-inside: avoid-page;
+    }
+    /* First section shouldn't force an extra page */
+    .diary .hero {
+      break-before: auto;
+      page-break-before: auto;
+    }
+
+    /* Don't break inside cards / important blocks */
+    .diary .polaroid,
+    .diary .postcard,
+    .diary .letter,
+    .diary .tier-card,
+    .diary .mind-card,
+    .diary .ledger-page,
+    .diary .byoc-page,
+    .diary .voice-page,
+    .diary .tarot-card,
+    .diary .chat-note,
+    .diary .ticket-stub,
+    .diary .chapter-header {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    /* Show on the page — print mode */
+    body.diary {
+      overflow: visible !important;
+    }
+
+    /* Mobile-stacking for narrower print widths so content doesn't get clipped
+       at A4 portrait width (~794px @ 96dpi). Trigger same layouts as the
+       existing 980px responsive breakpoint. */
+    @media print {
+      .diary .hero-grid { grid-template-columns: 1fr !important; gap: 60px !important; }
+      .diary .hero-right { height: auto !important; min-height: 640px !important; }
+
+      .diary .minds-shelf { grid-template-columns: 1fr 1fr !important; gap: 18px !important; }
+      .diary .mind-card { padding: 22px 20px !important; }
+      .diary .mind-card.recommended { grid-column: span 2; }
+
+      .diary .memory-grid { grid-template-columns: 1fr !important; gap: 60px !important; }
+      .diary .memory-visual { min-height: 700px !important; }
+
+      .diary .corkboard { min-height: 1100px !important; }
+
+      .diary .voice-spread { grid-template-columns: 1fr 1fr !important; }
+
+      .diary .byoc-grid { grid-template-columns: 1fr !important; }
+      .diary .byoc-page { min-height: auto !important; }
+
+      .diary .letter-stack { grid-template-columns: 1fr !important; max-width: 540px !important; }
+
+      .diary .patronage-grid { grid-template-columns: 1fr !important; max-width: 540px !important; margin-left: auto !important; margin-right: auto !important; }
+
+      .diary .colophon-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
+
+      /* Tighter section padding for print */
+      .diary .section { padding: 80px 0 !important; }
+      .diary .hero { padding-bottom: 60px !important; }
+      .diary .yourturn-section { padding: 100px 0 !important; }
+
+      /* Container width — fit A4 portrait comfortably */
+      .diary .container { max-width: 720px !important; padding: 0 36px !important; }
+    }
+  </style>
+  <script>
+    window.__SOULLINK_TWEAKS = /*EDITMODE-BEGIN*/{
+      "accent": "seal",
+      "headlineStyle": "serif",
+      "wobble": false,
+      "grain": 4.5
+    }/*EDITMODE-END*/;
+  </script>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script type="text/babel" src="src/v3/tweaks-panel.jsx"></script>
+</head>
+<body class="diary lang-en">
+  <div id="root"></div>
+  <script type="text/babel" src="src/v3/Nav.jsx"></script>
+  <script type="text/babel" src="src/v3/Hero.jsx"></script>
+  <script type="text/babel" src="src/v3/SoulSystem.jsx"></script>
+  <script type="text/babel" src="src/v3/Minds.jsx"></script>
+  <script type="text/babel" src="src/v3/Memory.jsx"></script>
+  <script type="text/babel" src="src/v3/Postcards.jsx"></script>
+  <script type="text/babel" src="src/v3/Voice.jsx"></script>
+  <script type="text/babel" src="src/v3/BYOC.jsx"></script>
+  <script type="text/babel" src="src/v3/Letters.jsx"></script>
+  <script type="text/babel" src="src/v3/Patronage.jsx"></script>
+  <script type="text/babel" src="src/v3/YourTurn.jsx"></script>
+  <script type="text/babel" src="src/v3/Colophon.jsx"></script>
+  <script type="text/babel" src="src/v3/App.jsx"></script>
+
+  <script type="text/babel">
+    // Wait until React has rendered the full page + fonts loaded, then print.
+    (async function () {
+      // 1) Wait for the root to populate (React render)
+      const root = document.getElementById('root');
+      await new Promise((resolve) => {
+        const check = () => {
+          if (root.querySelector('.colophon')) return resolve();
+          setTimeout(check, 100);
+        };
+        check();
+      });
+      // 2) Wait for fonts
+      if (document.fonts && document.fonts.ready) {
+        try { await document.fonts.ready; } catch (e) {}
+      }
+      // 3) Safety buffer
+      await new Promise(r => setTimeout(r, 800));
+      window.print();
+    })();
+  </script>
+</body>
+</html>
