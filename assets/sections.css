@@ -71,7 +71,7 @@ body.diary.lang-zh .chapter-sub { font-size: 16px; line-height: 1.6; }
   position: absolute; left: 50%; bottom: 16%; width: 70%; height: 60%;
   transform: translateX(-50%);
   background:
-    radial-gradient(ellipse at 50% 50%, rgba(184, 85, 67, 0.05) 0%, transparent 70%);
+    radial-gradient(ellipse at 50% 50%, rgba(184, 49, 47, 0.05) 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
@@ -111,7 +111,7 @@ body.diary.lang-zh .chapter-sub { font-size: 16px; line-height: 1.6; }
 }
 .diary .tc-back {
   background:
-    radial-gradient(ellipse at 50% 50%, rgba(184, 85, 67, 0.22) 0%, transparent 65%),
+    radial-gradient(ellipse at 50% 50%, rgba(184, 49, 47, 0.22) 0%, transparent 65%),
     linear-gradient(160deg, #1A140E 0%, #2A1A14 100%);
   color: #F4EFE6;
 }
@@ -170,7 +170,7 @@ body.diary.lang-zh .chapter-sub { font-size: 16px; line-height: 1.6; }
   font-style: italic;
   font-weight: 500;
   font-size: 26px;
-  color: #B85543;
+  color: #B8312F;
   letter-spacing: 0.05em;
   z-index: 1;
 }
@@ -375,14 +375,14 @@ body.diary.theme-dark .rubber-stamp {
   text-transform: uppercase;
   color: var(--sepia);
   padding: 3px 8px;
-  background: rgba(184, 85, 67, 0.06);
-  border: 1px solid rgba(184, 85, 67, 0.20);
+  background: rgba(184, 49, 47, 0.06);
+  border: 1px solid rgba(184, 49, 47, 0.20);
   border-radius: 1px;
 }
 .diary .mind-tag.hot {
   color: var(--seal);
-  background: rgba(184, 85, 67, 0.10);
-  border-color: rgba(184, 85, 67, 0.35);
+  background: rgba(184, 49, 47, 0.10);
+  border-color: rgba(184, 49, 47, 0.35);
 }
 
 /* ============== MEMORY ============== */
@@ -566,7 +566,7 @@ body.diary.theme-dark .page-tab.amber { background: var(--seal); color: #FFFAF0;
   position: absolute;
   left: -3px; right: -3px; bottom: 1px;
   height: 0.42em;
-  background: rgba(184, 85, 67, 0.24);
+  background: rgba(184, 49, 47, 0.24);
   z-index: -1;
 }
 .diary .page-val.hl-blue {

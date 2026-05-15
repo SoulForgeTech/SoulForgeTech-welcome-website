@@ -20,8 +20,9 @@
   /* Story colors */
   --sepia:        #8B6F47;
   --pen-blue:     #3A5A78;
-  --seal:         #B85543;       /* wax-seal red — NEW PRIMARY accent */
-  --faded-red:    #B85543;
+  --seal:         #B8312F;       /* cinnabar — NEW PRIMARY accent */
+  --faded-red:    #B8312F;
+  --seal-strong:  #9E2A29;       /* deeper cinnabar — reserved for strong-contrast surfaces */
   --kraft:        #C9A87C;
   --amber:        #D97742;       /* demoted: tertiary warm note only — not on CTAs */
   --amber-soft:   #EAA76A;
@@ -52,8 +53,9 @@ body.diary.theme-dark {
   --ink-line:     rgba(235, 227, 210, 0.18);
   --sepia:        #C9A87C;
   --pen-blue:     #8FA9C4;
-  --seal:         #D97365;       /* lifted wax-seal red for dark contrast */
-  --faded-red:    #D97365;
+  --seal:         #D85060;       /* lifted cinnabar for dark surfaces */
+  --faded-red:    #D85060;
+  --seal-strong:  #B83A4A;       /* AA-contrast cinnabar — used for CTA bg in dark mode */
   --kraft:        #D4B896;
   --grain-opacity: 0.06;
   --washi-pink:    rgba(230, 168, 165, 0.45);
@@ -77,32 +79,45 @@ body.diary {
   transition: background .5s ease, color .5s ease;
 }
 
-/* Paper grain — global fixed overlay */
+/* Xuan paper texture — light mode: two full-viewport noise SVGs (fine grain + large mottle) */
 body.diary::before {
   content: "";
   position: fixed; inset: 0;
   z-index: 0;
   pointer-events: none;
   background-image:
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 1 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
-  opacity: var(--grain-opacity);
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'><filter id='g1'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.08 0'/></filter><rect width='100%25' height='100%25' filter='url(%23g1)'/></svg>"),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'><filter id='g2'><feTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='2'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23g2)'/></svg>");
+  background-repeat: no-repeat, no-repeat;
+  background-size: cover, cover;
+  background-position: center, center;
   mix-blend-mode: multiply;
 }
-body.diary.theme-dark::before { mix-blend-mode: screen; opacity: calc(var(--grain-opacity) * 1.2); }
+body.diary.theme-dark::before {
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 1 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+  background-repeat: repeat;
+  background-size: auto;
+  opacity: calc(var(--grain-opacity) * 1.2);
+  mix-blend-mode: screen;
+}
 
-/* Soft warm wash, very subtle */
+/* Single huge warmth gradient — light mode only; dark mode keeps its own wash */
 body.diary::after {
   content: "";
   position: fixed; inset: 0;
   z-index: 0; pointer-events: none;
-  background:
-    radial-gradient(ellipse at 85% 12%, rgba(217, 119, 66, 0.06) 0%, transparent 55%),
-    radial-gradient(ellipse at 8% 75%, rgba(58, 90, 120, 0.05) 0%, transparent 50%);
+  background-image:
+    radial-gradient(circle 6000px at -10% -10%, rgba(232, 222, 196, 0.03) 0%, rgba(232, 222, 196, 0) 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 body.diary.theme-dark::after {
-  background:
+  background-image:
     radial-gradient(ellipse at 85% 12%, rgba(217, 119, 66, 0.10) 0%, transparent 55%),
     radial-gradient(ellipse at 8% 75%, rgba(58, 90, 120, 0.08) 0%, transparent 50%);
+  background-repeat: no-repeat;
+  background-size: auto;
 }
 
 .diary .container { max-width: 1240px; margin: 0 auto; padding: 0 36px; position: relative; z-index: 1; }
@@ -279,9 +294,11 @@ body.diary.theme-dark .nav { background: rgba(26, 24, 20, 0.85); }
   position: relative;
   white-space: nowrap;
 }
-.diary .btn-stamp:hover { transform: translateY(-1px) rotate(-0.5deg); box-shadow: 0 6px 18px rgba(184, 85, 67, 0.30); }
+.diary .btn-stamp:hover { transform: translateY(-1px) rotate(-0.5deg); box-shadow: 0 6px 18px rgba(184, 49, 47, 0.30); }
 .diary .btn-stamp .arrow { transition: transform .2s ease; }
 .diary .btn-stamp:hover .arrow { transform: translateX(3px); }
+body.diary.theme-dark .btn-stamp { background: var(--seal-strong); }
+body.diary.theme-dark .btn-stamp:hover { box-shadow: 0 6px 18px rgba(184, 58, 74, 0.35); }
 
 .diary .btn-quiet {
   display: inline-flex; align-items: center; gap: 8px;
@@ -551,7 +568,7 @@ body.diary.lang-zh .hero-sub {
 }
 .diary .trust-line .pp span:first-child { margin-left: 0; }
 .diary .pp .p1 { background: linear-gradient(135deg, #C9A87C, #8B6F47); }
-.diary .pp .p2 { background: linear-gradient(135deg, #E6A8A5, #B85543); }
+.diary .pp .p2 { background: linear-gradient(135deg, #E6A8A5, #B8312F); }
 .diary .pp .p3 { background: linear-gradient(135deg, #B8CFAD, #6B8C5B); }
 .diary .pp .p4 { background: linear-gradient(135deg, #D97742, #8B4A22); }
 

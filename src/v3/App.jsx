@@ -34,7 +34,7 @@ function App() {
   React.useEffect(() => {
     // accent: seal (default) | ink-blue | sepia
     const map = {
-      'seal':     '#B85543',
+      'seal':     '#B8312F',
       'ink-blue': '#3A5A78',
       'sepia':    '#8B6F47',
     };

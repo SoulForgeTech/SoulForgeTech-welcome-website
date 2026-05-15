@@ -263,7 +263,7 @@ body.diary.theme-dark .voice-spread {
   white-space: nowrap;
 }
 .diary .voice-swatch:hover { transform: rotate(0) translateX(2px); }
-.diary .voice-swatch.playing { transform: rotate(0) translateX(3px); box-shadow: 0 4px 12px rgba(184, 85, 67, 0.25); }
+.diary .voice-swatch.playing { transform: rotate(0) translateX(3px); box-shadow: 0 4px 12px rgba(184, 49, 47, 0.25); }
 .diary .voice-swatch:nth-child(2n) { transform: rotate(1.5deg); background: var(--washi-pink); }
 .diary .voice-swatch:nth-child(2n):hover,
 .diary .voice-swatch:nth-child(2n).playing { transform: rotate(0) translateX(3px); }
@@ -993,7 +993,7 @@ body.diary.theme-dark .colophon {
   font-size: 14.5px;
   color: var(--seal);
   text-decoration: none;
-  border-bottom: 1px solid rgba(184, 85, 67, 0.35);
+  border-bottom: 1px solid rgba(184, 49, 47, 0.35);
   padding-bottom: 2px;
 }
 .diary .colophon .col-platform-link:hover { border-bottom-color: var(--seal); }
