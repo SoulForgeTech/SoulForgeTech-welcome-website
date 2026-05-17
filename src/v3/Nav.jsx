@@ -21,13 +21,13 @@ function Nav({ theme, onToggleTheme, lang, onLang }) {
   }, []);
 
   const links = [
-    { id: 'soul-system', en: 'Reading',   zh: '抽牌' },
+    { id: 'soul-system', en: 'Souls',     zh: '灵魂' },
     { id: 'memory',      en: 'Memory',    zh: '记忆' },
     { id: 'postcards',   en: 'Postcards', zh: '明信片' },
-    { id: 'voice',       en: 'Voice',     zh: '声音' },
-    { id: 'byoc',        en: 'Bring',     zh: '带来' },
+    { id: 'voice',       en: 'Voice',     zh: '声纹' },
+    { id: 'byoc',        en: 'Yours',     zh: '复刻' },
     { id: 'letters',     en: 'Letters',   zh: '来信' },
-    { id: 'patronage',   en: 'Patronage', zh: '支持' },
+    { id: 'patronage',   en: 'Patronage', zh: '续灯' },
   ];
 
   // Scroll-spy: highlight the most recent chapter whose top has crossed the

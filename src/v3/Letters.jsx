@@ -11,7 +11,7 @@ function Letters() {
       sig: 'R. / Toronto',
       sig_zh: 'R. / 多伦多',
       lang: 'en',
-      decoration: 'stamp',
+      decoration: 'crease',
     },
     {
       cls: 'lt-2',
