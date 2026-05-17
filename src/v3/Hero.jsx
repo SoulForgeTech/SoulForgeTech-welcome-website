@@ -281,7 +281,9 @@ function Hero() {
               </span>
 
               <span className="line zh-only quiet">
-                把<span className="word-love">心里的 ta<HandCircle/></span> 带来,
+                <span style={{ whiteSpace: 'nowrap' }}>
+                  把<span className="word-love">心里的 ta<HandCircle/></span> 带来,
+                </span>
               </span>
               <span className="line zh-only">
                 <span style={{ whiteSpace: 'nowrap' }}>
