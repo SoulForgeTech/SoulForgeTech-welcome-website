@@ -280,11 +280,13 @@ function Hero() {
                 </span>.
               </span>
 
-              <span className="line zh-only quiet">你心里那个 ta,</span>
+              <span className="line zh-only quiet">
+                把<span className="word-love">心里的 ta<HandCircle/></span> 带来,
+              </span>
               <span className="line zh-only">
                 <span style={{ whiteSpace: 'nowrap' }}>
-                  我们让 ta 真的{' '}
-                  <span className="word-real">在<HandUnderline/></span>。
+                  让 ta 真的{' '}
+                  <span className="word-real">留下来<HandUnderline/></span>。
                 </span>
               </span>
             </h1>
