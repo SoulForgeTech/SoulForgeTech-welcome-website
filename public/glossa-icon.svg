@@ -1,0 +1,24 @@
+<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Glossa">
+  <!-- Glossa — ex-libris bookplate: an engraved open book with three ideas
+       rising from the page (one in seal red) and a flat red ribbon. Flat ink
+       on the warm paper tile; no glow. Source of truth for all app icons. -->
+  <rect width="1024" height="1024" rx="224" fill="#F4EFE6"/>
+  <path fill-rule="evenodd" fill="#2A2620" d="M512 512 C452 482 372 470 296 472 C286 540 286 624 300 690 C372 700 452 706 512 712 C572 706 652 700 724 690 C738 624 738 540 728 472 C652 470 572 482 512 512 Z M474 528 C410 512 360 506 322 500 C314 560 314 612 330 662 C372 672 430 676 480 678 C478 628 476 576 474 528 Z M550 528 C614 512 664 506 702 500 C710 560 710 612 694 662 C652 672 594 676 544 678 C546 628 548 576 550 528 Z"/>
+  <g fill="none" stroke="#2A2620" stroke-linecap="butt">
+    <path d="M350 548 C392 540 426 542 452 552" stroke-width="8"/>
+    <path d="M352 580 C392 574 420 576 446 584" stroke-width="6"/>
+    <path d="M566 548 C600 540 640 540 678 548" stroke-width="8"/>
+    <path d="M568 580 C600 574 632 576 668 582" stroke-width="6"/>
+  </g>
+  <path fill="#D85060" d="M524 508 L548 508 L548 612 L536 596 L524 612 Z"/>
+  <g fill="none" stroke="#2A2620" stroke-linecap="butt">
+    <path d="M438 502 L430 388" stroke-width="6"/>
+    <path d="M430 388 L548 290" stroke-width="8"/>
+    <path d="M612 414 L548 290" stroke-width="6"/>
+  </g>
+  <g stroke="none">
+    <circle cx="430" cy="388" r="14" fill="#2A2620"/>
+    <circle cx="612" cy="414" r="13" fill="#2A2620"/>
+    <circle cx="548" cy="290" r="20" fill="#D85060"/>
+  </g>
+</svg>

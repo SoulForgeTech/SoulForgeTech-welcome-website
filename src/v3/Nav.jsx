@@ -68,6 +68,10 @@ function Nav({ theme, onToggleTheme, lang, onLang }) {
               </span>
             </a>
           ))}
+          <a href="glossa.html" className="nav-link platform">
+            <span className="en-only">Glossa</span>
+            <span className="zh-only">岁月书房</span>
+          </a>
           <a href="platform.html" className="nav-link platform">
             <span className="en-only">Platform</span>
             <span className="zh-only">平台</span>
