@@ -7,10 +7,12 @@
   <link rel="icon" type="image/svg+xml" href="public/glossa-icon.svg"/>
   <link rel="canonical" href="https://soulforgetech.com/glossa.html"/>
   <meta property="og:title" content="Glossa — 岁月书房 · A Talking Study"/>
-  <meta property="og:description" content="把一本书，变成可听、可问、可回忆的陪伴。Forging warmth into technology."/>
+  <meta property="og:description" content="把一本书，变成可听、可问、可回忆的陪伴。读这本书，也看见它怎么想。"/>
   <meta property="og:url" content="https://soulforgetech.com/glossa.html"/>
   <meta property="og:image" content="https://soulforgetech.com/public/glossa-icon.svg"/>
   <meta property="og:type" content="website"/>
+  <meta name="theme-color" content="#F4EFE6" media="(prefers-color-scheme: light)"/>
+  <meta name="theme-color" content="#1A1814" media="(prefers-color-scheme: dark)"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Crimson+Pro:ital,wght@0,400;0,500;1,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=IBM+Plex+Mono:wght@400;500&family=Long+Cang&family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet"/>
@@ -21,7 +23,7 @@
     --ink:#2A2620; --ink-soft:rgba(42,38,32,.74); --ink-faint:rgba(42,38,32,.54);
     --ink-line:rgba(42,38,32,.18); --ink-hair:rgba(42,38,32,.10);
     --seal:#B8312F; --seal-strong:#9E2A29; --sepia:#8B6F47; --kraft:#C9A87C;
-    --pen-blue:#3A5A78;
+    --pen-blue:#3A5A78; --amber:#C0743A;
     --shadow:rgba(42,38,32,.14); --shadow-soft:rgba(42,38,32,.07);
     --gloss:255,251,239;
     --grain-blend:multiply; --grain-op:.5; --wash-op:1;
@@ -30,8 +32,7 @@
     --f-hand:'Caveat','Long Cang','STKaiti','KaiTi',cursive;
     --f-mono:'IBM Plex Mono','Noto Sans SC',ui-monospace,'SFMono-Regular',Menlo,monospace;
     --r-sm:8px; --r-md:12px; --r-lg:16px; --r-xl:22px; --r-pill:999px;
-    --maxw:1180px;
-    --ease:cubic-bezier(.16,1,.3,1); --spring:cubic-bezier(.34,1.42,.5,1);
+    --maxw:1180px; --ease:cubic-bezier(.16,1,.3,1); --spring:cubic-bezier(.34,1.42,.5,1);
   }
   @media (prefers-color-scheme:dark){
     :root{
@@ -39,7 +40,7 @@
       --ink:#EBE3D2; --ink-soft:rgba(235,227,210,.74); --ink-faint:rgba(235,227,210,.56);
       --ink-line:rgba(235,227,210,.20); --ink-hair:rgba(235,227,210,.10);
       --seal:#D85060; --seal-strong:#E0687A; --sepia:#C9A87C; --kraft:#D4B896;
-      --pen-blue:#8FA9C4; --shadow:rgba(0,0,0,.45); --shadow-soft:rgba(0,0,0,.3);
+      --pen-blue:#8FA9C4; --amber:#E0A060; --shadow:rgba(0,0,0,.45); --shadow-soft:rgba(0,0,0,.3);
       --grain-blend:screen; --grain-op:.28;
     }
   }
@@ -48,7 +49,7 @@
     --ink:#2A2620; --ink-soft:rgba(42,38,32,.74); --ink-faint:rgba(42,38,32,.54);
     --ink-line:rgba(42,38,32,.18); --ink-hair:rgba(42,38,32,.10);
     --seal:#B8312F; --seal-strong:#9E2A29; --sepia:#8B6F47; --kraft:#C9A87C;
-    --pen-blue:#3A5A78; --shadow:rgba(42,38,32,.14); --shadow-soft:rgba(42,38,32,.07);
+    --pen-blue:#3A5A78; --amber:#C0743A; --shadow:rgba(42,38,32,.14); --shadow-soft:rgba(42,38,32,.07);
     --grain-blend:multiply; --grain-op:.5;
   }
   :root[data-theme="dark"]{
@@ -56,68 +57,58 @@
     --ink:#EBE3D2; --ink-soft:rgba(235,227,210,.74); --ink-faint:rgba(235,227,210,.56);
     --ink-line:rgba(235,227,210,.20); --ink-hair:rgba(235,227,210,.10);
     --seal:#D85060; --seal-strong:#E0687A; --sepia:#C9A87C; --kraft:#D4B896;
-    --pen-blue:#8FA9C4; --shadow:rgba(0,0,0,.45); --shadow-soft:rgba(0,0,0,.3);
+    --pen-blue:#8FA9C4; --amber:#E0A060; --shadow:rgba(0,0,0,.45); --shadow-soft:rgba(0,0,0,.3);
     --grain-blend:screen; --grain-op:.28;
   }
 
   *{box-sizing:border-box}
   html{scroll-behavior:smooth;scroll-padding-top:84px}
-  body{margin:0;background:var(--paper);color:var(--ink);
-    font-family:var(--f-body);font-size:17px;line-height:1.62;
-    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
 
   .wash,.grain{position:fixed;inset:0;pointer-events:none;z-index:0}
-  .wash{opacity:var(--wash-op);
-    background:
-      radial-gradient(60% 50% at 82% 4%, rgba(217,119,66,.10), transparent 60%),
-      radial-gradient(55% 55% at 2% 92%, rgba(58,90,120,.07), transparent 55%);}
-  .grain{opacity:var(--grain-op);mix-blend-mode:var(--grain-blend);
-    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.12  0 0 0 0 0.1  0 0 0 0 0.07  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");}
+  .wash{opacity:var(--wash-op);background:radial-gradient(60% 50% at 82% 4%, rgba(217,119,66,.10), transparent 60%),radial-gradient(55% 55% at 2% 92%, rgba(58,90,120,.07), transparent 55%);}
+  .grain{opacity:var(--grain-op);mix-blend-mode:var(--grain-blend);background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.12  0 0 0 0 0.1  0 0 0 0 0.07  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");}
 
   .page{position:relative;z-index:1}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,5vw,40px)}
 
   /* nav */
-  .nav{position:sticky;top:0;z-index:60;
-    background:color-mix(in srgb,var(--paper) 84%,transparent);
-    backdrop-filter:blur(14px) saturate(140%);border-bottom:1px solid var(--ink-hair)}
-  .nav-inner{display:flex;align-items:center;gap:16px;padding-top:14px;padding-bottom:14px}
+  .nav{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--paper) 84%,transparent);backdrop-filter:blur(14px) saturate(140%);border-bottom:1px solid var(--ink-hair)}
+  .nav-inner{display:flex;align-items:center;gap:14px;padding-top:14px;padding-bottom:14px}
   .brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex:0 0 auto}
-  .brand .bmark{width:28px;height:28px;object-fit:contain;display:block}
+  .brand .bmark{width:28px;height:28px;display:block}
   .brand .bname{font-family:var(--f-display);font-size:21px;font-weight:600;letter-spacing:.01em;color:var(--ink)}
-  .navlinks{display:flex;align-items:center;gap:2px;margin:0 auto}
-  .navlinks a{font-family:var(--f-body);font-size:15px;color:var(--ink-soft);text-decoration:none;
-    padding:7px 12px;border-radius:var(--r-pill);transition:.24s var(--ease)}
-  .navlinks a:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 6%,transparent)}
+  .navlinks{display:flex;align-items:center;gap:1px;margin:0 auto}
+  .navlinks a{font-family:var(--f-body);font-size:15px;color:var(--ink-soft);text-decoration:none;padding:7px 11px;border-radius:var(--r-pill);transition:.24s var(--ease);white-space:nowrap}
+  .navlinks a:hover{color:var(--ink)}
+  /* hand-drawn pen loop on the active tab — same stroke as SoulLink's nav */
+  .navlinks a{position:relative}
+  .navlinks a .nav-circle{position:absolute;left:1px;right:1px;top:0;bottom:0;width:auto;height:auto;color:var(--seal);pointer-events:none;opacity:0;transition:opacity .25s ease}
+  .navlinks a .nav-circle path{stroke-dasharray:320;stroke-dashoffset:320;transition:stroke-dashoffset .9s var(--ease)}
+  .navlinks a:hover .nav-circle{opacity:.45}
+  .navlinks a:hover .nav-circle path{stroke-dashoffset:0}
+  .navlinks a.on{color:var(--ink)}
+  .navlinks a.on .nav-circle{opacity:1}
+  .navlinks a.on .nav-circle path{stroke-dashoffset:0}
   .nav-actions{display:flex;align-items:center;gap:10px;flex:0 0 auto}
-  .seg{display:inline-flex;background:color-mix(in srgb,var(--ink) 8%,transparent);
-    border:1px solid var(--ink-line);border-radius:var(--r-pill);padding:2px}
-  .seg button{font-family:var(--f-mono);font-size:12px;letter-spacing:.02em;border:0;background:transparent;
-    color:var(--ink-soft);cursor:pointer;padding:6px 12px;border-radius:var(--r-pill);transition:.28s var(--ease)}
+  .seg{display:inline-flex;background:color-mix(in srgb,var(--ink) 8%,transparent);border:1px solid var(--ink-line);border-radius:var(--r-pill);padding:2px}
+  .seg button{font-family:var(--f-mono);font-size:12px;border:0;background:transparent;color:var(--ink-soft);cursor:pointer;padding:6px 12px;border-radius:var(--r-pill);transition:.28s var(--ease)}
   .seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
-  .iconbtn{font-family:var(--f-mono);font-size:13px;width:34px;height:32px;display:grid;place-items:center;
-    border:1px solid var(--ink-line);background:transparent;color:var(--ink);border-radius:var(--r-pill);cursor:pointer}
-  .nav-cta{font-family:var(--f-body);font-size:15px;color:var(--paper);text-decoration:none;
-    background:var(--ink);padding:9px 18px;border-radius:var(--r-pill);transition:.24s var(--ease)}
+  .iconbtn{font-family:var(--f-mono);font-size:13px;width:34px;height:32px;display:grid;place-items:center;border:1px solid var(--ink-line);background:transparent;color:var(--ink);border-radius:var(--r-pill);cursor:pointer}
+  .nav-cta{font-family:var(--f-body);font-size:15px;color:var(--paper);text-decoration:none;background:var(--ink);padding:9px 18px;border-radius:var(--r-pill);transition:.24s var(--ease);white-space:nowrap}
   .nav-cta:hover{background:var(--seal);color:var(--paper)}
 
-  /* type bits */
   .eyebrow{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-faint)}
   .kicker{font-family:var(--f-hand);color:var(--seal);font-size:clamp(24px,3.4vw,32px);transform:rotate(-1.6deg);display:inline-block}
   h1,h2,h3{font-family:var(--f-display);font-weight:600;color:var(--ink);text-wrap:balance;margin:0;letter-spacing:-.01em}
-  .lead{color:var(--ink-soft);font-size:clamp(16px,1.6vw,18.5px);line-height:1.66;max-width:60ch}
+  .lead{color:var(--ink-soft);font-size:clamp(16px,1.6vw,18.5px);line-height:1.66;max-width:62ch}
 
-  .btn{font-family:var(--f-body);font-size:16px;cursor:pointer;border-radius:var(--r-pill);
-    padding:11px 26px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);
-    transition:.26s var(--ease);text-decoration:none;display:inline-block}
+  .btn{font-family:var(--f-body);font-size:16px;cursor:pointer;border-radius:var(--r-pill);padding:11px 26px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);transition:.26s var(--ease);text-decoration:none;display:inline-block}
   .btn:hover{background:var(--seal);border-color:var(--seal);transform:translateY(-1px)}
   .btn.ghost{background:transparent;color:var(--ink);border-color:var(--ink-line)}
-  .btn.ghost:hover{background:transparent;border-color:var(--ink);color:var(--ink);transform:translateY(-1px)}
+  .btn.ghost:hover{border-color:var(--ink);transform:translateY(-1px)}
 
-  .panel{position:relative;background-color:var(--panel);
-    background-image:linear-gradient(135deg,rgba(var(--gloss),.5) 0%,rgba(var(--gloss),.14) 12%,rgba(var(--gloss),.03) 30%,transparent 48%);
-    border:1px solid var(--ink-line);border-radius:var(--r-xl);
-    box-shadow:0 10px 30px var(--shadow),0 2px 6px var(--shadow-soft),inset 0 1px 0 rgba(var(--gloss),.6);}
+  .panel{position:relative;background-color:var(--panel);background-image:linear-gradient(135deg,rgba(var(--gloss),.5) 0%,rgba(var(--gloss),.14) 12%,rgba(var(--gloss),.03) 30%,transparent 48%);border:1px solid var(--ink-line);border-radius:var(--r-xl);box-shadow:0 10px 30px var(--shadow),0 2px 6px var(--shadow-soft),inset 0 1px 0 rgba(var(--gloss),.6);}
 
   /* hero */
   .g-hero{padding:clamp(34px,6vw,78px) 0 clamp(20px,3vw,40px);text-align:center}
@@ -128,80 +119,142 @@
   .g-ends{margin-top:22px;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
 
   .whatis{border-top:1px solid var(--ink-hair);border-bottom:1px solid var(--ink-hair);margin-top:8px}
-  .whatis .wrap{padding:28px 0;display:flex;justify-content:center;text-align:center}
-  .whatis p{margin:0;font-family:var(--f-display);font-size:clamp(19px,2.1vw,24px);line-height:1.5;color:var(--ink-soft);max-width:62ch}
+  .whatis .wrap{padding:30px 0;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+  .whatis .tag{font-family:var(--f-hand);color:var(--seal);font-size:clamp(22px,2.6vw,30px);transform:rotate(-1deg)}
+  .whatis p{margin:0;font-family:var(--f-display);font-size:clamp(18px,2vw,23px);line-height:1.5;color:var(--ink-soft);max-width:62ch}
 
-  .sec{padding:clamp(32px,5vw,60px) 0;border-top:1px solid var(--ink-hair);scroll-margin-top:84px}
+  .sec{padding:clamp(32px,5vw,58px) 0;border-top:1px solid var(--ink-hair);scroll-margin-top:84px}
   .sec-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(22px,4vw,54px);align-items:center}
   .sec.rev .sec-grid{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}
   .sec.rev .sec-copy{order:2}
-  .num{font-family:var(--f-display);font-size:15px;color:var(--seal);border:1px solid var(--seal);
-    width:34px;height:34px;border-radius:50%;display:grid;place-items:center;margin-bottom:16px}
+  .num{font-family:var(--f-display);font-size:15px;color:var(--seal);border:1px solid var(--seal);width:34px;height:34px;border-radius:50%;display:grid;place-items:center;margin-bottom:16px}
   .sec h2{font-size:clamp(28px,3.6vw,42px);line-height:1.12;margin:8px 0 14px}
   .sec-copy .eyebrow{margin-bottom:6px}
   .sec-copy p{color:var(--ink-soft);max-width:46ch;margin:0}
 
-  /* lecture player */
+  /* lecture player (real audio) */
   .player{padding:24px}
   .player .pl-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:4px}
   .player .pl-book{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
   .player .pl-title{font-family:var(--f-display);font-size:21px;margin:2px 0 18px}
-  .wave{display:flex;align-items:center;gap:2px;height:52px;margin-bottom:16px}
-  .wave span{flex:1;border-radius:2px;background:var(--ink-line);min-width:2px}
+  .wave{position:relative;display:flex;align-items:center;gap:2px;height:54px;margin-bottom:16px;cursor:grab;touch-action:none}
+  .wave:active{cursor:grabbing}
+  .wave span{flex:1;border-radius:2px;background:var(--ink-line);min-width:2px;transform-origin:center;transition:background .12s}
   .wave span.on{background:var(--seal)}
+  @keyframes barPulse{0%,100%{transform:scaleY(.6)}50%{transform:scaleY(1)}}
+  .wave.playing span{animation:barPulse 900ms ease-in-out infinite}
+  .wave .ph{position:absolute;top:-3px;bottom:-3px;left:0;width:2px;background:var(--seal);border-radius:2px;transform:translateX(-1px);pointer-events:none;z-index:2}
+  .wave .ph::after{content:"";position:absolute;left:1px;top:50%;width:13px;height:13px;border-radius:50%;background:var(--seal);transform:translate(-50%,-50%);box-shadow:0 1px 5px rgba(184,49,47,.55)}
   .player .pl-ctrls{display:flex;align-items:center;gap:14px}
-  .play{width:46px;height:46px;border-radius:50%;background:var(--seal);color:#fff;border:0;
-    display:grid;place-items:center;cursor:pointer;flex:0 0 auto;box-shadow:0 6px 16px rgba(184,49,47,.32)}
-  .play svg{margin-left:2px}
+  .play{width:48px;height:48px;border-radius:50%;background:var(--seal);color:#fff;border:0;display:grid;place-items:center;cursor:pointer;flex:0 0 auto;box-shadow:0 6px 16px rgba(184,49,47,.32)}
+  .play svg{display:block}
   .player .pl-time{font-family:var(--f-mono);font-size:13px;color:var(--ink-soft);font-variant-numeric:tabular-nums}
-  .player .pl-sp{margin-left:auto;font-family:var(--f-mono);font-size:12px;color:var(--ink-faint);
-    border:1px solid var(--ink-line);border-radius:var(--r-pill);padding:4px 10px}
-  .player .pl-listen{margin-top:16px;padding-top:14px;border-top:1px solid var(--ink-hair);
-    font-family:var(--f-body);font-size:15px;color:var(--seal);display:flex;align-items:center;gap:8px}
+  .pl-sp{margin-left:auto;font-family:var(--f-mono);font-size:12px;color:var(--ink-faint);border:1px solid var(--ink-line);border-radius:var(--r-pill);padding:5px 11px;cursor:pointer;background:transparent}
+  .pl-sp:hover{color:var(--ink);border-color:var(--ink)}
+  .player .pl-foot{margin-top:16px;padding-top:14px;border-top:1px solid var(--ink-hair);font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;color:var(--ink-faint);display:flex;align-items:center;gap:8px}
+  .player .pl-foot .dot{width:6px;height:6px;border-radius:50%;background:var(--seal);display:inline-block}
 
   /* chat */
   .chat{padding:22px;display:flex;flex-direction:column;gap:12px}
-  .bubble{max-width:82%;padding:12px 16px;border-radius:var(--r-lg);font-size:15.5px;line-height:1.55}
+  .bubble{max-width:84%;padding:12px 16px;border-radius:var(--r-lg);font-size:15.5px;line-height:1.55}
   .bubble.q{align-self:flex-end;background:var(--ink);color:var(--paper);border-bottom-right-radius:5px}
-  .bubble.a{align-self:flex-start;background:color-mix(in srgb,var(--ink) 6%,transparent);
-    border:1px solid var(--ink-line);border-bottom-left-radius:5px;color:var(--ink)}
-  .src{display:inline-flex;align-items:center;gap:6px;margin-top:9px;font-family:var(--f-mono);
-    font-size:11px;letter-spacing:.08em;color:var(--ink-faint)}
+  .bubble.a{align-self:flex-start;background:color-mix(in srgb,var(--ink) 6%,transparent);border:1px solid var(--ink-line);border-bottom-left-radius:5px;color:var(--ink)}
+  .src{display:inline-flex;align-items:center;gap:6px;margin-top:9px;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;color:var(--ink-faint)}
   .src b{color:var(--seal);font-weight:400}
-  .buy{align-self:flex-start;font-family:var(--f-body);font-size:14px;color:var(--seal);
-    border:1px solid var(--seal);border-radius:var(--r-pill);padding:6px 14px;background:transparent;cursor:pointer}
+  .buy{align-self:flex-start;font-family:var(--f-body);font-size:14px;color:var(--seal);border:1px solid var(--seal);border-radius:var(--r-pill);padding:6px 14px;background:transparent;cursor:pointer}
 
-  /* memory card — signature */
+  /* annotations / 笔记批注 */
+  .anno{padding:22px}
+  .anno-hl{background:color-mix(in srgb,var(--seal) 13%,transparent);border-left:2px solid var(--seal);border-radius:0 6px 6px 0;padding:12px 15px}
+  .anno-text{margin:0;font-family:var(--f-body);font-size:16px;line-height:1.62;color:var(--ink)}
+  .anno-ref{margin-top:8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint)}
+  .anno-margin{font-family:var(--f-hand);font-size:23px;color:var(--seal);transform:rotate(-1deg);margin:18px 0 0 14px}
+  .anno-bar{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;padding-top:14px;border-top:1px solid var(--ink-hair)}
+  .anno-bar span{font-family:var(--f-body);font-size:13px;color:var(--ink-soft);border:1px solid var(--ink-line);border-radius:var(--r-pill);padding:5px 12px}
+  .anno-bar span.seal{color:var(--seal);border-color:var(--seal)}
+
+  /* knowledge graph — interactive: drag · click a node · click a line */
+  .kg-live{position:relative;padding:0;height:360px;overflow:hidden}
+  .kg-edges{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+  .kg-edges line.vis{stroke:var(--ink-line);stroke-width:1.4;pointer-events:none;transition:stroke .15s,opacity .15s,stroke-width .15s}
+  .kg-edges line.vis.sel{stroke:var(--seal);stroke-width:2.8}
+  .kg-edges line.vis.dim{opacity:.14}
+  .kg-edges line.hit{stroke:transparent;stroke-width:16;pointer-events:stroke;cursor:pointer}
+  .kg-n{position:absolute;z-index:2;transform:translate(-50%,-50%);font-family:var(--f-body);font-size:13.5px;font-weight:600;
+    padding:6px 13px;border-radius:16px;background:var(--panel);border:1.5px solid var(--ink-line);color:var(--ink);
+    white-space:nowrap;cursor:grab;user-select:none;touch-action:none;box-shadow:0 2px 7px var(--shadow-soft);transition:box-shadow .15s,opacity .15s}
+  .kg-n:hover{box-shadow:0 5px 14px var(--shadow)}
+  .kg-n:active{cursor:grabbing}
+  .kg-n.person{border-color:var(--seal);color:var(--seal)}
+  .kg-n.person.center{background:var(--seal);color:#FFF8F0;border-color:var(--seal);font-size:15px}
+  .kg-n.place{border-color:var(--pen-blue);color:var(--pen-blue)}
+  .kg-n.event{border-color:var(--amber);color:var(--amber)}
+  .kg-n.theme{border-color:var(--sepia);color:var(--sepia)}
+  .kg-n.dim{opacity:.22}
+  .kg-n.sel{box-shadow:0 0 0 3px color-mix(in srgb,var(--seal) 40%,transparent),0 6px 16px var(--shadow)}
+  .kg-info{position:absolute;z-index:4;top:11px;left:16px;right:16px;text-align:center;font-family:var(--f-body);font-size:12.5px;
+    line-height:1.5;color:var(--ink-soft);pointer-events:none;transition:opacity .2s}
+  .kg-info b{color:var(--seal);font-weight:600}
+  .kg-info em{font-style:normal;color:var(--ink-faint);font-family:var(--f-mono);font-size:11px}
+  .kg-info.hint{font-family:var(--f-hand);font-size:18px;color:var(--ink-faint);transform:rotate(-.6deg)}
+  .kg-legend{position:absolute;z-index:2;left:0;right:0;bottom:14px;display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;
+    font-family:var(--f-mono);font-size:10.5px;letter-spacing:.04em;color:var(--ink-faint);pointer-events:none}
+  .kg-legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}
+
+  /* outline / 脉络 */
+  .outline{padding:24px}
+  .outline .thesis{border-left:2px solid var(--seal);padding:2px 0 2px 16px;font-family:var(--f-display);font-size:20px;line-height:1.42;color:var(--ink)}
+  .outline .thesis cite{display:block;font-family:var(--f-mono);font-style:normal;font-size:11px;color:var(--ink-faint);margin-top:8px;letter-spacing:.06em}
+  .outline .mv{margin-top:20px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--sepia)}
+  .outline .ch{margin-top:10px;padding-left:14px;border-left:1px solid var(--ink-line)}
+  .outline .ch h4{font-family:var(--f-display);font-size:17px;font-weight:600;margin:0 0 8px;color:var(--ink)}
+  .outline .beat{display:flex;align-items:center;gap:9px;margin:7px 0;font-size:14px;color:var(--ink-soft)}
+  .outline .beat .tg{font-family:var(--f-mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:3px;border:1px solid var(--ink-line);color:var(--ink-faint);flex:0 0 auto}
+  .outline .beat .ref{margin-left:auto;font-family:var(--f-mono);font-size:11px;color:var(--seal)}
+
+  /* ambient / 背景图音 */
+  .ambient{padding:22px;display:flex;flex-direction:column;gap:18px}
+  .amb-label{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:10px}
+  .wp-row{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+  .wp{aspect-ratio:1/1.2;border-radius:8px;border:1px solid var(--ink-line);position:relative;overflow:hidden;box-shadow:0 4px 12px var(--shadow-soft);background-size:cover;background-position:center}
+  .wp b{position:absolute;left:0;right:0;bottom:0;font-family:var(--f-mono);font-weight:400;font-size:8px;letter-spacing:.04em;text-align:center;padding:3px 0;background:rgba(0,0,0,.42);color:#F4EFE6}
+  .wp.paper{background-color:var(--paper);background-image:url(public/wp/paper-light.png);background-blend-mode:multiply} .wp.paper b{background:none;color:var(--ink-faint)}
+  @media (prefers-color-scheme:dark){ .wp.paper{background-image:url(public/wp/paper-dark.png);background-blend-mode:normal} }
+  :root[data-theme="light"] .wp.paper{background-image:url(public/wp/paper-light.png);background-blend-mode:multiply}
+  :root[data-theme="dark"] .wp.paper{background-image:url(public/wp/paper-dark.png);background-blend-mode:normal}
+  .wp.monet{background-image:url(public/wp/monet.jpg)}
+  .wp.paint{background-image:url(public/wp/painting.jpg)}
+  .wp.space{background-image:url(public/wp/space.jpg)}
+  .wp.photo{background-image:url(public/wp/photo.jpg)}
+  .snd{display:flex;flex-wrap:wrap;gap:8px}
+  .snd .chip{font-family:var(--f-body);font-size:13.5px;border:1px solid var(--ink-line);border-radius:var(--r-pill);padding:6px 13px;color:var(--ink-soft)}
+  .snd .chip.on{border-color:var(--seal);color:var(--ink);background:color-mix(in srgb,var(--seal) 9%,transparent)}
+  .snd-meta{font-family:var(--f-mono);font-size:11px;color:var(--ink-faint);display:flex;align-items:center;gap:8px;margin-top:2px}
+  .snd-meta .dot{width:6px;height:6px;border-radius:50%;background:var(--seal);display:inline-block}
+
+  /* memory card */
   .mcwrap{display:grid;place-items:center;padding:10px}
-  .mcard{position:relative;width:min(100%,420px);padding:28px 26px 24px;
-    background:var(--panel);border:1px solid var(--ink-line);border-radius:var(--r-lg);
-    box-shadow:0 16px 40px var(--shadow),inset 0 1px 0 rgba(var(--gloss),.6);transform:rotate(-1.4deg)}
+  .mcard{position:relative;width:min(100%,420px);padding:28px 26px 24px;background:var(--panel);border:1px solid var(--ink-line);border-radius:var(--r-lg);box-shadow:0 16px 40px var(--shadow),inset 0 1px 0 rgba(var(--gloss),.6);transform:rotate(-1.4deg)}
   .mcard .mc-label{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px}
-  .mcard blockquote{margin:0;padding:2px 0 2px 16px;border-left:2px solid var(--seal);
-    font-family:var(--f-hand);font-size:25px;line-height:1.5;color:var(--ink)}
+  .mcard blockquote{margin:0;padding:2px 0 2px 16px;border-left:2px solid var(--seal);font-family:var(--f-hand);font-size:25px;line-height:1.5;color:var(--ink)}
   .mcard .mc-from{margin-top:18px;font-size:13.5px;color:var(--ink-faint);font-family:var(--f-body)}
-  .mcard .mc-meta{display:flex;justify-content:space-between;margin-top:14px;padding-top:12px;
-    border-top:1px dashed var(--ink-line);font-family:var(--f-mono);font-size:11px;color:var(--ink-faint)}
+  .mcard .mc-meta{display:flex;justify-content:space-between;margin-top:14px;padding-top:12px;border-top:1px dashed var(--ink-line);font-family:var(--f-mono);font-size:11px;color:var(--ink-faint)}
   .chop{position:absolute;top:-16px;right:-14px;width:70px;height:70px;transform:rotate(-8deg)}
   .js .chop{opacity:0}
   .chop.stamped{animation:stamp .55s var(--spring) forwards}
   @keyframes stamp{0%{opacity:0;transform:rotate(-8deg) scale(2)}55%{opacity:1;transform:rotate(4deg) scale(.9)}100%{opacity:1;transform:rotate(-8deg) scale(1)}}
+  .soon{font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--seal);border:1px solid var(--seal);border-radius:var(--r-pill);padding:4px 11px;display:inline-block;margin-top:16px}
 
-  /* memoir */
-  .memoir{padding:26px;display:flex;align-items:center;gap:22px;justify-content:center}
-  .mstack{position:relative;width:120px;height:150px;flex:0 0 auto}
-  .mstack i{position:absolute;inset:0;border-radius:6px;border:1px solid var(--ink-line);background:var(--panel-2);box-shadow:0 6px 14px var(--shadow-soft)}
-  .mstack i:nth-child(2){transform:rotate(-7deg) translateY(6px)}
-  .mstack i:nth-child(3){transform:rotate(4deg)}
-  .mstack i:nth-child(4){transform:rotate(-1deg) translateY(-4px);background:linear-gradient(135deg,var(--sepia),var(--kraft));border-color:transparent}
-  .mstack .spine{position:absolute;left:0;top:0;bottom:0;width:8px;background:var(--seal-strong);border-radius:6px 0 0 6px;transform:rotate(-1deg) translateY(-4px);z-index:1}
-  .soon{font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--seal);
-    border:1px solid var(--seal);border-radius:var(--r-pill);padding:4px 11px;display:inline-block;margin-top:14px}
+  /* features grid / 更多 */
+  .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+  .feat{padding:24px 22px;border:1px solid var(--ink-line);border-radius:var(--r-md);background:var(--panel)}
+  .feat .fk{font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--seal)}
+  .feat h4{font-family:var(--f-display);font-weight:600;font-size:19px;margin:8px 0 8px;color:var(--ink)}
+  .feat p{font-family:var(--f-body);font-size:14.5px;line-height:1.55;color:var(--ink-soft);margin:0}
 
   /* shelf */
   .shelf{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
-  .book{position:relative;padding:20px 18px;border-radius:var(--r-md);overflow:hidden;min-height:190px;
-    display:flex;flex-direction:column;justify-content:flex-end;border:1px solid var(--ink-line);color:#F4EFE6;box-shadow:0 10px 24px var(--shadow)}
+  .book{position:relative;padding:20px 18px;border-radius:var(--r-md);overflow:hidden;min-height:190px;display:flex;flex-direction:column;justify-content:flex-end;border:1px solid var(--ink-line);color:#F4EFE6;box-shadow:0 10px 24px var(--shadow)}
   .book::before{content:"";position:absolute;left:0;top:0;bottom:0;width:7px;background:rgba(0,0,0,.22)}
   .book .bk-cn{font-family:var(--f-display);font-weight:600;font-size:23px;line-height:1.15}
   .book .bk-en{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;opacity:.82;margin-top:8px}
@@ -210,37 +263,24 @@
   .book.b2{background:linear-gradient(155deg,#3f5a4a,#26382c)}
   .book.b3{background:linear-gradient(155deg,#5a4468,#352544)}
   .shelf-more{margin-top:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center}
-  .beta{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;color:var(--ink-faint);
-    border:1px dashed var(--ink-line);border-radius:var(--r-pill);padding:6px 13px}
-
-  /* membership card */
-  .memcard{position:relative;width:min(100%,440px);padding:30px 28px;border-radius:var(--r-lg);
-    background:linear-gradient(150deg,var(--panel),var(--panel-2));border:1px solid var(--ink-line);
-    box-shadow:0 16px 40px var(--shadow),inset 0 1px 0 rgba(var(--gloss),.6);overflow:hidden}
-  .memcard .mm-top{display:flex;justify-content:space-between;align-items:flex-start}
-  .memcard .mm-name{font-family:var(--f-display);font-size:19px}
-  .memcard .mm-name small{display:block;font-size:12px;color:var(--ink-faint);font-family:var(--f-mono);letter-spacing:.14em;margin-top:4px;text-transform:uppercase}
-  .memcard .mm-price{font-family:var(--f-display);font-size:44px;font-weight:600;margin:14px 0 4px;font-variant-numeric:tabular-nums}
-  .memcard .mm-price small{font-size:15px;color:var(--ink-faint);font-weight:400}
-  .memcard ul{list-style:none;padding:0;margin:16px 0 20px;display:flex;flex-direction:column;gap:9px}
-  .memcard li{font-size:15px;color:var(--ink-soft);display:flex;align-items:center;gap:10px}
-  .memcard li svg{flex:0 0 auto;color:var(--seal)}
-  .memcard li.soon-li{color:var(--ink-faint)}
-  .memcard .mm-note{font-family:var(--f-mono);font-size:11px;color:var(--ink-faint);margin-top:14px;line-height:1.6}
-  .memchop{position:absolute;right:-10px;bottom:-10px;width:96px;height:96px;opacity:.13;transform:rotate(-12deg)}
+  .beta{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;color:var(--ink-faint);border:1px dashed var(--ink-line);border-radius:var(--r-pill);padding:6px 13px}
 
   /* where to read */
-  .ends3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
-  .endc{padding:22px 18px;border:1px solid var(--ink-line);border-radius:var(--r-md);background:var(--panel);text-align:center}
-  .endc .en-k{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--seal)}
+  .ends4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
+  .endc{padding:22px 16px;border:1px solid var(--ink-line);border-radius:var(--r-md);background:var(--panel);text-align:center;text-decoration:none;color:inherit;display:block;transition:border-color .2s var(--ease),transform .2s var(--ease)}
+  a.endc:hover{border-color:var(--seal);transform:translateY(-2px)}
+  .endc .en-k{font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--seal)}
   .endc .en-t{font-family:var(--f-display);font-size:20px;margin-top:9px}
-  .endc .en-s{font-size:13px;color:var(--ink-faint);margin-top:5px}
+  .endc .en-s{font-size:12.5px;color:var(--ink-faint);margin-top:5px;line-height:1.4}
+  .endc .en-go{font-family:var(--f-body);font-size:13px;color:var(--seal);margin-top:10px}
+  .endc .en-ic{height:30px;display:flex;align-items:center;justify-content:center;color:var(--ink)}
+  .endc .en-ic svg{height:26px;width:auto;display:block}
+  .endc .en-ic + .en-t{margin-top:8px}
 
   /* colophon */
   .colophon{margin-top:clamp(30px,5vw,60px);border-top:1px solid var(--ink-line)}
   .colophon .wrap{padding-top:38px;padding-bottom:46px;display:flex;flex-wrap:wrap;gap:22px 40px;align-items:flex-start}
   .colophon .cmark{display:flex;align-items:center;gap:10px}
-  .colophon .cmark img{width:22px;height:22px;object-fit:contain}
   .colophon .cmark .bname{font-family:var(--f-display);font-size:18px}
   .colophon .csub{font-family:var(--f-hand);color:var(--seal);font-size:21px;transform:rotate(-1deg);margin-top:6px}
   .colophon .cstats{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;color:var(--ink-faint);line-height:1.9}
@@ -249,10 +289,8 @@
   .colophon .cright a:hover{color:var(--seal)}
   .colophon .flinks{margin-top:10px;display:flex;gap:14px;justify-content:flex-end;font-family:var(--f-body);font-size:14px}
 
-  /* reveal */
   .js .rv{opacity:0;transform:translateY(16px)}
   .rv.in{opacity:1;transform:none;transition:opacity .7s var(--ease),transform .7s var(--ease)}
-
   a,button{color:inherit}
   :focus-visible{outline:2px solid var(--seal);outline-offset:3px;border-radius:4px}
 
@@ -260,13 +298,11 @@
   @media (max-width:820px){
     .sec-grid,.sec.rev .sec-grid{grid-template-columns:1fr}
     .sec.rev .sec-copy{order:0}
-    .shelf,.ends3{grid-template-columns:1fr}
+    .shelf,.feat-grid{grid-template-columns:1fr}
+    .ends4{grid-template-columns:repeat(2,1fr)}
+    .wp-row{grid-template-columns:repeat(5,1fr)}
   }
-  @media (prefers-reduced-motion:reduce){
-    *{animation-duration:.001ms!important;transition-duration:.001ms!important}
-    .js .rv{opacity:1;transform:none}
-    .js .chop{opacity:1}
-  }
+  @media (prefers-reduced-motion:reduce){ *{animation-duration:.001ms!important;transition-duration:.001ms!important} .js .rv{opacity:1;transform:none} .js .chop{opacity:1} .wave.playing span{animation:none} }
   </style>
 </head>
 <body>
@@ -276,15 +312,9 @@
   <!-- NAV -->
   <nav class="nav">
     <div class="wrap nav-inner">
-      <a class="brand" href="index.html" aria-label="Glossa">
+      <a class="brand" href="#top" aria-label="Glossa">
         <svg class="bmark" viewBox="286 265 452 452" role="img" aria-label="Glossa">
           <path fill-rule="evenodd" fill="var(--ink)" d="M512 512 C452 482 372 470 296 472 C286 540 286 624 300 690 C372 700 452 706 512 712 C572 706 652 700 724 690 C738 624 738 540 728 472 C652 470 572 482 512 512 Z M474 528 C410 512 360 506 322 500 C314 560 314 612 330 662 C372 672 430 676 480 678 C478 628 476 576 474 528 Z M550 528 C614 512 664 506 702 500 C710 560 710 612 694 662 C652 672 594 676 544 678 C546 628 548 576 550 528 Z"/>
-          <g fill="none" stroke="var(--ink)" stroke-linecap="butt">
-            <path d="M350 548 C392 540 426 542 452 552" stroke-width="8"/>
-            <path d="M352 580 C392 574 420 576 446 584" stroke-width="6"/>
-            <path d="M566 548 C600 540 640 540 678 548" stroke-width="8"/>
-            <path d="M568 580 C600 574 632 576 668 582" stroke-width="6"/>
-          </g>
           <path fill="var(--seal)" d="M524 508 L548 508 L548 612 L536 596 L524 612 Z"/>
           <g fill="none" stroke="var(--ink)" stroke-linecap="butt">
             <path d="M438 502 L430 388" stroke-width="6"/>
@@ -300,12 +330,14 @@
         <span class="bname">Glossa</span>
       </a>
       <div class="navlinks">
-        <a href="#listen" data-en="Listen" data-zh="听讲解">听讲解</a>
-        <a href="#ask" data-en="Ask" data-zh="问这一节">问这一节</a>
-        <a href="#keep" data-en="Keep" data-zh="记忆卡">记忆卡</a>
-        <a href="#shelf" data-en="Shelf" data-zh="书架">书架</a>
-        <a href="#card" data-en="Card" data-zh="陪伴卡">陪伴卡</a>
-        <a href="index.html" data-en="SoulLink" data-zh="SoulLink">SoulLink</a>
+        <a href="#listen"><span data-en="Listen" data-zh="听讲解">听讲解</span></a>
+        <a href="#ask"><span data-en="Ask" data-zh="问这一节">问这一节</span></a>
+        <a href="#graph"><span data-en="Map" data-zh="知识图谱">知识图谱</span></a>
+        <a href="#outline"><span data-en="Outline" data-zh="脉络">脉络</span></a>
+        <a href="#keep"><span data-en="Keep" data-zh="记忆卡">记忆卡</span></a>
+        <a href="#shelf"><span data-en="Shelf" data-zh="书架">书架</span></a>
+        <a href="soullink.html" data-en="SoulLink" data-zh="SoulLink">SoulLink</a>
+        <a href="index.html" data-en="SoulForge" data-zh="主页">主页</a>
       </div>
       <div class="nav-actions">
         <div class="seg" role="group" aria-label="language">
@@ -325,37 +357,42 @@
       <span class="kicker" data-en="open it, and meet" data-zh="翻开，便是相遇">翻开，便是相遇</span>
       <h1 class="g-h1 rv" data-en="A book you can listen to,&#10;ask, and remember." data-zh="把一本书，变成\n可听、可问、可回忆的陪伴。">把一本书，变成
 可听、可问、可回忆的陪伴。</h1>
-      <p class="lead rv" data-en="Made for readers born 1960–1976. Every book, split into sections — each a 40-minute literary lecture. Listen to it, ask it, and keep the memories it stirs, one card at a time." data-zh="为 1960–1976 年出生的读书人而做。每本书拆成若干节，每节一段 40 分钟以上的文学之声精讲——听它、问它，把你想起的往事，一张张记下来。">为 1960–1976 年出生的读书人而做。每本书拆成若干节，每节一段 40 分钟以上的文学之声精讲——听它、问它，把你想起的往事，一张张记下来。</p>
+      <p class="lead rv" data-en="Made for readers born 1960–1976. Read the book — and see how it thinks. A 40-minute lecture, a companion to ask, its outline and knowledge graph, ambient wallpaper and sound, and the memories it stirs — kept one card at a time." data-zh="为 1960–1976 年出生的读书人而做。读这本书，也看见它怎么想——一段 40 分钟精讲、一位随时可问的伴读、它的脉络与知识图谱、一层背景图音，还有你想起的往事，一张张记下来。">为 1960–1976 年出生的读书人而做。读这本书，也看见它怎么想——一段 40 分钟精讲、一位随时可问的伴读、它的脉络与知识图谱、一层背景图音，还有你想起的往事，一张张记下来。</p>
       <div class="g-cta rv">
         <a class="btn" href="https://glossa.soulforgetech.com" target="_blank" rel="noopener" data-en="Enter the library" data-zh="进入书架">进入书架</a>
-        <a class="btn ghost" href="#listen" data-en="Hear a lecture" data-zh="先听一段讲解">先听一段讲解</a>
+        <a class="btn ghost" href="#listen" data-en="Hear a real lecture" data-zh="先听一段真实讲解">先听一段真实讲解</a>
       </div>
       <div class="g-ends" data-en="Web · App · WeChat mini-program — pick up anywhere" data-zh="网页 · App · 微信小程序，随处续读">网页 · App · 微信小程序，随处续读</div>
     </div></header>
 
     <!-- WHAT IS IT -->
     <section class="whatis"><div class="wrap">
-      <p data-en="Glossa isn't a reader — it's a study that talks back. You don't wade through the whole text; you sit with a book, hear it explained, ask what puzzles you, and quietly keep what it stirs." data-zh="岁月书房不是一个阅读器，而是一间会说话的书房。你不必啃完全文——坐下来，听人把这本书讲给你听，不懂就问，把想起的往事静静留下来。">岁月书房不是一个阅读器，而是一间会说话的书房。你不必啃完全文——坐下来，听人把这本书讲给你听，不懂就问，把想起的往事静静留下来。</p>
+      <div class="tag" data-en="Read the book. See how it thinks." data-zh="读这本书，也看见它怎么想。">读这本书，也看见它怎么想。</div>
+      <p data-en="Glossa isn't a reader — it's a study that talks back. You don't wade through the whole text; you sit with a book, hear it explained, ask what puzzles you, follow its threads, and quietly keep what it stirs." data-zh="岁月书房不是一个阅读器，而是一间会说话的书房。你不必啃完全文——坐下来，听人把这本书讲给你听，不懂就问，顺着它的脉络走，把想起的往事静静留下来。">岁月书房不是一个阅读器，而是一间会说话的书房。你不必啃完全文——坐下来，听人把这本书讲给你听，不懂就问，顺着它的脉络走，把想起的往事静静留下来。</p>
     </div></section>
 
-    <!-- 听讲解 -->
+    <!-- 听讲解 — real audio player -->
     <section class="sec" id="listen"><div class="wrap sec-grid">
       <div class="sec-copy rv">
         <div class="num">一</div>
         <div class="eyebrow" data-en="ONE · LISTEN" data-zh="其一 · 听">其一 · 听</div>
         <h2 data-en="Listen to the lecture" data-zh="听讲解">听讲解</h2>
-        <p data-en="Each section is a 40-minute literary-voiced lecture — script and audio both, adjustable speed, resume where you left off. Like a well-read friend sitting beside you, telling you this chapter." data-zh="每一节，一段 40 分钟以上的文学之声精讲：讲稿与音频俱全，可调速，能续播。像一位学识温厚的朋友，坐在你身边，把这一节讲给你听。">每一节，一段 40 分钟以上的文学之声精讲：讲稿与音频俱全，可调速，能续播。像一位学识温厚的朋友，坐在你身边，把这一节讲给你听。</p>
+        <p data-en="Each book, split into 5–8 sections — every section a 40-minute literary lecture: a warm, human-voiced telling, adjustable speed, resume where you left off, listen-only or follow the script. The clip on the right is real." data-zh="每本书拆成 5–8 节，每节一段 40 分钟以上的文学之声精讲：温厚的真人质感讲述，可调速、能续播、可只听或看讲稿。右边这段，是真实的讲解音频。">每本书拆成 5–8 节，每节一段 40 分钟以上的文学之声精讲：温厚的真人质感讲述，可调速、能续播、可只听或看讲稿。右边这段，是真实的讲解音频。</p>
       </div>
       <div class="player panel rv">
-        <div class="pl-head"><span class="pl-book" data-en="Walden · Ch.2" data-zh="瓦尔登湖 · 第二章">瓦尔登湖 · 第二章</span><span class="pl-book" data-en="section 3 of 18" data-zh="第 3 节 / 共 18 节">第 3 节 / 共 18 节</span></div>
-        <div class="pl-title" data-en="Where I Lived, and What I Lived For" data-zh="我生活的地方；我为何生活">我生活的地方；我为何生活</div>
-        <div class="wave" id="wave" aria-hidden="true"></div>
-        <div class="pl-ctrls">
-          <button class="play" aria-label="play"><svg width="16" height="18" viewBox="0 0 16 18" fill="currentColor"><path d="M0 0l16 9L0 18z"/></svg></button>
-          <span class="pl-time">12:30 / 43:18</span>
-          <span class="pl-sp">1.0×</span>
+        <div class="pl-head">
+          <span class="pl-book" data-en="Man's Search for Meaning · §1" data-zh="活出生命的意义 · 第 1 节">活出生命的意义 · 第 1 节</span>
+          <span class="pl-book" data-en="≈45 min · 6 sections" data-zh="约 45 分钟 · 共 6 节">约 45 分钟 · 共 6 节</span>
         </div>
-        <div class="pl-listen"><span>▶</span><span data-en="Listen · 45-minute lecture" data-zh="收听 45 分钟讲解">收听 45 分钟讲解</span></div>
+        <div class="pl-title" data-en="Why live: a book that was almost anonymous" data-zh="为什么而活：一本差点匿名的书">为什么而活：一本差点匿名的书</div>
+        <div class="wave" id="wave" role="slider" aria-label="seek" tabindex="0"></div>
+        <div class="pl-ctrls">
+          <button class="play" id="playBtn" aria-label="play"><svg id="playIcon" width="16" height="18" viewBox="0 0 16 18" fill="currentColor"><path d="M0 0l16 9L0 18z"/></svg></button>
+          <span class="pl-time" id="plTime">0:00 / 0:00</span>
+          <button class="pl-sp" id="spBtn">1.0×</button>
+        </div>
+        <audio id="lecAudio" preload="metadata" src="public/lecture-mans-s1-zh.mp3"></audio>
+        <div class="pl-foot"><span class="dot"></span><span data-en="Real lecture audio · tap play" data-zh="真实讲解音频 · 点播放试听">真实讲解音频 · 点播放试听</span></div>
       </div>
     </div></section>
 
@@ -365,29 +402,91 @@
         <div class="num">二</div>
         <div class="eyebrow" data-en="TWO · ASK" data-zh="其二 · 问">其二 · 问</div>
         <h2 data-en="Ask this section" data-zh="问这一节">问这一节</h2>
-        <p data-en="Ask the study's companion about the very section you're on. Answers cite their sources, keep to sensible bounds, and every book has a voice of its own. Whatever puzzles you, whatever you want to talk over — just ask." data-zh="对着正在听的这一节，随口问「书斋伴读」。答案有出处、有边界，每本书都有自己的性格。不明白的、想深聊的，都可以问。">对着正在听的这一节，随口问「书斋伴读」。答案有出处、有边界，每本书都有自己的性格。不明白的、想深聊的，都可以问。</p>
+        <p data-en="Ask the study's companion about the section you're on. Answers cite their sources — tap to open the passage — and every book has its own voice and bounds: Frankl warm but never preachy, Outlive rigorous but never a diagnosis." data-zh="对着正在听的这一节，随口问「书斋伴读」。答案有出处、可点开原文，每本书都有自己的性格与边界——《活出生命的意义》温厚不灌鸡汤，《超越百岁》严谨但只谈知识、不作诊断。">对着正在听的这一节，随口问「书斋伴读」。答案有出处、可点开原文，每本书都有自己的性格与边界——《活出生命的意义》温厚不灌鸡汤，《超越百岁》严谨但只谈知识、不作诊断。</p>
       </div>
       <div class="chat panel rv">
         <div class="bubble q" data-en="Why did Thoreau go off to live alone by the pond?" data-zh="梭罗为什么要一个人住到湖边去？">梭罗为什么要一个人住到湖边去？</div>
-        <div class="bubble a" data-en="He wanted to live deliberately — to strip life to its essentials and see what it had to teach, rather than discover at the end that he had not lived. The pond was less escape than experiment." data-zh="他想“活得从容”——把生活削到最要紧处，看它究竟能教给人什么，免得临了才发现自己不曾真正活过。湖边与其说是逃避，不如说是一场试验。">他想“活得从容”——把生活削到最要紧处，看它究竟能教给人什么，免得临了才发现自己不曾真正活过。湖边与其说是逃避，不如说是一场试验。</div>
+        <div class="bubble a" data-en="He wanted to live deliberately — to strip life to its essentials and see what it had to teach, rather than find at the end that he had not lived. The pond was less escape than experiment." data-zh="他想“活得从容”——把生活削到最要紧处，看它究竟能教给人什么，免得临了才发现自己不曾真正活过。湖边与其说是逃避，不如说是一场试验。">他想“活得从容”——把生活削到最要紧处，看它究竟能教给人什么，免得临了才发现自己不曾真正活过。湖边与其说是逃避，不如说是一场试验。</div>
         <div class="src"><span data-en="source" data-zh="出处">出处</span> · <b data-en="Walden, Ch.2" data-zh="《瓦尔登湖》第二章">《瓦尔登湖》第二章</b></div>
         <button class="buy" data-en="Buy this book →" data-zh="购买此书 →">购买此书 →</button>
       </div>
     </div></section>
 
-    <!-- 记忆卡 -->
-    <section class="sec" id="keep"><div class="wrap sec-grid">
+    <!-- 导读 -->
+    <section class="sec" id="study"><div class="wrap sec-grid">
       <div class="sec-copy rv">
         <div class="num">三</div>
-        <div class="eyebrow" data-en="THREE · KEEP" data-zh="其三 · 记">其三 · 记</div>
+        <div class="eyebrow" data-en="THREE · STUDY" data-zh="其三 · 读">其三 · 读</div>
+        <h2 data-en="A guided read" data-zh="导读">导读</h2>
+        <p data-en="Not only you asking it. In a guided read the companion leads you slowly through a chapter — it asks first, you answer, and together you go a little deeper. Like a teacher sitting beside you until the passage opens up." data-zh="不只是你问、它答。导读里，引路人带你一步步细读本章——它先发问，你回应，再一起往深里走。像有位老师坐在你身边，陪你把一段文字读透。">不只是你问、它答。导读里，引路人带你一步步细读本章——它先发问，你回应，再一起往深里走。像有位老师坐在你身边，陪你把一段文字读透。</p>
+      </div>
+      <div class="chat panel rv">
+        <div class="src" style="margin-top:0"><b data-en="the guide · study" data-zh="引路人 · 导读">引路人 · 导读</b></div>
+        <div class="bubble a" data-en="&ldquo;Thoreau went to the woods to live deliberately. Have you ever wanted, badly, to live one thing on purpose?&rdquo;" data-zh="「梭罗说，他步入丛林，是想活得从容。你有没有过——特别想为一件事，认真活一次的时候？」">「梭罗说，他步入丛林，是想活得从容。你有没有过——特别想为一件事，认真活一次的时候？」</div>
+        <div class="bubble q" data-en="Yes — the year I graduated, I drove out west, alone." data-zh="有。刚毕业那年，我一个人开车去了趟西部。">有。刚毕业那年，我一个人开车去了趟西部。</div>
+        <div class="bubble a" data-en="What stayed with you from that road? Let's take it slowly." data-zh="那趟路，最后留在你心里的是什么？我们慢慢说。">那趟路，最后留在你心里的是什么？我们慢慢说。</div>
+      </div>
+    </div></section>
+
+    <!-- 知识图谱 -->
+    <section class="sec rev" id="graph"><div class="wrap sec-grid">
+      <div class="sec-copy rv">
+        <div class="num">四</div>
+        <div class="eyebrow" data-en="FOUR · MAP" data-zh="其四 · 图">其四 · 图</div>
+        <h2 data-en="Knowledge map" data-zh="知识图谱">知识图谱</h2>
+        <p data-en="People, places, events, themes and ideas, drawn into one interactive graph. Tap a name to see what it connects to; tap a line and it tells you why they're linked — with the source passage. Flip EN/中 and the whole map relabels in place." data-zh="人物、地点、事件、主题、概念，连成一张可交互的图。点一个名字，看它和谁相关；点一条线，它告诉你为什么相连——都带原文出处。中英一键切换，整张图就地换语言。">人物、地点、事件、主题、概念，连成一张可交互的图。点一个名字，看它和谁相关；点一条线，它告诉你为什么相连——都带原文出处。中英一键切换，整张图就地换语言。</p>
+      </div>
+      <div class="kg-live panel rv" id="kglive">
+        <svg class="kg-edges" id="kgEdges" aria-hidden="true"></svg>
+        <div class="kg-info hint" id="kgInfo"></div>
+        <div class="kg-legend">
+          <span><i style="background:var(--seal)"></i><span data-en="person" data-zh="人物">人物</span></span>
+          <span><i style="background:var(--pen-blue)"></i><span data-en="place" data-zh="地点">地点</span></span>
+          <span><i style="background:var(--amber)"></i><span data-en="event" data-zh="事件">事件</span></span>
+          <span><i style="background:var(--sepia)"></i><span data-en="theme" data-zh="主题">主题</span></span>
+        </div>
+      </div>
+    </div></section>
+
+    <!-- 脉络 -->
+    <section class="sec" id="outline"><div class="wrap sec-grid">
+      <div class="sec-copy rv">
+        <div class="num">五</div>
+        <div class="eyebrow" data-en="FIVE · OUTLINE" data-zh="其五 · 脉">其五 · 脉</div>
+        <h2 data-en="The outline" data-zh="脉络">脉络</h2>
+        <p data-en="Open a book and first see its spine — from thesis, down through movements, chapters, and beats, like a clear skeleton of meaning. A map to read by, a companion to read with. Tap any beat to jump straight to that part of the lecture." data-zh="翻开一本书，先看它的脉络——从主旨，到一段段乐章、章节与段落，像一副清晰的意义骨架。脉络为图，伴读为友。点任一节，直接跳到那段讲解。">翻开一本书，先看它的脉络——从主旨，到一段段乐章、章节与段落，像一副清晰的意义骨架。脉络为图，伴读为友。点任一节，直接跳到那段讲解。</p>
+      </div>
+      <div class="outline panel rv">
+        <div class="thesis" data-en="&ldquo;He who has a why to live for can bear almost any how.&rdquo;" data-zh="「知道为什么而活的人，几乎能忍受任何一种活法。」">「知道为什么而活的人，几乎能忍受任何一种活法。」<cite data-en="the book's thesis · §1" data-zh="全书主旨 · 第 1 节">全书主旨 · 第 1 节</cite></div>
+        <div class="mv" data-en="Movement · Opening" data-zh="乐章 · 开卷">乐章 · 开卷</div>
+        <div class="ch">
+          <h4 data-en="1 · In the camp" data-zh="一 · 在集中营里">一 · 在集中营里</h4>
+          <div class="beat"><span class="tg" data-en="Event" data-zh="事件">事件</span><span data-en="Arrival and the first selection" data-zh="初到与第一次筛选">初到与第一次筛选</span><span class="ref">§1</span></div>
+          <div class="beat"><span class="tg" data-en="Theme" data-zh="主题">主题</span><span data-en="What can't be taken from a person" data-zh="人身上拿不走的东西">人身上拿不走的东西</span><span class="ref">§2</span></div>
+          <div class="beat"><span class="tg" data-en="Key idea" data-zh="要义">要义</span><span data-en="The last of the human freedoms" data-zh="最后一种自由">最后一种自由</span><span class="ref">§2</span></div>
+        </div>
+        <div class="mv" data-en="Movement · The turn" data-zh="乐章 · 转折">乐章 · 转折</div>
+        <div class="ch">
+          <h4 data-en="2 · A why to live" data-zh="二 · 一个为什么">二 · 一个为什么</h4>
+          <div class="beat"><span class="tg" data-en="Key idea" data-zh="要义">要义</span><span data-en="Meaning as the will to live" data-zh="意义，就是活下去的意志">意义，就是活下去的意志</span><span class="ref">§3</span></div>
+        </div>
+      </div>
+    </div></section>
+
+    <!-- 记忆卡 / 回忆录 -->
+    <section class="sec rev" id="keep"><div class="wrap sec-grid">
+      <div class="sec-copy rv">
+        <div class="num">六</div>
+        <div class="eyebrow" data-en="SIX · KEEP" data-zh="其六 · 记">其六 · 记</div>
         <h2 data-en="Memory cards" data-zh="记忆卡">记忆卡</h2>
-        <p data-en="The stories you tell while listening — in your own words, sealed in cinnabar, kept one card at a time. Yours alone, or shared with family." data-zh="你在听、在聊里讲起的往事——用你自己的话，盖上一枚朱砂印，一张张留下来。可以只给自己，也可以分享给家人。">你在听、在聊里讲起的往事——用你自己的话，盖上一枚朱砂印，一张张留下来。可以只给自己，也可以分享给家人。</p>
+        <p data-en="The stories you tell while listening — the companion looks back through your chat and drafts one, in your own words: theme, when, where, who, what, feeling, and your exact words. Seal it in cinnabar; keep it for yourself or share with family. Card by card, they gather into a memoir." data-zh="你在听、在聊里讲起的往事——伴读回看你们的对话，用你自己的话，替你记下一张：主题、时间、地点、人物、事件、心情，还有你的原话。盖上朱砂印，可私藏，也可分享给家人。一张张，慢慢汇成一本回忆录。">你在听、在聊里讲起的往事——伴读回看你们的对话，用你自己的话，替你记下一张：主题、时间、地点、人物、事件、心情，还有你的原话。盖上朱砂印，可私藏，也可分享给家人。一张张，慢慢汇成一本回忆录。</p>
+        <span class="soon" data-en="Memoir · coming soon" data-zh="回忆录 · 敬请期待">回忆录 · 敬请期待</span>
       </div>
       <div class="mcwrap rv">
         <div class="mcard" id="mcard">
           <div class="mc-label" data-en="A memory · shared with family" data-zh="一则记忆 · 已分享给家人">一则记忆 · 已分享给家人</div>
           <blockquote data-en="「My father read this very book to me, under a single lamp, the winter I turned fifteen.」" data-zh="「我十五岁那年冬天，父亲就着一盏灯，把这本书念给我听。」">「我十五岁那年冬天，父亲就着一盏灯，把这本书念给我听。」</blockquote>
-          <div class="mc-from" data-en="stirred by 《Man's Search for Meaning》· section 3" data-zh="由《活出生命的意义》· 第 3 节 想起">由《活出生命的意义》· 第 3 节 想起</div>
+          <div class="mc-from" data-en="stirred by 《Man's Search for Meaning》· §3" data-zh="由《活出生命的意义》· 第 3 节 想起">由《活出生命的意义》· 第 3 节 想起</div>
           <div class="mc-meta"><span data-en="Jul 2026" data-zh="2026 年 7 月">2026 年 7 月</span><span data-en="in your own words" data-zh="你自己的话">你自己的话</span></div>
           <svg class="chop" id="chop" viewBox="0 0 70 70" aria-hidden="true">
             <circle cx="35" cy="35" r="31" fill="none" stroke="var(--seal)" stroke-width="2.4"/>
@@ -399,17 +498,71 @@
       </div>
     </div></section>
 
-    <!-- 回忆录 -->
-    <section class="sec rev"><div class="wrap sec-grid">
+    <!-- 笔记批注 -->
+    <section class="sec" id="notes"><div class="wrap sec-grid">
       <div class="sec-copy rv">
-        <div class="num">四</div>
-        <div class="eyebrow" data-en="FOUR · REMEMBER" data-zh="其四 · 忆">其四 · 忆</div>
-        <h2 data-en="A memoir, slowly" data-zh="回忆录">回忆录</h2>
-        <p data-en="Card by card, your memories gather into a memoir that is yours alone. The books you read become the story of you." data-zh="一张张记忆卡，慢慢汇成一本只属于你的回忆录。你读过的书，最后长成了你自己的故事。">一张张记忆卡，慢慢汇成一本只属于你的回忆录。你读过的书，最后长成了你自己的故事。</p>
-        <span class="soon" data-en="Coming soon" data-zh="敬请期待">敬请期待</span>
+        <div class="num">七</div>
+        <div class="eyebrow" data-en="SEVEN · NOTES" data-zh="其七 · 注">其七 · 注</div>
+        <h2 data-en="Highlights &amp; notes" data-zh="笔记批注">笔记批注</h2>
+        <p data-en="An old reader's habit. Drag to highlight a line, jot a few words in the margin, or ask the companion to &lsquo;✦ explain this&rsquo; right where you are. Every highlight and note gathers by book — always there to turn back to." data-zh="读书人的老习惯。划一句话高亮起来，在旁边写几行，或者就地让伴读「✦ 解释这句」。所有高亮与笔记，按书聚在一处，随时翻回来。">读书人的老习惯。划一句话高亮起来，在旁边写几行，或者就地让伴读「✦ 解释这句」。所有高亮与笔记，按书聚在一处，随时翻回来。</p>
       </div>
-      <div class="memoir panel rv">
-        <div class="mstack"><span class="spine"></span><i></i><i></i><i></i></div>
+      <div class="anno panel rv">
+        <div class="anno-hl">
+          <p class="anno-text" data-en="I went to the woods because I wished to live deliberately, to front only the essential facts of life, and see what it had to teach." data-zh="我步入丛林，因为我希望活得从容，只面对生活中最本质的事实，看看它究竟要教给我什么。">我步入丛林，因为我希望活得从容，只面对生活中最本质的事实，看看它究竟要教给我什么。</p>
+          <div class="anno-ref" data-en="highlighted · Walden, Ch.2" data-zh="已高亮 · 《瓦尔登湖》第二章">已高亮 · 《瓦尔登湖》第二章</div>
+        </div>
+        <div class="anno-margin" data-en="— this line. copy it out, for my daughter." data-zh="「这句，想抄一遍，给女儿。」">「这句，想抄一遍，给女儿。」</div>
+        <div class="anno-bar"><span data-en="Highlight" data-zh="高亮">高亮</span><span data-en="Note" data-zh="写笔记">写笔记</span><span class="seal" data-en="✦ Explain" data-zh="✦ 就此问">✦ 就此问</span><span data-en="Read aloud" data-zh="朗读">朗读</span></div>
+      </div>
+    </div></section>
+
+    <!-- 背景图音 -->
+    <section class="sec rev" id="ambient"><div class="wrap sec-grid">
+      <div class="sec-copy rv">
+        <div class="num">八</div>
+        <div class="eyebrow" data-en="EIGHT · AMBIENCE" data-zh="其八 · 境">其八 · 境</div>
+        <h2 data-en="Wallpaper &amp; ambience" data-zh="背景图音">背景图音</h2>
+        <p data-en="Set the mood to read in. Sixty-two backgrounds to choose from — Monet, paintings, deep space (NASA), photography, or plain paper — and a layer of ambient sound over it: rain, birdsong, a campfire, a café, waves, white noise… each with its own volume, mixed how you like. Over a wallpaper, the paper turns to warm glass." data-zh="给读书一点氛围。62 张可选背景——莫奈、名画、星空(NASA)、摄影，或纯纸面；再叠一层环境音：雨声、鸟鸣、篝火、咖啡馆、海浪、白噪……各自可调音量，随你混。背景之上，纸面化作一层温润的玻璃。">给读书一点氛围。62 张可选背景——莫奈、名画、星空(NASA)、摄影，或纯纸面；再叠一层环境音：雨声、鸟鸣、篝火、咖啡馆、海浪、白噪……各自可调音量，随你混。背景之上，纸面化作一层温润的玻璃。</p>
+      </div>
+      <div class="ambient panel rv">
+        <div>
+          <div class="amb-label" data-en="Background · 62 wallpapers" data-zh="背景 · 62 张壁纸">背景 · 62 张壁纸</div>
+          <div class="wp-row">
+            <div class="wp paper"><b data-en="Paper" data-zh="纯纸面">纯纸面</b></div>
+            <div class="wp monet"><b data-en="Monet" data-zh="莫奈">莫奈</b></div>
+            <div class="wp paint"><b data-en="Painting" data-zh="绘画">绘画</b></div>
+            <div class="wp space"><b data-en="Space" data-zh="星空">星空</b></div>
+            <div class="wp photo"><b data-en="Photo" data-zh="摄影">摄影</b></div>
+          </div>
+        </div>
+        <div>
+          <div class="amb-label" data-en="Ambient sound · mix your own" data-zh="环境音 · 随你混">环境音 · 随你混</div>
+          <div class="snd">
+            <span class="chip on">🌧️ <span data-en="Light rain" data-zh="小雨">小雨</span></span>
+            <span class="chip on">🔥 <span data-en="Campfire" data-zh="篝火">篝火</span></span>
+            <span class="chip">🐦 <span data-en="Birds" data-zh="鸟鸣">鸟鸣</span></span>
+            <span class="chip">🌊 <span data-en="Waves" data-zh="海浪">海浪</span></span>
+            <span class="chip">☕ <span data-en="Café" data-zh="咖啡馆">咖啡馆</span></span>
+            <span class="chip">📻 <span data-en="White noise" data-zh="白噪">白噪</span></span>
+          </div>
+          <div class="snd-meta"><span class="dot"></span><span data-en="2 sounds playing" data-zh="2 个声音播放中">2 个声音播放中</span></div>
+        </div>
+      </div>
+    </div></section>
+
+    <!-- 更多 -->
+    <section class="sec"><div class="wrap">
+      <div class="sec-copy rv" style="text-align:center;max-width:none">
+        <div class="eyebrow" data-en="AND MORE" data-zh="还有">还有</div>
+        <h2 style="margin-top:8px" data-en="More ways in" data-zh="更多陪你读的方式">更多陪你读的方式</h2>
+      </div>
+      <div class="feat-grid rv">
+        <div class="feat"><div class="fk" data-en="Appearance" data-zh="深浅色">深浅色</div><h4 data-en="Light, dark, or system" data-zh="跟随系统明暗">跟随系统明暗</h4><p data-en="Follow your system, or pick light / dark by hand — read into the night and the paper dims with you." data-zh="跟随系统，或手动浅色 / 深色；读到夜里，纸面也跟着暗下来。">跟随系统，或手动浅色 / 深色；读到夜里，纸面也跟着暗下来。</p></div>
+        <div class="feat"><div class="fk" data-en="Reader" data-zh="阅读">阅读</div><h4 data-en="Side-by-side text" data-zh="中英双栏对照">中英双栏对照</h4><p data-en="For the public-domain corpus: Chinese ‖ English, page-turn on phones, authentic section headings." data-zh="公版语料：中英并排、手机翻页、原汁分段标题。">公版语料：中英并排、手机翻页、原汁分段标题。</p></div>
+        <div class="feat"><div class="fk" data-en="Voice" data-zh="语音">语音</div><h4 data-en="Speak and listen" data-zh="说着问，听着答">说着问，听着答</h4><p data-en="Ask your question out loud and have the answer read back to you — hands-free reading." data-zh="张口就能问，答案也能读给你听——不必总盯着屏幕。">张口就能问，答案也能读给你听——不必总盯着屏幕。</p></div>
+        <div class="feat"><div class="fk" data-en="Resume" data-zh="续读">续读</div><h4 data-en="Pick up anywhere" data-zh="进度三端同步">进度三端同步</h4><p data-en="Your place and your memories stay in sync across web, App, and WeChat." data-zh="进度与记忆，网页、App、微信三端一处同步。">进度与记忆，网页、App、微信三端一处同步。</p></div>
+        <div class="feat"><div class="fk" data-en="Companion" data-zh="伴读">伴读</div><h4 data-en="Many conversations" data-zh="多会话伴读">多会话伴读</h4><p data-en="Talk like chat — start new threads, rename, revisit; ask by voice, hear answers read aloud." data-zh="像聊天一样——随时新开、重命名、回看；能语音提问，也能朗读回答。">像聊天一样——随时新开、重命名、回看；能语音提问，也能朗读回答。</p></div>
+        <div class="feat"><div class="fk" data-en="Grounded" data-zh="有据">有据</div><h4 data-en="Honest by design" data-zh="诚实为底">诚实为底</h4><p data-en="Answers cite sources; a per-book AI voice stays within bounds — knowledge and company, never diagnosis." data-zh="回答标出处；每本书的 AI 都守着边界——只给知识与陪伴，不作诊断。">回答标出处；每本书的 AI 都守着边界——只给知识与陪伴，不作诊断。</p></div>
       </div>
     </div></section>
 
@@ -418,7 +571,7 @@
       <div class="sec-copy rv" style="text-align:center;max-width:none">
         <div class="eyebrow" data-en="THE SHELF" data-zh="书架">书架</div>
         <h2 style="margin-top:8px" data-en="On the shelf" data-zh="书架上的书">书架上的书</h2>
-        <p style="margin:12px auto 0;max-width:52ch" data-en="Three books to start, plus a public-domain Bible corpus in beta." data-zh="首批三本 demo，另有公版《圣经》测试语料。">首批三本 demo，另有公版《圣经》测试语料。</p>
+        <p style="margin:12px auto 0;max-width:52ch" data-en="Three books to start — each with its own lecture, graph and outline — plus a public-domain Bible corpus in beta." data-zh="首批三本，各有自己的讲解、图谱与脉络——另有公版《圣经》测试语料。">首批三本，各有自己的讲解、图谱与脉络——另有公版《圣经》测试语料。</p>
       </div>
       <div class="shelf rv" style="margin-top:24px">
         <div class="book b1"><div class="bk-cn" data-en="Man's Search for Meaning" data-zh="活出生命的意义">活出生命的意义</div><div class="bk-en">Man's Search for Meaning</div><div class="bk-au" data-en="Viktor Frankl" data-zh="维克多·弗兰克尔">维克多·弗兰克尔</div></div>
@@ -431,33 +584,6 @@
       </div>
     </div></section>
 
-    <!-- 陪伴卡 -->
-    <section class="sec rev" id="card"><div class="wrap sec-grid">
-      <div class="sec-copy rv">
-        <div class="eyebrow" data-en="MEMBERSHIP" data-zh="陪伴卡">陪伴卡</div>
-        <h2 style="margin-top:8px" data-en="The companion card" data-zh="陪伴卡">陪伴卡</h2>
-        <p data-en="¥365 for a whole year of company — the lectures, the asking, and every memory you keep." data-zh="365 元，一整年的陪伴——所有讲解、随时的提问，和你留下的每一则记忆。">365 元，一整年的陪伴——所有讲解、随时的提问，和你留下的每一则记忆。</p>
-      </div>
-      <div class="mcwrap rv">
-        <div class="memcard">
-          <div class="mm-top">
-            <div class="mm-name">岁月书房<small data-en="Companion Card" data-zh="陪伴卡">陪伴卡</small></div>
-            <svg width="26" height="26" viewBox="0 0 40 40" fill="none" aria-hidden="true" style="opacity:.8"><path d="M20 15 6 17.5V32l14-2 14 2V17.5L20 15Z" stroke="var(--seal)" stroke-width="1.5" stroke-linejoin="round"/><circle cx="20" cy="6" r="2.3" fill="var(--seal)"/></svg>
-          </div>
-          <div class="mm-price">¥365<small data-en=" / year" data-zh=" / 年"> / 年</small></div>
-          <ul>
-            <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3.2L13 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en="All lectures, unlimited" data-zh="听全部讲解，不限量">听全部讲解，不限量</span></li>
-            <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3.2L13 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en="Ask this section, unlimited" data-zh="问这一节，不限次">问这一节，不限次</span></li>
-            <li><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3.2L13 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-en="Memory cards & memoir" data-zh="记忆卡与回忆录">记忆卡与回忆录</span></li>
-            <li class="soon-li"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.4"/></svg><span data-en="Family access — coming soon" data-zh="家属端 —— 敬请期待">家属端 —— 敬请期待</span></li>
-          </ul>
-          <a class="btn" href="https://glossa.soulforgetech.com" target="_blank" rel="noopener" style="width:100%;text-align:center" data-en="Get the card" data-zh="开通陪伴卡">开通陪伴卡</a>
-          <div class="mm-note" data-en="WeChat sign-in, the companion card and family access are on the way." data-zh="微信登录、陪伴卡与家属端功能，敬请期待。">微信登录、陪伴卡与家属端功能，敬请期待。</div>
-          <svg class="memchop" viewBox="0 0 70 70" aria-hidden="true"><circle cx="35" cy="35" r="31" fill="none" stroke="var(--seal)" stroke-width="3"/><path d="M22 30c5-2 8-2 13 1 5-3 8-3 13-1v12c-5-2-8-2-13 1-5-3-8-3-13-1V30Z" fill="none" stroke="var(--seal)" stroke-width="2.4"/></svg>
-        </div>
-      </div>
-    </div></section>
-
     <!-- 在哪读 -->
     <section class="sec"><div class="wrap">
       <div class="sec-copy rv" style="text-align:center;max-width:none">
@@ -465,10 +591,19 @@
         <h2 style="margin-top:8px" data-en="Anywhere, and it remembers" data-zh="随处续读，进度自会记得">随处续读，进度自会记得</h2>
         <p style="margin:12px auto 0;max-width:48ch" data-en="Web, App and a WeChat mini-program — your place and your memories stay in sync across all three." data-zh="网页、App、微信小程序——进度与记忆，三端一处同步。">网页、App、微信小程序——进度与记忆，三端一处同步。</p>
       </div>
-      <div class="ends3 rv">
-        <div class="endc"><div class="en-k">Web</div><div class="en-t" data-en="Web" data-zh="网页">网页</div><div class="en-s">glossa.soulforgetech.com</div></div>
-        <div class="endc"><div class="en-k">iOS</div><div class="en-t">App</div><div class="en-s" data-en="on the App Store" data-zh="App Store 上架中">App Store 上架中</div></div>
-        <div class="endc"><div class="en-k">WeChat</div><div class="en-t" data-en="Mini-program" data-zh="微信小程序">微信小程序</div><div class="en-s" data-en="scan to open" data-zh="扫码即用">扫码即用</div></div>
+      <div class="ends4 rv">
+        <a class="endc" href="https://glossa.soulforgetech.com" target="_blank" rel="noopener">
+          <div class="en-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke-width="1.5"/><ellipse cx="12" cy="12" rx="4" ry="9" stroke-width="1.2"/><line x1="3" y1="12" x2="21" y2="12" stroke-width="1.2"/><line x1="5.2" y1="7.5" x2="18.8" y2="7.5" stroke-width="1"/><line x1="5.2" y1="16.5" x2="18.8" y2="16.5" stroke-width="1"/></svg></div>
+          <div class="en-t" data-en="Web" data-zh="网页">网页</div><div class="en-s">glossa.soulforgetech.com</div><div class="en-go" data-en="Open →" data-zh="打开 →">打开 →</div></a>
+        <a class="endc" href="https://testflight.apple.com/join/D5ENbUP2" target="_blank" rel="noopener">
+          <div class="en-ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 12.04c-.03-2.87 2.35-4.25 2.46-4.32-1.34-1.96-3.42-2.23-4.16-2.26-1.77-.18-3.46 1.04-4.36 1.04-.9 0-2.29-1.02-3.77-.99-1.94.03-3.73 1.13-4.73 2.87-2.02 3.5-.52 8.68 1.44 11.52.96 1.39 2.1 2.95 3.6 2.9 1.44-.06 1.99-.93 3.73-.93 1.74 0 2.24.93 3.77.9 1.56-.03 2.54-1.42 3.49-2.82 1.1-1.61 1.55-3.17 1.58-3.25-.03-.02-3.03-1.16-3.06-4.61zM14.6 4.15c.8-.97 1.34-2.31 1.19-3.65-1.15.05-2.55.77-3.37 1.73-.74.86-1.38 2.24-1.21 3.55 1.28.1 2.59-.65 3.39-1.63z"/></svg></div>
+          <div class="en-t" data-en="iOS · iPadOS" data-zh="iOS · iPadOS">iOS · iPadOS</div><div class="en-s" data-en="App Store · in review" data-zh="App Store 上架中 · 测试版">App Store 上架中 · 测试版</div><div class="en-go" data-en="TestFlight →" data-zh="TestFlight 试用 →">TestFlight 试用 →</div></a>
+        <a class="endc" href="https://expo.dev/accounts/jingbin/projects/glossa-mobile/builds/16913a37-f96b-46c7-a1de-ce05be7a8477" target="_blank" rel="noopener">
+          <div class="en-ic"><svg viewBox="0 0 28 20" fill="currentColor" aria-hidden="true"><g stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="8.5" y1="4.8" x2="6.5" y2="2"/><line x1="19.5" y1="4.8" x2="21.5" y2="2"/></g><path d="M4 12 a10 10 0 0 1 20 0 Z"/><circle cx="10" cy="8" r="1.15" fill="var(--panel)"/><circle cx="18" cy="8" r="1.15" fill="var(--panel)"/></svg></div>
+          <div class="en-t" data-en="Android" data-zh="Android">Android</div><div class="en-s" data-en="internal beta · Expo" data-zh="内测版 · Expo">内测版 · Expo</div><div class="en-go" data-en="Download APK →" data-zh="下载 APK →">下载 APK →</div></a>
+        <div class="endc">
+          <div class="en-ic"><svg viewBox="0 0 30 26" fill="currentColor" aria-hidden="true"><path d="M11 3.2C5.9 3.2 2 6.5 2 10.5c0 2.2 1.2 4.2 3.2 5.6L4 19.8l3.9-2c1 .3 2 .45 3.1.45.3 0 .6-.01.9-.04-.2-.66-.3-1.35-.3-2.06 0-3.7 3.6-6.6 8.1-6.6.35 0 .7.02 1.05.06C19.5 5.6 15.7 3.2 11 3.2z"/><circle cx="8" cy="8.6" r="1.15" fill="var(--panel)"/><circle cx="14" cy="8.6" r="1.15" fill="var(--panel)"/><path d="M28 16c0-3-2.9-5.4-6.5-5.4S15 13 15 16s2.9 5.4 6.5 5.4c.85 0 1.7-.14 2.45-.4L26.8 22.5l-1.4-2.7C26.9 18.8 28 17.5 28 16z"/><circle cx="19.4" cy="15.4" r="0.85" fill="var(--panel)"/><circle cx="23.6" cy="15.4" r="0.85" fill="var(--panel)"/></svg></div>
+          <div class="en-t" data-en="Mini-program" data-zh="微信小程序">微信小程序</div><div class="en-s" data-en="in development" data-zh="开发中">开发中</div></div>
       </div>
     </div></section>
 
@@ -479,28 +614,20 @@
           <svg width="22" height="22" viewBox="286 265 452 452" role="img" aria-label="Glossa">
             <path fill-rule="evenodd" fill="var(--ink)" d="M512 512 C452 482 372 470 296 472 C286 540 286 624 300 690 C372 700 452 706 512 712 C572 706 652 700 724 690 C738 624 738 540 728 472 C652 470 572 482 512 512 Z M474 528 C410 512 360 506 322 500 C314 560 314 612 330 662 C372 672 430 676 480 678 C478 628 476 576 474 528 Z M550 528 C614 512 664 506 702 500 C710 560 710 612 694 662 C652 672 594 676 544 678 C546 628 548 576 550 528 Z"/>
             <path fill="var(--seal)" d="M524 508 L548 508 L548 612 L536 596 L524 612 Z"/>
-            <g fill="none" stroke="var(--ink)" stroke-linecap="butt">
-              <path d="M438 502 L430 388" stroke-width="6"/>
-              <path d="M430 388 L548 290" stroke-width="8"/>
-              <path d="M612 414 L548 290" stroke-width="6"/>
-            </g>
-            <g stroke="none">
-              <circle cx="430" cy="388" r="14" fill="var(--ink)"/>
-              <circle cx="612" cy="414" r="13" fill="var(--ink)"/>
-              <circle cx="548" cy="290" r="20" fill="var(--seal)"/>
-            </g>
+            <g fill="none" stroke="var(--ink)" stroke-linecap="butt"><path d="M438 502 L430 388" stroke-width="6"/><path d="M430 388 L548 290" stroke-width="8"/><path d="M612 414 L548 290" stroke-width="6"/></g>
+            <g stroke="none"><circle cx="430" cy="388" r="14" fill="var(--ink)"/><circle cx="612" cy="414" r="13" fill="var(--ink)"/><circle cx="548" cy="290" r="20" fill="var(--seal)"/></g>
           </svg>
           <span class="bname">Glossa · 岁月书房</span>
         </div>
-        <div class="csub" data-en="A book you can listen to, ask, and remember." data-zh="一本可听、可问、可回忆的书。">一本可听、可问、可回忆的书。</div>
+        <div class="csub" data-en="Read the book. See how it thinks." data-zh="读这本书，也看见它怎么想。">读这本书，也看见它怎么想。</div>
         <div style="font-family:var(--f-mono);font-size:11px;letter-spacing:.04em;color:var(--ink-faint);margin-top:10px">© 2026 SoulForge Tech</div>
       </div>
       <div class="cstats" data-en="Glossa · 岁月书房&#10;Web · glossa.soulforgetech.com&#10;App · WeChat mini-program" data-zh="Glossa · 岁月书房&#10;网页 · glossa.soulforgetech.com&#10;App · 微信小程序">Glossa · 岁月书房<br>网页 · glossa.soulforgetech.com<br>App · 微信小程序</div>
       <div class="cright">
         <a href="mailto:contact@soulforge.tech">contact@soulforge.tech</a>
         <div class="flinks">
-          <a href="index.html" data-en="← SoulLink" data-zh="← SoulLink">← SoulLink</a>
-          <a href="platform.html" data-en="Platform" data-zh="平台">平台</a>
+          <a href="index.html" data-en="← SoulForge" data-zh="← SoulForge">← SoulForge</a>
+          <a href="soullink.html" data-en="SoulLink" data-zh="SoulLink">SoulLink</a>
         </div>
       </div>
     </div></footer>
@@ -509,21 +636,23 @@
   <script>
   (function(){
     var root=document.documentElement; root.classList.add('js');
-    var LKEY='soullink-diary-lang', TKEY='soullink-diary-theme';
+    var LKEY='soullink-diary-lang', TKEY='sf-theme';
 
     /* theme */
     var themeBtn=document.getElementById('themeBtn');
-    function curTheme(){ var t=root.getAttribute('data-theme'); if(t) return t;
-      return window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'; }
+    function curTheme(){ var t=root.getAttribute('data-theme'); if(t) return t; return window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'; }
     function setTheme(t){ root.setAttribute('data-theme',t); themeBtn.textContent=t==='dark'?'☀':'☾'; try{localStorage.setItem(TKEY,t)}catch(e){} }
     var tInit; try{ tInit=localStorage.getItem(TKEY); }catch(e){}
-    setTheme(tInit || curTheme());
+    if(tInit){ setTheme(tInit); } else { themeBtn.textContent=curTheme()==='dark'?'☀':'☾'; }
     themeBtn.addEventListener('click',function(){ setTheme(curTheme()==='dark'?'light':'dark'); });
+    var _tmq=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)');
+    if(_tmq&&_tmq.addEventListener) _tmq.addEventListener('change',function(){ if(!root.getAttribute('data-theme')) themeBtn.textContent=_tmq.matches?'☀':'☾'; });
 
     /* language */
+    var lang='zh';
     function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
     function applyLang(l){
-      root.setAttribute('lang', l==='zh'?'zh-CN':'en');
+      lang=l; root.setAttribute('lang', l==='zh'?'zh-CN':'en');
       document.querySelectorAll('[data-en]').forEach(function(el){
         var v=el.getAttribute(l==='zh'?'data-zh':'data-en'); if(v==null) return;
         var norm=v.replace(/\\n/g,'\n');
@@ -531,32 +660,125 @@
         else { el.textContent=norm; }
       });
       document.querySelectorAll('.seg [data-lang]').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.lang===l)); });
-      try{ localStorage.setItem(LKEY,l); }catch(e){}
+      setLectureSrc(l);
+      var _kg=document.getElementById('kglive'); if(_kg && _kg.__kgRender) _kg.__kgRender();
     }
     document.querySelectorAll('.seg [data-lang]').forEach(function(b){ b.addEventListener('click',function(){ applyLang(b.dataset.lang); }); });
 
-    /* lecture waveform */
+    /* lecture player — real audio */
+    var audio=document.getElementById('lecAudio');
     var wave=document.getElementById('wave');
-    if(wave){ var n=52, played=Math.round(n*0.29);
-      for(var i=0;i<n;i++){ var s=document.createElement('span');
-        var h=18+Math.abs(Math.sin(i*0.7))*24+Math.abs(Math.sin(i*0.23))*10;
-        s.style.height=h+'%'; if(i<played) s.className='on'; wave.appendChild(s); } }
-
-    /* reveal on scroll */
+    var playBtn=document.getElementById('playBtn');
+    var playIcon=document.getElementById('playIcon');
+    var timeEl=document.getElementById('plTime');
+    var spBtn=document.getElementById('spBtn');
+    var speeds=[1,1.15,0.85], si=0;
+    var PLAY='<path d="M0 0l16 9L0 18z"/>', PAUSE='<path d="M1 0h5v18H1z M10 0h5v18h-5z"/>';
     var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var io=null;
-    if('IntersectionObserver' in window && !reduce){
-      io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },{threshold:0.12,rootMargin:'0px 0px -8% 0px'});
-    }
-    document.querySelectorAll('.rv').forEach(function(el){ if(reduce || !io){ el.classList.add('in'); return; } io.observe(el); });
 
-    /* seal stamp — fires when the memory card scrolls into view */
+    /* build bars + draggable red playhead */
+    var N=56, bars=[];
+    for(var i=0;i<N;i++){ var s=document.createElement('span'); var h=20+Math.abs(Math.sin(i*0.7))*24+Math.abs(Math.sin(i*0.23))*12; s.style.height=h+'%'; s.style.animationDelay=((i%9)*0.07).toFixed(2)+'s'; wave.appendChild(s); bars.push(s); }
+    var ph=document.createElement('i'); ph.className='ph'; wave.appendChild(ph);
+    function fmt(t){ if(!isFinite(t)||t<0) t=0; var m=Math.floor(t/60), s=Math.floor(t%60); return m+':'+(s<10?'0':'')+s; }
+    function render(frac){ frac=Math.min(1,Math.max(0,frac||0)); ph.style.left=(frac*100)+'%'; var on=Math.round(N*frac); for(var i=0;i<N;i++){ bars[i].classList.toggle('on', i<on); } var d=audio.duration||0; timeEl.textContent=fmt(frac*d)+' / '+fmt(d); }
+    function paint(){ var d=audio.duration||0; render(d?(audio.currentTime/d):0); }
+    function setLectureSrc(l){ audio.src = l==='zh' ? 'public/lecture-mans-s1-zh.mp3' : 'public/lecture-mans-s1-en.mp3'; audio.load(); audio.playbackRate=speeds[si]; render(0); }
+    playBtn.addEventListener('click',function(){ if(audio.paused){ audio.play(); } else { audio.pause(); } });
+    audio.addEventListener('play',function(){ playIcon.innerHTML=PAUSE; if(!reduce) wave.classList.add('playing'); });
+    audio.addEventListener('pause',function(){ playIcon.innerHTML=PLAY; wave.classList.remove('playing'); });
+    audio.addEventListener('ended',function(){ playIcon.innerHTML=PLAY; wave.classList.remove('playing'); });
+    audio.addEventListener('timeupdate',paint);
+    audio.addEventListener('loadedmetadata',paint);
+    audio.addEventListener('durationchange',paint);
+    var dragging=false;
+    function fracFromX(x){ var r=wave.getBoundingClientRect(); return Math.min(1,Math.max(0,(x-r.left)/r.width)); }
+    function scrub(x){ var f=fracFromX(x); render(f); if(isFinite(audio.duration)&&audio.duration) audio.currentTime=f*audio.duration; }
+    wave.addEventListener('pointerdown',function(e){ dragging=true; try{ wave.setPointerCapture(e.pointerId); }catch(_){}; scrub(e.clientX); e.preventDefault(); });
+    wave.addEventListener('pointermove',function(e){ if(dragging) scrub(e.clientX); });
+    wave.addEventListener('pointerup',function(){ dragging=false; });
+    wave.addEventListener('pointercancel',function(){ dragging=false; });
+    spBtn.addEventListener('click',function(){ si=(si+1)%speeds.length; audio.playbackRate=speeds[si]; spBtn.textContent=speeds[si].toFixed(2).replace(/0$/,'')+'×'; });
+
+    /* reveal */
+    var io=null;
+    if('IntersectionObserver' in window && !reduce){ io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },{threshold:0.12,rootMargin:'0px 0px -8% 0px'}); }
+    document.querySelectorAll('.rv').forEach(function(el){ if(reduce||!io){ el.classList.add('in'); return; } io.observe(el); });
+
+    /* seal stamp */
     var stamped=false;
-    function stamp(){ var c=document.getElementById('chop'); if(!c) return;
-      if(reduce){ c.style.opacity='1'; return; } if(stamped) return; stamped=true; c.classList.add('stamped'); }
+    function stamp(){ var c=document.getElementById('chop'); if(!c) return; if(reduce){ c.style.opacity='1'; return; } if(stamped) return; stamped=true; c.classList.add('stamped'); }
     var mcEl=document.getElementById('mcard');
-    if(io && mcEl){ var io2=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ stamp(); io2.disconnect(); } }); },{threshold:0.45}); io2.observe(mcEl); }
-    else { stamp(); }
+    if(io && mcEl){ var io2=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ stamp(); io2.disconnect(); } }); },{threshold:0.45}); io2.observe(mcEl); } else { stamp(); }
+
+    /* interactive knowledge graph — real John (ch.1–3) subgraph: drag · click a node · click a line */
+    (function(){
+      var host=document.getElementById('kglive'); if(!host) return;
+      var esvg=document.getElementById('kgEdges');
+      var info=document.getElementById('kgInfo');
+      function L(){ return root.getAttribute('lang')==='en'?'en':'zh'; }
+      var NS=[
+        {id:'jesus',t:'person',en:'Jesus',zh:'耶稣',x:50,y:46,c:1},
+        {id:'evcana',t:'event',en:'Cana · 1st sign',zh:'迦拿婚宴',x:50,y:13},
+        {id:'baptist',t:'person',en:'John the Baptist',zh:'施洗约翰',x:22,y:21},
+        {id:'nic',t:'person',en:'Nicodemus',zh:'尼哥底母',x:79,y:22},
+        {id:'light',t:'theme',en:'Light',zh:'光',x:86,y:41},
+        {id:'jeru',t:'place',en:'Jerusalem',zh:'耶路撒冷',x:83,y:67},
+        {id:'cana',t:'place',en:'Cana',zh:'迦拿',x:46,y:85},
+        {id:'peter',t:'person',en:'Peter',zh:'彼得',x:15,y:69}
+      ];
+      var ES=[
+        ['jesus','baptist',{k:'cooccur',s:7,zh:'施洗约翰为耶稣作见证',en:'John bears witness to Jesus',ref:'约 1'}],
+        ['jesus','nic',{k:'cooccur',s:8,zh:'尼哥底母夜里来见耶稣，论「重生」',en:'Nicodemus comes by night — being “born again”',ref:'约 3'}],
+        ['jesus','peter',{k:'cooccur',s:6,zh:'耶稣呼召西门彼得作门徒',en:'Jesus calls Simon Peter',ref:'约 1'}],
+        ['jesus','cana',{k:'involves',s:5,zh:'耶稣在迦拿赴婚宴',en:'Jesus at the wedding in Cana',ref:'约 2'}],
+        ['jesus','jeru',{k:'involves',s:6,zh:'耶稣上耶路撒冷，洁净圣殿',en:'Jesus goes up to Jerusalem',ref:'约 2'}],
+        ['jesus','light',{k:'concept',s:7,zh:'耶稣是世界的光',en:'Jesus is the light of the world',ref:'约 1 · 8'}],
+        ['jesus','evcana',{k:'sequence',s:6,zh:'耶稣行第一件神迹：水变酒',en:"Jesus' first sign: water into wine",ref:'约 2'}],
+        ['evcana','cana',{k:'involves',s:5,zh:'神迹发生在迦拿',en:'the sign happens at Cana',ref:'约 2'}],
+        ['baptist','light',{k:'concept',s:5,zh:'约翰为光作见证',en:'John bears witness to the light',ref:'约 1'}],
+        ['nic','jeru',{k:'involves',s:4,zh:'尼哥底母是耶路撒冷的法利赛人',en:'Nicodemus, a Pharisee of Jerusalem',ref:'约 3 · 7'}]
+      ];
+      var by={}; NS.forEach(function(n){ by[n.id]=n; });
+      NS.forEach(function(n){ var el=document.createElement('div'); el.className='kg-n '+n.t+(n.c?' center':''); el.style.left=n.x+'%'; el.style.top=n.y+'%'; el.innerHTML='<span data-en="'+n.en+'" data-zh="'+n.zh+'">'+(L()==='en'?n.en:n.zh)+'</span>'; n.el=el; host.appendChild(el); wire(el,n); });
+      function mk(cls){ var l=document.createElementNS('http://www.w3.org/2000/svg','line'); l.setAttribute('class',cls); return l; }
+      var LN=ES.map(function(e){ var vis=mk('vis'), hit=mk('hit'); esvg.appendChild(vis); esvg.appendChild(hit); var o={vis:vis,hit:hit,a:by[e[0]],b:by[e[1]],r:e[2]}; hit.addEventListener('click',function(ev){ ev.stopPropagation(); pickEdge(o); }); return o; });
+      function P(n){ var r=host.getBoundingClientRect(); return {x:n.x/100*r.width, y:n.y/100*r.height}; }
+      function draw(){ LN.forEach(function(l){ var a=P(l.a),b=P(l.b); [l.vis,l.hit].forEach(function(ln){ ln.setAttribute('x1',a.x); ln.setAttribute('y1',a.y); ln.setAttribute('x2',b.x); ln.setAttribute('y2',b.y); }); }); }
+      var sel=null;
+      function clearSel(){ sel=null; NS.forEach(function(n){ n.el.classList.remove('dim','sel'); }); LN.forEach(function(l){ l.vis.classList.remove('dim','sel'); }); render(); }
+      function pickNode(n){ if(sel&&sel.n===n){ clearSel(); return; } var nb={}; nb[n.id]=1; LN.forEach(function(l){ if(l.a===n||l.b===n){ nb[l.a.id]=1; nb[l.b.id]=1; } }); NS.forEach(function(m){ m.el.classList.toggle('dim',!nb[m.id]); m.el.classList.toggle('sel',m===n); }); LN.forEach(function(l){ var on=l.a===n||l.b===n; l.vis.classList.toggle('sel',on); l.vis.classList.toggle('dim',!on); }); sel={type:'node',n:n}; render(); }
+      function pickEdge(l){ if(sel&&sel.l===l){ clearSel(); return; } NS.forEach(function(m){ m.el.classList.toggle('dim',m!==l.a&&m!==l.b); m.el.classList.toggle('sel',m===l.a||m===l.b); }); LN.forEach(function(x){ x.vis.classList.toggle('sel',x===l); x.vis.classList.toggle('dim',x!==l); }); sel={type:'edge',l:l}; render(); }
+      var KMAP={cooccur:['co-occurs','同现'],involves:['involves','涉及'],sequence:['follows','先后'],concept:['idea','概念']};
+      function nm(n){ return L()==='en'?n.en:n.zh; }
+      function render(){ var l=L();
+        if(!sel){ info.className='kg-info hint'; info.textContent = l==='en'?'Click a name to see its links · click a line for why':'点一个名字，看它和谁相关 · 点一条线，看它为什么相连'; return; }
+        info.className='kg-info';
+        if(sel.type==='node'){ var names=LN.filter(function(x){return x.a===sel.n||x.b===sel.n;}).map(function(x){ return nm(x.a===sel.n?x.b:x.a); }); info.innerHTML='<b>'+nm(sel.n)+'</b> '+(l==='en'?'connects to':'关联')+' '+names.join(l==='en'?', ':'、'); }
+        else { var r=sel.l.r, k=KMAP[r.k][l==='en'?0:1]; info.innerHTML='<b>'+nm(sel.l.a)+'</b>&nbsp;—&nbsp;<b>'+nm(sel.l.b)+'</b> · '+k+' · '+r.ref+' · '+(l==='en'?'strength':'强度')+' '+r.s+'/10<br><em>'+(l==='en'?r.en:r.zh)+'</em>'; }
+      }
+      function wire(el,n){ el.addEventListener('pointerdown',function(e){ e.preventDefault(); try{ el.setPointerCapture(e.pointerId); }catch(_){} var sx=e.clientX, sy=e.clientY, moved=false; el.style.zIndex='6';
+        function mv(ev){ if(!moved && Math.abs(ev.clientX-sx)+Math.abs(ev.clientY-sy)>5) moved=true; if(moved){ var r=host.getBoundingClientRect(); n.x=Math.min(93,Math.max(7,(ev.clientX-r.left)/r.width*100)); n.y=Math.min(90,Math.max(9,(ev.clientY-r.top)/r.height*100)); el.style.left=n.x+'%'; el.style.top=n.y+'%'; draw(); } }
+        function up(){ el.removeEventListener('pointermove',mv); el.removeEventListener('pointerup',up); el.style.zIndex=''; if(!moved) pickNode(n); }
+        el.addEventListener('pointermove',mv); el.addEventListener('pointerup',up); });
+        el.addEventListener('click',function(e){ e.stopPropagation(); }); }
+      host.addEventListener('click',function(e){ if(e.target===host||e.target===esvg||e.target===info) clearSel(); });
+      host.__kgRender=render;
+      draw(); render(); window.addEventListener('resize',draw);
+    })();
+
+    /* nav circles — scroll-spy that loops a pen stroke around the active tab (as on SoulLink) */
+    (function(){
+      var links=[].slice.call(document.querySelectorAll('.navlinks a[href^="#"]'));
+      if(!links.length) return;
+      var CIRCLE='<svg class="nav-circle" viewBox="0 0 100 36" preserveAspectRatio="none" aria-hidden="true"><path d="M 8,18 C 10,7 28,3 50,4 C 74,5 92,10 95,18 C 96,28 80,33 50,33 C 22,33 5,30 6,20 C 6,15 9,13 16,11" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>';
+      links.forEach(function(a){ a.insertAdjacentHTML('beforeend',CIRCLE); });
+      var ids=links.map(function(a){ return a.getAttribute('href').slice(1); });
+      function setOn(id){ links.forEach(function(a){ a.classList.toggle('on', a.getAttribute('href')==='#'+id); }); }
+      function spy(){ var trig=window.innerHeight*0.35, act=''; ids.forEach(function(id){ var el=document.getElementById(id); if(el && el.getBoundingClientRect().top<=trig) act=id; }); setOn(act); }
+      links.forEach(function(a){ a.addEventListener('click',function(){ setOn(a.getAttribute('href').slice(1)); }); });
+      spy(); window.addEventListener('scroll',spy,{passive:true}); window.addEventListener('resize',spy);
+    })();
 
     var lInit; try{ lInit=localStorage.getItem(LKEY); }catch(e){}
     applyLang(lInit || 'zh');

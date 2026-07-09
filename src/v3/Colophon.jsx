@@ -81,9 +81,9 @@ function Colophon() {
                 SoulForge Tech, LLC · 2026 · 由会回邮件的人做的。
               </span>
             </p>
-            <a href="platform.html" className="col-platform-link">
-              <span className="en-only">for builders &amp; researchers → /platform</span>
-              <span className="zh-only">给开发者和研究者 → /platform</span>
+            <a href="index.html#tech" className="col-platform-link">
+              <span className="en-only">for builders &amp; researchers → the technology</span>
+              <span className="zh-only">给开发者和研究者 → 看技术</span>
             </a>
           </div>
         </div>

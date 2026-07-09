@@ -1,9 +1,10 @@
 // SoulLink — full landing assembly, lang + theme + tweaks
 function App() {
   const [theme, setTheme] = React.useState(() => {
-    try { return localStorage.getItem('soullink-diary-theme') || 'light'; }
-    catch { return 'light'; }
+    try { const s = localStorage.getItem('sf-theme'); if (s === 'light' || s === 'dark') return s; } catch {}
+    try { return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; } catch { return 'light'; }
   });
+  const themeChosen = React.useRef(false);
   const [lang, setLang] = React.useState(() => {
     try { return localStorage.getItem('soullink-diary-lang') || 'en'; }
     catch { return 'en'; }
@@ -22,8 +23,16 @@ function App() {
 
   React.useEffect(() => {
     document.body.classList.toggle('theme-dark', theme === 'dark');
-    try { localStorage.setItem('soullink-diary-theme', theme); } catch {}
+    if (themeChosen.current) { try { localStorage.setItem('sf-theme', theme); } catch {} }
   }, [theme]);
+
+  // Follow the system light/dark until the reader picks one by hand.
+  React.useEffect(() => {
+    let mq; try { mq = window.matchMedia('(prefers-color-scheme: dark)'); } catch (e) { return; }
+    const onChange = () => { try { if (!localStorage.getItem('sf-theme')) setTheme(mq.matches ? 'dark' : 'light'); } catch (e) {} };
+    if (mq.addEventListener) mq.addEventListener('change', onChange); else mq.addListener(onChange);
+    return () => { if (mq.removeEventListener) mq.removeEventListener('change', onChange); else mq.removeListener(onChange); };
+  }, []);
 
   React.useEffect(() => {
     document.body.classList.remove('lang-en','lang-zh');
@@ -53,7 +62,7 @@ function App() {
 
   return (
     <>
-      <Nav theme={theme} onToggleTheme={() => setTheme(x => x==='dark'?'light':'dark')}
+      <Nav theme={theme} onToggleTheme={() => { themeChosen.current = true; setTheme(x => x==='dark'?'light':'dark'); }}
            lang={lang} onLang={setLang}/>
       <Hero/>
       <SoulSystem/>
