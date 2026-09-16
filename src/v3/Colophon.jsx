@@ -64,7 +64,9 @@ function Colophon() {
               <span className="zh-only">联系</span>
             </div>
             <ul className="col-list mono">
-              <li>contact@soulforge.tech</li>
+              <li>contact@soulforgetech.com</li>
+              <li>jingbin@soulforgetech.com</li>
+              <li>alphonse@soulforgetech.com</li>
             </ul>
           </div>
 
