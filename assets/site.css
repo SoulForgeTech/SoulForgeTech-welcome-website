@@ -173,6 +173,17 @@ html[lang="zh-CN"] [data-en], html[lang="en"] [data-zh] { display: none !importa
 .btn:hover { color: var(--ink); background: rgba(42, 38, 32, 0.05); }
 .btn:active { transform: scale(0.97); transition: transform 100ms ease-out; }
 .btn.lg { height: 48px; padding: 0 22px; font-size: 1rem; }
+/* Oslian wordmark: the navy lettering on paper, the light lettering in dark mode. */
+.oslian-wordmark { display: inline-flex; }
+.oslian-wordmark img { width: 150px; height: auto; }
+.oslian-wordmark .wm-dark { display: none; }
+:root[data-theme="dark"] .oslian-wordmark .wm-light { display: none; }
+:root[data-theme="dark"] .oslian-wordmark .wm-dark { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .oslian-wordmark .wm-light { display: none; }
+  :root:not([data-theme="light"]) .oslian-wordmark .wm-dark { display: block; }
+}
+
 /* Official store badges (artwork as supplied by Apple / Google; only scaled). */
 .store-badge { display: inline-flex; align-items: center; border-radius: 9px; transition: transform var(--spring-dur) var(--spring), opacity 150ms ease; }
 .store-badge:hover { opacity: 0.88; }
