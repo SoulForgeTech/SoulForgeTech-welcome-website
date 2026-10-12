@@ -1,712 +1,319 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN" class="no-js">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>SoulForge Tech — Forging warmth into technology</title>
-  <link rel="icon" type="image/png" href="public/logo.png"/>
-  <link rel="canonical" href="https://soulforgetech.com/"/>
-  <meta property="og:title" content="SoulForge Tech — Forging warmth into technology"/>
-  <meta property="og:description" content="Infrastructure for AI companions with a soul — memory, an inner life, and the will to reach back. Two products: SoulLink and Glossa."/>
-  <meta property="og:url" content="https://soulforgetech.com/"/>
-  <meta property="og:image" content="https://soulforgetech.com/public/logo.png"/>
-  <meta property="og:type" content="website"/>
-  <meta name="theme-color" content="#0E0D0B" media="(prefers-color-scheme: dark)"/>
-  <meta name="theme-color" content="#F4EFE6" media="(prefers-color-scheme: light)"/>
-  <link rel="stylesheet" href="assets/platform.css?v=20260515"/>
-  <style>
-    /* ===== THEME: light auto-follows system; data-theme overrides ===== */
-    :root{ --pf-nav-bg:rgba(14,13,11,0.86); }
-    @media (prefers-color-scheme: light){
-      :root{
-        --pf-bg:#F4EFE6; --pf-bg-2:#ECE5D6; --pf-fg:#2A2620;
-        --pf-muted:#6E675C; --pf-line:rgba(42,38,32,0.12); --pf-line-2:rgba(42,38,32,0.22);
-        --pf-seal:#B8312F; --pf-seal-soft:rgba(184,49,47,0.16);
-        --pf-nav-bg:rgba(244,239,230,0.85);
-      }
-    }
-    :root[data-theme="light"]{
-      --pf-bg:#F4EFE6; --pf-bg-2:#ECE5D6; --pf-fg:#2A2620;
-      --pf-muted:#6E675C; --pf-line:rgba(42,38,32,0.12); --pf-line-2:rgba(42,38,32,0.22);
-      --pf-seal:#B8312F; --pf-seal-soft:rgba(184,49,47,0.16);
-      --pf-nav-bg:rgba(244,239,230,0.85);
-    }
-    :root[data-theme="dark"]{
-      --pf-bg:#0E0D0B; --pf-bg-2:#16140F; --pf-fg:#F4EFE6;
-      --pf-muted:#6B6760; --pf-line:rgba(244,239,230,0.10); --pf-line-2:rgba(244,239,230,0.18);
-      --pf-seal:#B8312F; --pf-seal-soft:rgba(184,49,47,0.22);
-      --pf-nav-bg:rgba(14,13,11,0.86);
-    }
-    /* theme-aware fixes for platform.css hardcodes */
-    .platform .pf-nav{ background:var(--pf-nav-bg); }
-    .platform .pf-btn{ color:#FBF7EE; }
-    .platform .pf-problem-line:nth-child(3){ color:var(--pf-fg); opacity:.42; }
-    /* subtle paper grain in light mode only */
-    body.platform{ transition:background .4s ease,color .4s ease; }
-
-    /* theme toggle button */
-    .pf-theme{ width:30px; height:30px; border:1px solid var(--pf-line-2); background:transparent;
-      color:var(--pf-fg); border-radius:2px; cursor:pointer; font-size:13px; line-height:1;
-      display:inline-flex; align-items:center; justify-content:center; transition:border-color .15s ease; }
-    .pf-theme:hover{ border-color:var(--pf-fg); }
-
-    .pf-hero-eyebrow{ font-family:var(--pf-mono); font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--pf-muted); margin-bottom:22px; }
-
-    /* hero graph — theme-aware via CSS (var() needs CSS props, not SVG attrs) */
-    .pf-graph .g-grid{ stroke:var(--pf-fg); stroke-opacity:.07; stroke-width:.5; fill:none; }
-    .pf-graph .g-edge{ stroke:var(--pf-fg); stroke-opacity:.30; stroke-width:1; fill:none; }
-    .pf-graph .g-node{ fill:var(--pf-fg); }
-    .pf-graph .g-hot{ fill:var(--pf-seal); }
-    .pf-graph .g-ring{ stroke:var(--pf-seal); stroke-width:1; fill:none; opacity:.5; }
-    .pf-graph .g-lbl{ fill:var(--pf-fg); fill-opacity:.5; font-family:var(--pf-mono); font-size:8px; letter-spacing:.1em; }
-    .pf-graph .g-lbl.hot{ fill:var(--pf-seal); fill-opacity:1; }
-
-    /* closing line under the problem */
-    .pf-turn{ font-family:var(--pf-display); font-style:italic; font-size:clamp(18px,2vw,24px);
-      color:var(--pf-muted); margin-top:36px; max-width:640px; text-wrap:pretty; }
-    .pf-turn em{ font-style:normal; color:var(--pf-seal); }
-
-    /* two product cards — the gateway */
-    .pf-products{ display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:52px; }
-    .pf-product{ display:flex; flex-direction:column; text-decoration:none; padding:40px 36px 34px;
-      border:1px solid var(--pf-line-2); background:var(--pf-bg); position:relative; overflow:hidden;
-      transition:border-color .2s ease, transform .2s ease; }
-    .pf-product::after{ content:""; position:absolute; left:0; top:0; height:3px; width:100%; background:var(--pf-seal); transform:scaleX(0); transform-origin:left; transition:transform .25s ease; }
-    .pf-product:hover{ transform:translateY(-3px); }
-    .pf-product:hover::after{ transform:scaleX(1); }
-    .pf-product .pp-tag{ font-family:var(--pf-mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--pf-seal); }
-    .pf-product .pp-name{ font-family:var(--pf-display); font-weight:400; font-size:38px; letter-spacing:-.025em; color:var(--pf-fg); margin:18px 0 4px; line-height:1; }
-    .pf-product .pp-sub{ font-family:var(--pf-display); font-style:italic; font-size:15px; color:var(--pf-muted); }
-    .pf-product .pp-desc{ font-family:var(--pf-body); font-size:15px; line-height:1.6; color:var(--pf-muted); margin:22px 0 22px; max-width:42ch; }
-    /* verb line — italic display keywords with seal middots, no boxes */
-    .pf-product .pp-kw{ display:flex; flex-wrap:wrap; align-items:baseline; margin-bottom:20px; }
-    .pf-product .pp-kw > span{ font-family:var(--pf-display); font-style:italic; font-size:17px; letter-spacing:.01em; color:var(--pf-fg); }
-    .pf-product .pp-kw > span + span::before{ content:"·"; color:var(--pf-seal); font-style:normal; margin:0 12px; }
-    .pf-product .pp-meta{ font-family:var(--pf-mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--pf-muted); padding-top:16px; border-top:1px solid var(--pf-line); display:flex; align-items:center; gap:8px; }
-    .pf-product .pp-meta .dot{ width:6px; height:6px; border-radius:50%; background:var(--pf-seal); display:inline-block; }
-    .pf-product .pp-tech{ font-family:var(--pf-mono); font-size:10px; letter-spacing:.03em; line-height:1.75; color:var(--pf-muted); margin-top:8px; }
-    .pf-product .pp-go{ margin-top:20px; font-family:var(--pf-body); font-size:14.5px; font-weight:500; color:var(--pf-fg); display:inline-flex; gap:8px; align-items:center; }
-    .pf-product:hover .pp-go{ color:var(--pf-seal); }
-    .pf-product .pp-go .arrow{ transition:transform .2s ease; }
-    .pf-product:hover .pp-go .arrow{ transform:translateX(3px); }
-
-    /* platform capabilities — 2×2, richer + a proof line */
-    .pf-caps{ display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--pf-line); border:1px solid var(--pf-line); margin-top:44px; }
-    .pf-cap{ background:var(--pf-bg); padding:34px 34px 30px; display:flex; flex-direction:column; gap:12px; min-height:210px; }
-    .pf-cap .n{ font-family:var(--pf-mono); font-size:10px; letter-spacing:.18em; color:var(--pf-seal); }
-    .pf-cap h3{ font-family:var(--pf-display); font-weight:400; font-size:22px; color:var(--pf-fg); letter-spacing:-.01em; }
-    .pf-cap p{ font-family:var(--pf-body); font-size:14.5px; line-height:1.58; color:var(--pf-muted); flex:1; }
-    .pf-cap .proof{ font-family:var(--pf-mono); font-size:10.5px; letter-spacing:.06em; color:var(--pf-muted); padding-top:14px; border-top:1px solid var(--pf-line); }
-    .pf-cap .proof b{ color:var(--pf-seal); font-weight:400; }
-    .pf-more{ margin-top:34px; display:inline-flex; align-items:center; gap:8px; font-family:var(--pf-body); font-size:14.5px; color:var(--pf-seal); text-decoration:none; border-bottom:1px solid var(--pf-seal-soft); padding-bottom:3px; }
-    .pf-more:hover{ border-color:var(--pf-seal); }
-    .pf-verticals-note{ margin-top:28px; font-family:var(--pf-display); font-style:italic; font-size:15px; color:var(--pf-muted); }
-    .pf-verticals-note b{ color:var(--pf-fg); font-weight:400; font-style:normal; }
-
-    /* team */
-    .pf-team{ display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:44px; }
-    .pf-member{ padding:32px 30px; border:1px solid var(--pf-line-2); background:var(--pf-bg); }
-    .pf-member .m-name{ font-family:var(--pf-display); font-weight:400; font-size:23px; color:var(--pf-fg); letter-spacing:-.01em; }
-    .pf-member .m-role{ font-family:var(--pf-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--pf-seal); margin-top:8px; }
-    .pf-member .m-edu{ font-family:var(--pf-body); font-size:13px; color:var(--pf-fg); margin-top:14px; }
-    .pf-member .m-bio{ font-family:var(--pf-body); font-size:13.5px; color:var(--pf-muted); line-height:1.6; margin-top:8px; }
-
-    /* contact */
-    .pf-contact{ max-width:640px; }
-    .pf-contact h2{ font-family:var(--pf-display); font-weight:400; font-size:clamp(28px,3vw,40px); letter-spacing:-.02em; line-height:1.14; color:var(--pf-fg); margin-bottom:26px; text-wrap:balance; }
-    .pf-contact .row{ display:flex; align-items:center; gap:22px; flex-wrap:wrap; }
-    .pf-contact .email{ font-family:var(--pf-mono); font-size:15px; color:var(--pf-fg); text-decoration:none; border-bottom:1px solid var(--pf-line-2); padding-bottom:3px; }
-    .pf-contact .email:hover{ border-color:var(--pf-seal); color:var(--pf-seal); }
-
-    /* smooth anchors under the sticky nav */
-    html{ scroll-behavior:smooth; }
-    .pf-section{ scroll-margin-top:70px; }
-
-    /* nav scroll-spy — seal underline on the active section */
-    .pf-nav-links a{ position:relative; }
-    .pf-nav-links a::after{ content:""; position:absolute; left:10%; right:10%; bottom:-5px; height:1.5px; background:var(--pf-seal); transform:scaleX(0); transform-origin:left; transition:transform .25s ease; }
-    .pf-nav-links a.on{ color:var(--pf-fg); }
-    .pf-nav-links a.on::after{ transform:scaleX(1); }
-
-    /* sub-eyebrow — labels the two halves of the tech section */
-    .pf-sub-eyebrow{ display:block; font-family:var(--pf-mono); font-size:10.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--pf-muted); margin-top:56px; }
-    .pf-sub-eyebrow b{ color:var(--pf-seal); font-weight:400; }
-
-    /* the tech grid — six real capabilities, theme-aware SVGs */
-    .pf-pillars{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--pf-line); border:1px solid var(--pf-line); margin-top:44px; }
-    .pf-pillar{ background:var(--pf-bg); padding:30px 28px 24px; display:flex; flex-direction:column; gap:11px; }
-    .pf-pillar .proof{ font-family:var(--pf-mono); font-size:11px; letter-spacing:.06em; color:var(--pf-muted); padding-top:14px; border-top:1px solid var(--pf-line); }
-    .pf-pillar .proof b{ color:var(--pf-seal); font-weight:400; }
-    .pf-pillar-num{ font-family:var(--pf-mono); font-size:10px; letter-spacing:.18em; color:var(--pf-seal); }
-    .pf-pillar-title{ font-family:var(--pf-display); font-weight:400; font-size:19px; color:var(--pf-fg); letter-spacing:-.01em; }
-    .pf-pillar-desc{ font-family:var(--pf-body); font-size:13.5px; line-height:1.55; color:var(--pf-muted); flex:1; }
-    .pf-pillar-svg{ width:100%; height:70px; margin-top:4px; }
-    .pf-pillar-svg .s{ stroke:var(--pf-fg); stroke-opacity:.35; stroke-width:1; fill:none; }
-    .pf-pillar-svg .f{ fill:var(--pf-fg); fill-opacity:.85; }
-    .pf-pillar-svg .hot{ fill:var(--pf-seal); }
-    .pf-pillar-svg .hots{ stroke:var(--pf-seal); stroke-width:1.2; fill:none; }
-
-    /* resources — the holdings */
-    .pf-stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--pf-line); border:1px solid var(--pf-line); margin-top:44px; }
-    .pf-stat{ background:var(--pf-bg); padding:26px 24px 22px; }
-    .pf-stat .v{ font-family:var(--pf-display); font-weight:400; font-size:34px; color:var(--pf-fg); letter-spacing:-.02em; font-variant-numeric:tabular-nums; }
-    .pf-stat .v em{ font-style:normal; color:var(--pf-seal); }
-    .pf-stat .k{ font-family:var(--pf-mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--pf-muted); margin-top:8px; }
-    .pf-res{ display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-top:32px; }
-    .pf-res-item{ border-top:1px solid var(--pf-line-2); padding-top:16px; }
-    .pf-res-item .n{ font-family:var(--pf-mono); font-size:10px; letter-spacing:.18em; color:var(--pf-seal); display:block; margin-bottom:10px; }
-    .pf-res-item h3{ font-family:var(--pf-display); font-weight:400; font-size:18px; color:var(--pf-fg); }
-    .pf-res-item p{ font-family:var(--pf-body); font-size:13px; line-height:1.6; color:var(--pf-muted); margin-top:8px; }
-
-    /* verticals (ported) */
-    .pf-verticals{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:44px; }
-    .pf-vertical{ border-top:1px solid var(--pf-line-2); padding-top:18px; }
-    .pf-vertical-num{ font-family:var(--pf-mono); font-size:10px; letter-spacing:.18em; color:var(--pf-seal); }
-    .pf-vertical-title{ font-family:var(--pf-display); font-weight:400; font-size:20px; color:var(--pf-fg); margin-top:10px; }
-    .pf-vertical-desc{ font-family:var(--pf-body); font-size:13.5px; line-height:1.6; color:var(--pf-muted); margin-top:8px; }
-    .pf-verticals-disclaimer{ margin-top:30px; font-family:var(--pf-display); font-style:italic; font-size:14.5px; color:var(--pf-muted); }
-    .pf-verticals-disclaimer a{ color:var(--pf-seal); text-decoration:none; border-bottom:1px solid var(--pf-seal-soft); }
-
-    /* vision */
-    .pf-vision-lead{ font-family:var(--pf-display); font-weight:400; font-size:clamp(26px,3vw,38px); letter-spacing:-.02em; line-height:1.22; color:var(--pf-fg); max-width:780px; margin-top:34px; text-wrap:balance; }
-    .pf-vision-lead em{ font-style:italic; color:var(--pf-seal); }
-    .pf-vis{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:44px; }
-    .pf-vis-item{ border-top:1px solid var(--pf-line-2); padding-top:16px; }
-    .pf-vis-item h3{ font-family:var(--pf-display); font-weight:400; font-size:19px; color:var(--pf-fg); }
-    .pf-vis-item p{ font-family:var(--pf-body); font-size:13.5px; line-height:1.62; color:var(--pf-muted); margin-top:8px; }
-    .pf-vision-close{ margin-top:44px; font-family:var(--pf-display); font-style:italic; font-size:clamp(17px,1.9vw,21px); color:var(--pf-muted); max-width:680px; line-height:1.55; }
-    .pf-vision-close em{ font-style:normal; color:var(--pf-seal); }
-
-    /* team — richer cards */
-    .pf-member .m-top{ display:flex; align-items:center; gap:16px; }
-    .pf-member .m-ava{ width:52px; height:52px; flex:0 0 auto; display:grid; place-items:center; border:1px solid var(--pf-line-2); color:var(--pf-seal); font-family:var(--pf-display); font-size:18px; letter-spacing:.02em; }
-    .pf-member .m-loc{ font-family:var(--pf-mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--pf-muted); margin-top:6px; }
-    /* focus line — same italic verb treatment as the product cards */
-    .pf-member .m-chips{ display:flex; flex-wrap:wrap; align-items:baseline; margin-top:16px; }
-    .pf-member .m-chips > span{ font-family:var(--pf-display); font-style:italic; font-size:15.5px; letter-spacing:.01em; color:var(--pf-fg); }
-    .pf-member .m-chips > span + span::before{ content:"·"; color:var(--pf-seal); font-style:normal; margin:0 10px; }
-    .pf-member .m-links{ display:flex; gap:16px; margin-top:18px; padding-top:14px; border-top:1px solid var(--pf-line); }
-    .pf-member .m-links a{ font-family:var(--pf-mono); font-size:11px; letter-spacing:.08em; color:var(--pf-fg); text-decoration:none; border-bottom:1px solid var(--pf-line-2); padding-bottom:2px; }
-    .pf-member .m-links a:hover{ color:var(--pf-seal); border-color:var(--pf-seal); }
-
-    /* type scale bump + smoother rendering (fonts read small / jagged on Windows) */
-    body.platform{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; text-rendering:optimizeLegibility; }
-    .pf-nav-links a{ font-size:14.5px; }
-    .pf-eyebrow{ font-size:11.5px; }
-    .pf-hero-sub{ font-size:18px; line-height:1.65; }
-    .pf-section-tagline{ font-size:17px; }
-    .pf-why p{ font-size:17.5px; line-height:1.7; }
-    .pf-product .pp-desc{ font-size:16px; line-height:1.66; max-width:46ch; }
-    .pf-product .pp-tech{ font-size:11px; line-height:1.8; }
-    .pf-product .pp-meta{ font-size:11.5px; }
-    .pf-product .pp-tag{ font-size:11px; }
-    .pf-pillar-title{ font-size:20px; }
-    .pf-pillar-desc{ font-size:15px; line-height:1.62; }
-    .pf-res-item h3{ font-size:19px; }
-    .pf-res-item p{ font-size:14.5px; line-height:1.65; }
-    .pf-stat .k{ font-size:11px; }
-    .pf-vertical-desc{ font-size:15px; line-height:1.65; }
-    .pf-vis-item p{ font-size:15px; line-height:1.68; }
-    .pf-member .m-edu{ font-size:14.5px; }
-    .pf-member .m-bio{ font-size:15px; line-height:1.68; }
-    .pf-member .m-links a{ font-size:11.5px; }
-
-    @media (max-width:980px){
-      .pf-products{ grid-template-columns:1fr; }
-      .pf-caps{ grid-template-columns:1fr 1fr; }
-      .pf-team{ grid-template-columns:1fr; }
-      .pf-pillars{ grid-template-columns:1fr 1fr; }
-      .pf-stats{ grid-template-columns:1fr 1fr; }
-      .pf-res{ grid-template-columns:1fr 1fr; }
-      .pf-verticals{ grid-template-columns:1fr; }
-      .pf-vis{ grid-template-columns:1fr; }
-    }
-    @media (max-width:560px){ .pf-caps{ grid-template-columns:1fr; } .pf-pillars{ grid-template-columns:1fr; } .pf-res{ grid-template-columns:1fr; } }
-  </style>
+<meta charset="utf-8">
+<script>try{var t=localStorage.getItem("sf_theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SoulForge · 陪人读书、陪人说话的 AI 产品</title>
+<meta name="title-zh-CN" content="SoulForge · 陪人读书、陪人说话的 AI 产品">
+<meta name="title-en" content="SoulForge · AI that reads with you and talks with you">
+<meta name="description" content="SoulForge 做恩典书房、岁月书房和 SoulLink，也和 Oslian 合作医疗研究软件。">
+<link rel="canonical" href="https://soulforgetech.com/">
+<meta property="og:title" content="SoulForge">
+<meta property="og:description" content="恩典书房 · 岁月书房 · SoulLink">
+<meta property="og:url" content="https://soulforgetech.com/">
+<meta property="og:image" content="https://soulforgetech.com/public/logo.png">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#EEE8DC">
+<link rel="icon" type="image/png" href="public/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Noto+Serif+SC:wght@600;700&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=20261012k">
+<script defer src="assets/site.js?v=20261012k"></script>
 </head>
-<body class="platform lang-en">
+<body>
 
-  <!-- ===== NAV ===== -->
-  <nav class="pf-nav">
-    <div class="pf-nav-inner">
-      <a class="pf-logo" href="index.html">
-        <img src="public/logo.png" alt="SoulForge" class="pf-mark"/>
-        <span>SoulForge</span>
-      </a>
-      <div class="pf-nav-links">
-        <a href="#products"><span class="en-only">Products</span><span class="zh-only">产品</span></a>
-        <a href="#tech"><span class="en-only">Technology</span><span class="zh-only">技术</span></a>
-        <a href="#resources"><span class="en-only">Resources</span><span class="zh-only">资源</span></a>
-        <a href="#vision"><span class="en-only">Vision</span><span class="zh-only">愿景</span></a>
-        <a href="#company"><span class="en-only">Team</span><span class="zh-only">团队</span></a>
-        <a href="#contact"><span class="en-only">Contact</span><span class="zh-only">联系</span></a>
-      </div>
-      <div class="pf-nav-actions">
-        <div class="pf-lang" id="lang-toggle">
-          <button data-lang="en" class="active">EN</button>
-          <span style="color:var(--pf-muted)">/</span>
-          <button data-lang="zh">中</button>
-        </div>
-        <button class="pf-theme" id="theme-toggle" aria-label="Toggle theme">☾</button>
-        <a href="#products" class="pf-back"><span class="en-only">See the products →</span><span class="zh-only">看看产品 →</span></a>
-      </div>
-    </div>
-  </nav>
+<header class="topbar">
+<div class="wrap">
+<div style="display: flex; align-items: center; gap: 28px">
+<a class="brand" href="index.html"><img src="public/logo.png" alt=""><b>SoulForge</b></a>
+<nav class="nav" aria-label="主导航" data-spy>
+<a href="#grace"><span data-zh>恩典书房</span><span data-en>Glossa Bible</span></a>
+<a href="#glossa"><span data-zh>岁月书房</span><span data-en>Glossa</span></a>
+<a href="#soullink">SoulLink</a>
+<a href="#oslian"><span data-zh>合作项目</span><span data-en>Partnership</span></a>
+<a href="#team"><span data-zh>团队</span><span data-en>Team</span></a>
+</nav>
+</div>
+<div class="bar-actions">
+<button type="button" class="theme-btn" data-theme-toggle aria-label="切换深浅色"><svg data-moon width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg><svg data-sun width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+<button type="button" class="lang-btn" data-lang-toggle><span data-l="zh">中</span><span class="sep">/</span><span data-l="en">EN</span></button>
+<a class="btn ink" href="#contact"><span data-zh>联系我们</span><span data-en>Contact</span></a>
+</div>
+</div>
+</header>
 
-  <!-- ===== HERO ===== -->
-  <header class="pf-hero">
-    <div class="container">
-      <div class="pf-hero-grid">
-        <div>
-          <div class="pf-hero-eyebrow"><span class="en-only">SoulForge Tech · Houston · Riverside</span><span class="zh-only">SoulForge Tech · 休斯顿 · 河滨</span></div>
-          <h1 class="pf-hero-headline">
-            <span class="en-only">Forging <em>warmth</em> into technology.</span>
-            <span class="zh-only">把<em>温度</em>，铸进技术。</span>
-          </h1>
-          <p class="pf-hero-sub">
-            <span class="en-only">We build the infrastructure that gives AI characters real memory, an inner life, and the will to reach back — and two products that put it in people's hands.</span>
-            <span class="zh-only">我们为 AI 角色打造真正的记忆、内心和主动性，并做成两款产品：一款陪你生活，一款陪你读书。</span>
-          </p>
-          <div class="pf-hero-actions">
-            <a href="#products" class="pf-btn"><span class="en-only">Meet the products</span><span class="zh-only">认识两个产品</span><span class="arrow">↓</span></a>
-            <a href="#tech" class="pf-btn-quiet"><span class="en-only">The technology →</span><span class="zh-only">看技术 →</span></a>
-          </div>
-        </div>
+<main>
+<section class="wrap" style="padding-top: 72px; padding-bottom: 36px">
+<h1 class="h1 rise" style="--d: 0">
+<span data-zh>我们做陪人读书、陪人说话的 AI 产品。</span>
+<span data-en>We build AI that reads with you and talks with you.</span>
+</h1>
+<p class="soft rise" style="--d: 1; margin: 16px 0 0; max-width: 680px; font-size: 1.125rem">
+<span data-zh>恩典书房陪你读圣经，岁月书房陪你读书、聊人生，SoulLink 陪你说话、写日记。三款产品用的是同一套记忆、检索和声音技术；我们也和 Oslian 合作，做医疗方向的研究软件。</span>
+<span data-en>Glossa Bible reads Scripture with you, Glossa reads books and talks about life with you, and SoulLink keeps you company and keeps a diary. All three run on the same memory, retrieval and voice technology, and with Oslian we also build research software for medicine.</span>
+</p>
+</section>
 
-        <div class="pf-hero-visual">
-          <svg class="pf-graph" viewBox="0 0 380 380" aria-hidden="true">
-            <defs>
-              <radialGradient id="pf-node-glow" cx="50%" cy="50%" r="50%">
-                <stop offset="0" stop-color="#B8312F" stop-opacity="0.9"/>
-                <stop offset="0.6" stop-color="#B8312F" stop-opacity="0.2"/>
-                <stop offset="1" stop-color="#B8312F" stop-opacity="0"/>
-              </radialGradient>
-            </defs>
-            <g class="g-grid">
-              <path d="M 40 40 L 340 40 L 340 340 L 40 340 Z"/>
-              <line x1="40" y1="115" x2="340" y2="115"/>
-              <line x1="40" y1="190" x2="340" y2="190"/>
-              <line x1="40" y1="265" x2="340" y2="265"/>
-              <line x1="115" y1="40" x2="115" y2="340"/>
-              <line x1="190" y1="40" x2="190" y2="340"/>
-              <line x1="265" y1="40" x2="265" y2="340"/>
-            </g>
-            <g class="g-edge">
-              <line x1="80" y1="100" x2="190" y2="160"/>
-              <line x1="190" y1="160" x2="300" y2="80"/>
-              <line x1="190" y1="160" x2="120" y2="260"/>
-              <line x1="190" y1="160" x2="280" y2="260"/>
-              <line x1="120" y1="260" x2="280" y2="260"/>
-              <line x1="80" y1="100" x2="120" y2="260"/>
-              <line x1="300" y1="80" x2="280" y2="260"/>
-            </g>
-            <circle cx="190" cy="160" r="60" fill="url(#pf-node-glow)"/>
-            <g class="g-node">
-              <circle cx="80"  cy="100" r="5"/>
-              <circle cx="300" cy="80"  r="5"/>
-              <circle cx="120" cy="260" r="5"/>
-              <circle cx="280" cy="260" r="5"/>
-            </g>
-            <circle class="g-hot" cx="190" cy="160" r="8"/>
-            <circle class="g-ring" cx="190" cy="160" r="14"/>
-            <text class="g-lbl" x="62" y="92">e₁</text>
-            <text class="g-lbl" x="290" y="72">e₂</text>
-            <text class="g-lbl" x="98" y="278">e₄</text>
-            <text class="g-lbl" x="288" y="278">e₅</text>
-            <text class="g-lbl hot" x="174" y="148">e₀</text>
-          </svg>
-        </div>
-      </div>
-    </div>
-  </header>
+<section id="products" class="wrap section">
+<div class="grid three">
+<a class="card pad reveal" style="--d: 0" href="grace.html">
+<div class="product">
+<div class="head">
+<img src="assets/img/brand/grace-icon.png" alt="">
+<div><b class="h3" style="display: block"><span data-zh>恩典书房</span><span data-en>Glossa Bible</span></b>
+<span class="soft" style="font-size: 0.875rem"><span data-zh>读经 · 公益项目</span><span data-en>Bible reading · non-profit</span></span></div>
+</div>
+<p><span data-zh>读圣经、听每章讲解、问经文问题。回答会标出引用的经文和解经出处。</span><span data-en>Read the Bible, hear a lecture for every chapter, ask about any verse. Answers cite the verse and the commentary.</span></p>
+<div class="foot"><span class="mono">App Store · Google Play</span><span class="chip"><span data-zh>已上架</span><span data-en>Live</span></span></div>
+</div>
+</a>
+<a class="card pad reveal" style="--d: 1" href="glossa.html">
+<div class="product">
+<div class="head">
+<img src="assets/img/brand/suiyue-logo.png" alt="">
+<div><b class="h3" style="display: block"><span data-zh>岁月书房</span><span data-en>Glossa</span></b>
+<span class="soft" style="font-size: 0.875rem"><span data-zh>读书 · 与岁月书斋合作</span><span data-en>Books · with Suiyue Shuzhai</span></span></div>
+</div>
+<p><span data-zh>给自己一间会说话的书房：听一段书，聊一段人生，写下自己的故事。</span><span data-en>A study that talks: hear a book, talk about your life, and write your own story.</span></p>
+<div class="foot"><span class="mono"><span data-zh>网页 · App · 小程序</span><span data-en>Web · App · WeChat</span></span><span class="chip muted"><span data-zh>商务合作 · 迭代中</span><span data-en>Partnership · in progress</span></span></div>
+</div>
+</a>
+<a class="card pad reveal" style="--d: 2" href="soullink.html">
+<div class="product">
+<div class="head">
+<img src="assets/img/brand/soullink-icon.png" alt="">
+<div><b class="h3" style="display: block">SoulLink</b>
+<span class="soft" style="font-size: 0.875rem"><span data-zh>陪伴 · 伴侣日记</span><span data-en>Companion · The Companion Diaries</span></span></div>
+</div>
+<p><span data-zh>和喜欢的角色写日记、聊天、打电话。它记得你说过的事，久了没联系会给你写信。</span><span data-en>Keep a diary, chat and call with a character you love. It remembers what you said and writes when it has been a while.</span></p>
+<div class="foot"><span class="mono"><span data-zh>网页 · 日记免费</span><span data-en>Web · the diary is free</span></span><span class="chip muted"><span data-zh>商务合作 · 迭代中</span><span data-en>Partnership · in progress</span></span></div>
+</div>
+</a>
+</div>
+</section>
 
-  <!-- ===== THE PROBLEM ===== -->
-  <section class="pf-section" id="why">
-    <div class="container">
-      <span class="pf-eyebrow"><span class="en-only">Why we exist</span><span class="zh-only">为什么做这件事</span></span>
-      <div class="pf-problem">
-        <div class="pf-problem-line"><span class="en-only">Today's AI forgets you.</span><span class="zh-only">今天的 AI，会忘了你。</span></div>
-        <div class="pf-problem-line"><span class="en-only">It makes things up.</span><span class="zh-only">它会一本正经地编。</span></div>
-        <div class="pf-problem-line"><span class="en-only">It's a text box, not a companion.</span><span class="zh-only">它只是一个输入框，谈不上陪伴。</span></div>
-      </div>
-      <p class="pf-turn"><span class="en-only">So we build the layer underneath — memory that <em>lasts</em>, answers you can <em>trace</em>, and a voice to listen to — then two companions on top of it.</span><span class="zh-only">于是我们从最底层做起：<em>记得住</em>的记忆、<em>有出处</em>的回答、听得见的声音。两个产品，都建在这之上。</span></p>
-    </div>
-  </section>
+<!-- 恩典书房 -->
+<section id="grace" class="wrap section">
+<div class="card feature-panel panel-grace grace reveal">
+<div class="text">
+<span class="eyebrow"><span data-zh>恩典书房</span><span data-en>Glossa Bible</span></span>
+<h2 class="h2"><span data-zh>App Store 和 Google Play 都已上架</span><span data-en>Now on the App Store and Google Play</span></h2>
+<p class="soft" style="margin: 0"><span data-zh>从岁月书房分出来的一款读经 App，专门给读圣经的人用。这是一个公益项目：所有功能免费，没有广告。</span><span data-en>A Bible app grown out of Glossa, made for people who read Scripture. It is a non-profit project: every feature is free, with no ads.</span></p>
+<ul>
+<li><span data-zh>和合本简体、繁體、KJV 可以并排看</span><span data-en>Chinese Union Version (simplified and traditional) side by side with the KJV</span></li>
+<li><span data-zh>每章有一段讲解，锁屏能听，也能下载离线听</span><span data-en>A lecture for every chapter, playable from the lock screen or offline</span></li>
+<li><span data-zh>问书的回答引用马太·亨利、蔡哲民等人的解经，点开能看原文</span><span data-en>Answers quote Matthew Henry, Chua Che-Min and others; tap to read their own words</span></li>
+<li><span data-zh>253 首公有领域圣诗，歌词跟着音乐走</span><span data-en>253 public-domain hymns with lyrics that follow the music</span></li>
+</ul>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px">
+<a class="store-badge" href="https://apps.apple.com/app/id6811499488" aria-label="在 App Store 下载"><img class="b-app" src="assets/img/badges/app-store-official.svg" alt="Download on the App Store"></a>
+<a class="store-badge" href="https://play.google.com/store/apps/details?id=com.soulforgetech.glossabible" aria-label="在 Google Play 下载"><img class="b-play" src="assets/img/badges/google-play-official.png" alt="Get it on Google Play"></a>
+<a class="btn" href="grace.html"><span data-zh>详细介绍</span><span data-en>Learn more</span></a>
+</div>
+</div>
+<div class="carousel" data-strip-nav="gb-mini" data-step="1">
+<div class="track" id="gb-mini">
+<img draggable="false" src="assets/img/posters/zh/01-home-zh-Hans.jpg" data-src-en="assets/img/posters/en/01-home-en-US.jpg" alt="读经，从这里开始。" data-alt-zh="读经，从这里开始。" data-alt-en="Read. Listen. Ask. All here.">
+<img draggable="false" src="assets/img/posters/zh/06-ask-bible-zh-Hans.jpg" data-src-en="assets/img/posters/en/06-ask-bible-en-US.jpg" alt="有疑问，问就是了。" data-alt-zh="有疑问，问就是了。" data-alt-en="Ask away. It's all cited.">
+<img draggable="false" src="assets/img/posters/zh/08-vocal-hymn-zh-Hans.jpg" data-src-en="assets/img/posters/en/08-vocal-hymn-en-US.jpg" alt="一首圣诗，安静一整天。" data-alt-zh="一首圣诗，安静一整天。" data-alt-en="Real voices. Old hymns.">
+<img draggable="false" loading="lazy" src="assets/img/posters/zh/02-reader-zh-Hans.jpg" data-src-en="assets/img/posters/en/02-reader-en-US.jpg" alt="静得很，读得进。" data-alt-zh="静得很，读得进。" data-alt-en="Quiet page. Clear head.">
+<img draggable="false" loading="lazy" src="assets/img/posters/zh/04-guided-study-zh-Hans.jpg" data-src-en="assets/img/posters/en/04-guided-study-en-US.jpg" alt="读不懂？有人陪你读。" data-alt-zh="读不懂？有人陪你读。" data-alt-en="Never read alone.">
+<img draggable="false" loading="lazy" src="assets/img/posters/zh/07-chapter-lecture-zh-Hans.jpg" data-src-en="assets/img/posters/en/07-chapter-lecture-en-US.jpg" alt="一章一讲，边走边听。" data-alt-zh="一章一讲，边走边听。" data-alt-en="Press play. Hear a chapter.">
+<img draggable="false" loading="lazy" src="assets/img/posters/zh/05-book-outline-zh-Hans.jpg" data-src-en="assets/img/posters/en/05-book-outline-en-US.jpg" alt="先看全局，再读细节。" data-alt-zh="先看全局，再读细节。" data-alt-en="Big picture first.">
+<img draggable="false" loading="lazy" src="assets/img/posters/zh/03-landscape-reader-zh-Hans.jpg" data-src-en="assets/img/posters/en/03-landscape-reader-en-US.jpg" alt="一转，三栏全开。" data-alt-zh="一转，三栏全开。" data-alt-en="Turn it. Three columns.">
+<img draggable="false" loading="lazy" src="assets/img/posters/zh/09-offline-downloads-zh-Hans.jpg" data-src-en="assets/img/posters/en/09-offline-downloads-en-US.jpg" alt="没网，照样读照样听。" data-alt-zh="没网，照样读照样听。" data-alt-en="No signal? No problem.">
+<img draggable="false" loading="lazy" src="assets/img/posters/zh/10-notes-zh-Hans.jpg" data-src-en="assets/img/posters/en/10-notes-en-US.jpg" alt="划一句，记一笔。" data-alt-zh="划一句，记一笔。" data-alt-en="Highlight it. Write it down.">
+</div>
+<button type="button" class="arrow prev" data-dir="-1" aria-label="上一张"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+<button type="button" class="arrow next" data-dir="1" aria-label="下一张"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+</div>
+</div>
+</section>
 
-  <!-- ===== PRODUCTS ===== -->
-  <section class="pf-section" id="products">
-    <div class="container">
-      <span class="pf-eyebrow"><span class="en-only">Two products · one soul</span><span class="zh-only">两个产品 · 同一个灵魂</span></span>
-      <p class="pf-section-tagline"><span class="en-only">Same stack underneath — memory, voice, and presence. Two very different people to meet.</span><span class="zh-only">底下是同一套系统：记忆、声音、陪伴。上面是两个性格很不一样的伙伴，等你认识。</span></p>
+<!-- 岁月书房 -->
+<section id="glossa" class="wrap section">
+<div class="card glossa-panel reveal" style="padding: 36px; display: flex; flex-direction: column; gap: 22px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 8px; max-width: 660px">
+<div class="cobrand sm" role="img" aria-label="岁月书房 × Glossa">
+<img class="seal-logo" src="assets/img/brand/suiyue-logo.png" alt="">
+<b>岁月书房</b><span class="x">×</span>
+<svg class="glyph" aria-hidden="true"><use href="#glossa-glyph" width="100%" height="100%"></use></svg>
+<b class="light">Glossa</b>
+</div>
+<h2 class="h2"><span data-zh>给自己一间会说话的书房</span><span data-en>A study that talks back</span></h2>
+<p class="soft" style="margin: 0"><span data-zh>与岁月书斋编辑部合作，写给 60 后、70 后的读书人。每本书由主编审校，做成约 45 分钟的讲解，分 5 到 8 节慢慢听；听到哪一节，就可以问哪一节。讲解里的人物和年代让你想起什么，也可以说给书房听，经你确认后记成一张记忆卡，慢慢攒成自己的回忆录。</span><span data-en>Made with the Suiyue Shuzhai editors for readers born in the 1960s and 70s. Each book is an editor-reviewed lecture of about 45 minutes in five to eight sections, and you can ask about whichever section you are on. When a person or a year in the lecture brings something back, tell the study; with your say-so it becomes a memory card, and in time, your own memoir.</span></p>
+</div>
+<a class="btn" href="glossa.html"><span data-zh>详细介绍</span><span data-en>Learn more</span></a>
+</div>
 
-      <div class="pf-products">
-        <a class="pf-product" href="soullink.html">
-          <span class="pp-tag"><span class="en-only">Companion · consumer</span><span class="zh-only">陪伴 · 消费级</span></span>
-          <span class="pp-name">SoulLink</span>
-          <span class="pp-sub"><span class="en-only">The Companion Diaries · 伴侣日记</span><span class="zh-only">伴侣日记 · The Companion Diaries</span></span>
-          <span class="pp-desc"><span class="en-only">Bring any character to life — anime, game, novel, or your own. Grounded in real source material, then yours to keep: they remember what you said, send selfies and letters, and reach out when it's been too long.</span><span class="zh-only">把心里的 ta 带来——动漫、游戏、小说，或只活在你心里的那个。从真实资料里长出来，然后留在你身边：记得你说过的小事，会发自拍和来信，太久没说话会主动找你。</span></span>
-          <span class="pp-kw">
-            <span><span class="en-only">remembers</span><span class="zh-only">记得你</span></span>
-            <span><span class="en-only">writes &amp; calls</span><span class="zh-only">会来信</span></span>
-            <span><span class="en-only">stays</span><span class="zh-only">一直在</span></span>
-          </span>
-          <span class="pp-tech"><span class="en-only">Under the hood — tarot personality cold-start · fan-wiki + Wikipedia grounding · World-Info lorebook · Fish Audio voice</span><span class="zh-only">底层 —— 塔罗人格冷启动 · 粉丝百科+维基 grounding · World-Info 词条库 · Fish Audio 声音</span></span>
-          <span class="pp-meta"><span class="dot"></span><span class="en-only">Live · the diary is free, forever</span><span class="zh-only">已上线 · 日记永远免费</span></span>
-          <span class="pp-go"><span class="en-only">Visit SoulLink</span><span class="zh-only">走进 SoulLink</span><span class="arrow">→</span></span>
-        </a>
+<div style="display: flex; flex-wrap: wrap; gap: 20px">
+<div class="sub-card continue" style="flex: 1 1 480px; min-width: 0">
+<img class="cover" src="assets/img/covers/mans-search.jpg" alt="《活出生命的意义》封面">
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span class="faint" style="font-size: 0.8125rem"><span data-zh>继续听</span><span data-en>Continue listening</span></span>
+<b style="font-size: 1.1875rem"><span data-zh>活出生命的意义</span><span data-en>Man's Search for Meaning</span></b>
+<span class="mono"><span data-zh>第 1 节 · 还剩 3 分钟</span><span data-en>Section 1 · 3 min left</span></span>
+<div class="progress"><i></i></div>
+</div>
+</div>
+<div class="sub-card" style="flex: 1 1 320px; min-width: 0; padding: 20px 24px; display: flex; flex-direction: column; justify-content: center; gap: 4px">
+<span class="faint" style="font-size: 0.8125rem"><span data-zh>岁月书房</span><span data-en>Glossa</span></span>
+<b style="font-size: 1.125rem"><span data-zh>2026 年入选书目</span><span data-en>The 2026 reading list</span></b>
+<span class="mono"><span data-zh>6 大类 · 100 本 · 已上架 8 本</span><span data-en>6 categories · 100 books · 8 on the shelf</span></span>
+</div>
+</div>
 
-        <a class="pf-product" href="glossa.html">
-          <span class="pp-tag"><span class="en-only">Reading · 岁月书房</span><span class="zh-only">读书 · 岁月书房</span></span>
-          <span class="pp-name">Glossa</span>
-          <span class="pp-sub"><span class="en-only">A Talking Study · 岁月书房</span><span class="zh-only">岁月书房 · A Talking Study</span></span>
-          <span class="pp-desc"><span class="en-only">Turn a book into a companion you can listen to, ask, and remember. Every section becomes a 40-minute literary lecture; ask the study's guide about the very passage; keep what it stirs as memory cards, sealed in cinnabar.</span><span class="zh-only">把一本书变成可听、可问、可回忆的陪伴。每一节化成 40 分钟文学精讲；对着正听的这段问书斋伴读；把想起的往事，盖上朱砂印，留成一张张记忆卡。</span></span>
-          <span class="pp-kw">
-            <span><span class="en-only">listen</span><span class="zh-only">听讲解</span></span>
-            <span><span class="en-only">ask</span><span class="zh-only">问这一节</span></span>
-            <span><span class="en-only">remember</span><span class="zh-only">记忆卡</span></span>
-          </span>
-          <span class="pp-tech"><span class="en-only">Under the hood — a knowledge graph per book · graph-RAG with clickable citations · pre-generated 40-min lectures · memory cards in your own words</span><span class="zh-only">底层 —— 每本书一张知识图谱 · 带出处的 graph-RAG · 预生成 40 分钟讲解 · 只用你自己话的记忆卡</span></span>
-          <span class="pp-meta"><span class="dot"></span><span class="en-only">Web · App · WeChat mini-program</span><span class="zh-only">网页 · App · 微信小程序</span></span>
-          <span class="pp-go"><span class="en-only">Visit Glossa</span><span class="zh-only">进入 Glossa</span><span class="arrow">→</span></span>
-        </a>
-      </div>
-    </div>
-  </section>
+<div class="case" aria-label="岁月书房书架，点一本书看简介">
+<div class="case-row">
+<button type="button" class="spine" style="width: 56px; height: 244px" data-cover="assets/img/covers/mans-search.jpg" data-title="活出生命的意义" data-title-en="Man's Search for Meaning" data-author="维克多·弗兰克尔" data-author-en="Viktor E. Frankl" data-desc="一位精神科医生在集中营里找到的答案。" data-desc-en="A psychiatrist's answer, written inside the camps."><span class="tex bk-mans"></span><span class="gloss"></span><span class="band t"></span><span class="band b"></span><span class="label"><span data-zh>活出生命的意义</span><span data-en>Man's Search</span></span></button>
+<button type="button" class="spine dk" style="width: 54px; height: 238px" data-cover="assets/img/covers/walden.jpg" data-title="瓦尔登湖" data-title-en="Walden" data-author="亨利·戴维·梭罗" data-author-en="Henry David Thoreau" data-desc="在湖边住了两年，试试人到底需要多少东西。" data-desc-en="Two years by a pond, testing how little a life needs."><span class="tex bk-walden"></span><span class="gloss"></span><span class="band t"></span><span class="band b"></span><span class="label"><span data-zh>瓦尔登湖</span><span data-en>Walden</span></span></button>
+<button type="button" class="spine dk" style="width: 56px; height: 242px" data-cover="assets/img/covers/outlive.jpg" data-title="超越百岁" data-title-en="Outlive" data-author="彼得·阿提亚" data-author-en="Peter Attia" data-desc="一位医生讲怎么在病来之前十年就开始准备。" data-desc-en="A doctor's case for planning the last decade before it arrives."><span class="tex bk-outlive"></span><span class="gloss"></span><span class="band t"></span><span class="band b"></span><span class="label"><span data-zh>超越百岁</span><span data-en>Outlive</span></span></button>
+<button type="button" class="spine dk" style="width: 52px; height: 230px" data-cover="assets/img/covers/mindset.jpg" data-title="终身成长" data-title-en="Mindset" data-author="卡罗尔·德韦克" data-author-en="Carol S. Dweck" data-desc="相信自己能成长，会怎样改变一个人能走多远。" data-desc-en="How believing you can grow changes how far you go."><span class="tex bk-mindset"></span><span class="gloss"></span><span class="band t"></span><span class="band b"></span><span class="label"><span data-zh>终身成长</span><span data-en>Mindset</span></span></button>
+<button type="button" class="spine" style="width: 50px; height: 222px" data-cover="assets/img/covers/we-three.jpg" data-title="我们仨" data-title-en="We Three" data-author="杨绛" data-author-en="Yang Jiang" data-desc="杨绛写她和钱锺书、女儿钱瑗一家三口的往事。" data-desc-en="Yang Jiang's memoir of her family of three."><span class="tex bk-wethree"></span><span class="gloss"></span><span class="band t"></span><span class="band b"></span><span class="label"><span data-zh>我们仨</span><span data-en>We Three</span></span></button>
+<button type="button" class="spine dk" style="width: 54px; height: 236px" data-cover="assets/img/covers/jixianlin-life.jpg" data-title="季羡林谈人生" data-title-en="Ji Xianlin on Life" data-author="季羡林" data-author-en="Ji Xianlin" data-desc="一位老学者谈做人、读书和人生的况味。" data-desc-en="A scholar's late essays on living and reading."><span class="tex bk-jxl"></span><span class="gloss"></span><span class="band t"></span><span class="band b"></span><span class="label"><span data-zh>季羡林谈人生</span><span data-en>Ji Xianlin</span></span></button>
+<button type="button" class="spine dk" style="width: 52px; height: 228px" data-cover="assets/img/covers/life-edge.jpg" data-title="走到人生边上" data-title-en="At the Edge of Life" data-author="杨绛" data-author-en="Yang Jiang" data-desc="九十六岁的杨绛，追问生死、灵魂与人生的价值。" data-desc-en="At ninety-six, Yang Jiang asks about death, the soul and what a life is worth."><span class="tex bk-edge"></span><span class="gloss"></span><span class="band t"></span><span class="band b"></span><span class="label"><span data-zh>走到人生边上</span><span data-en>Edge of Life</span></span></button>
+<button type="button" class="spine" style="width: 58px; height: 246px" data-cover="assets/img/covers/why-we-sleep.jpg" data-title="我们为什么要睡觉" data-title-en="Why We Sleep" data-author="马修·沃克" data-author-en="Matthew Walker" data-desc="睡眠科学家讲睡眠对身体和大脑做了什么。" data-desc-en="A sleep scientist on what sleep does for body and brain."><span class="tex bk-sleep"></span><span class="gloss"></span><span class="band t"></span><span class="band b"></span><span class="label"><span data-zh>我们为什么要睡觉</span><span data-en>Why We Sleep</span></span></button>
+<span class="spine ghost" aria-hidden="true" style="width: 50px; height: 230px; background: #6E7F72"><span class="gloss"></span><span class="band t"></span><span class="band b"></span></span>
+<span class="spine ghost" aria-hidden="true" style="width: 46px; height: 214px; background: #8C7A5E"><span class="gloss"></span><span class="band t"></span><span class="band b"></span></span>
+<span class="spine ghost" aria-hidden="true" style="width: 54px; height: 248px; background: #687A8E"><span class="gloss"></span><span class="band t"></span><span class="band b"></span></span>
+<span class="spine ghost" aria-hidden="true" style="width: 48px; height: 222px; background: #9A8468"><span class="gloss"></span><span class="band t"></span><span class="band b"></span></span>
+<span class="spine ghost" aria-hidden="true" style="width: 52px; height: 238px; background: #7D6B83"><span class="gloss"></span><span class="band t"></span><span class="band b"></span></span>
+<span class="spine ghost" aria-hidden="true" style="width: 50px; height: 226px; background: #5F7D7B"><span class="gloss"></span><span class="band t"></span><span class="band b"></span></span>
+<span class="spine ghost" aria-hidden="true" style="width: 54px; height: 244px; background: #A5333A"><span class="gloss"></span><span class="band t"></span><span class="band b"></span></span>
+<a class="spine more" href="https://glossa.soulforgetech.com/book-list" style="width: 104px; height: 214px"><span data-zh>还有 92 本<br>陆续上架</span><span data-en>92 more<br>on the way</span></a>
+</div>
+<div class="plank"></div>
+</div>
+</div>
+</section>
 
-  <!-- ===== TECHNOLOGY (platform page folded in) ===== -->
-  <section class="pf-section" id="tech">
-    <div class="container">
-      <span class="pf-eyebrow"><span class="en-only">Technology · what's actually running</span><span class="zh-only">技术 · 已在线上运行</span></span>
-      <p class="pf-section-tagline"><span class="en-only">Not a system prompt — real retrieval, persistent memory, and grounding you can trace.</span><span class="zh-only">不是一段 system prompt——而是真实的检索、持久的记忆，和每一句都有出处的回答。</span></p>
+<!-- SoulLink -->
+<section id="soullink" class="wrap section">
+<div class="card feature-panel reveal">
+<div class="text">
+<div style="display: flex; gap: 14px; align-items: center">
+<img src="assets/img/brand/soullink-icon.png" alt="" style="width: 56px; height: 56px; border-radius: 14px; flex: 0 0 56px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18)">
+<span class="eyebrow"><span data-zh>SoulLink · 伴侣日记</span><span data-en>SoulLink · The Companion Diaries</span></span>
+</div>
+<h2 class="h2"><span data-zh>把喜欢的角色带到身边</span><span data-en>Bring a character you love home</span></h2>
+<p class="soft" style="margin: 0"><span data-zh>动漫、游戏、小说里的人物，或者只活在你心里的那一个。它从原作资料里长出性格，和你一起写日记；你久了没来，它会先开口。</span><span data-en>A character from anime, games or novels, or one who only lives in your head. Its personality grows from the source material, it keeps a diary with you, and it reaches out when you have been away.</span></p>
+<ul>
+<li><span data-zh>记得你说过的事，记忆可以查看和编辑</span><span data-en>Remembers what you said; you can see and edit its memory</span></li>
+<li><span data-zh>会写信、寄明信片、发自拍</span><span data-en>Writes letters, sends postcards and selfies</span></li>
+<li><span data-zh>给它挑一个声音，发语音或者直接打电话</span><span data-en>Pick its voice, trade voice notes or just call</span></li>
+<li><span data-zh>日记功能一直免费</span><span data-en>The diary is always free</span></li>
+</ul>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px">
+<a class="btn seal" href="https://prototype.soulforgetech.com"><span data-zh>打开 SoulLink</span><span data-en>Open SoulLink</span></a>
+<a class="btn" href="soullink.html"><span data-zh>详细介绍</span><span data-en>Learn more</span></a>
+</div>
+</div>
+<div class="carousel" data-strip-nav="sl-mini" data-step="1">
+<div class="track" id="sl-mini">
+<img draggable="false" src="assets/img/posters/soullink/01-chat.jpg" alt="Your AI companion, always there.">
+<img draggable="false" src="assets/img/posters/soullink/02-live-portrait.jpg" alt="She's right there with you.">
+<img draggable="false" loading="lazy" src="assets/img/posters/soullink/03-diary.jpg" alt="She writes you into her diary.">
+<img draggable="false" loading="lazy" src="assets/img/posters/soullink/04-design-companion.jpg" alt="Your companion, defined by you.">
+<img draggable="false" loading="lazy" src="assets/img/posters/soullink/05-voice.jpg" alt="A voice you'll want to hear.">
+<img draggable="false" loading="lazy" src="assets/img/posters/soullink/06-diary-editor.jpg" alt="Every page, yours to rewrite.">
+<img draggable="false" loading="lazy" src="assets/img/posters/soullink/07-memory.jpg" alt="The things you said, she remembers.">
+</div>
+<button type="button" class="arrow prev" data-dir="-1" aria-label="上一张"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+<button type="button" class="arrow next" data-dir="1" aria-label="下一张"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+</div>
+</div>
+</section>
 
-      <div class="pf-pillars">
-        <div class="pf-pillar">
-          <span class="pf-pillar-num">01</span>
-          <h3 class="pf-pillar-title"><span class="en-only">Knowledge-graph RAG</span><span class="zh-only">知识图谱检索</span></h3>
-          <p class="pf-pillar-desc"><span class="en-only">Every book gets its own knowledge graph. Answers walk the graph, pull the exact passage, and cite it — click the citation and the reader jumps to the line.</span><span class="zh-only">每本书都有自己的知识图谱。回答沿着图谱检索，取回原文段落，并附上出处——点一下出处，阅读器就翻到那一行。</span></p>
-          <svg class="pf-pillar-svg" viewBox="0 0 220 100" aria-hidden="true">
-            <g class="s"><line x1="30" y1="30" x2="90" y2="60"/><line x1="90" y1="60" x2="150" y2="32"/><line x1="90" y1="60" x2="120" y2="84"/><line x1="150" y1="32" x2="190" y2="60"/></g>
-            <g class="f"><circle cx="30" cy="30" r="4"/><circle cx="150" cy="32" r="4"/><circle cx="120" cy="84" r="4"/><circle cx="190" cy="60" r="4"/></g>
-            <circle class="hot" cx="90" cy="60" r="6"/>
-          </svg>
-          <div class="proof"><span class="en-only"><b>graph-RAG</b> · clickable citations · live in Glossa</span><span class="zh-only"><b>graph-RAG</b> · 可点出处 · Glossa 已上线</span></div>
-        </div>
-        <div class="pf-pillar">
-          <span class="pf-pillar-num">02</span>
-          <h3 class="pf-pillar-title"><span class="en-only">Memory that lasts — and fades</span><span class="zh-only">会记，也会忘</span></h3>
-          <p class="pf-pillar-desc"><span class="en-only">Three tiers — permanent, long-term, short-term — so what matters is kept and trivia decays on its own, with semantic recall over a vector store.</span><span class="zh-only">记忆分三层：永久、长期、短期。要紧的留下来，琐碎的自己淡去；需要时，按语义找回。</span></p>
-          <svg class="pf-pillar-svg" viewBox="0 0 220 100" aria-hidden="true">
-            <g class="s"><circle cx="110" cy="50" r="38"/><circle cx="110" cy="50" r="26"/><circle cx="110" cy="50" r="14"/></g>
-            <circle class="hot" cx="110" cy="50" r="5"/>
-          </svg>
-          <div class="proof"><span class="en-only"><b>Qdrant</b> · text-embedding-3-small · time-decay</span><span class="zh-only"><b>Qdrant</b> 向量召回 · 分层 · 时间衰减</span></div>
-        </div>
-        <div class="pf-pillar">
-          <span class="pf-pillar-num">03</span>
-          <h3 class="pf-pillar-title"><span class="en-only">Canon grounding</span><span class="zh-only">正典打底</span></h3>
-          <p class="pf-pillar-desc"><span class="en-only">Characters grow out of real source material — fan wikis, Wikipedia — with a keyword lorebook firing within a token budget. Told, above all else, not to invent.</span><span class="zh-only">角色从真实材料里长出来：粉丝百科、维基百科打底，词条库按关键词触发，控制在 token 预算之内。第一条规矩：宁可不答，也不编造。</span></p>
-          <svg class="pf-pillar-svg" viewBox="0 0 220 100" aria-hidden="true">
-            <g class="s"><rect x="70" y="16" width="80" height="66" rx="2"/><line x1="82" y1="32" x2="138" y2="32"/><line x1="82" y1="44" x2="138" y2="44"/><line x1="82" y1="56" x2="120" y2="56"/></g>
-            <path class="hots" d="M 138 56 L 176 56 L 176 74"/>
-            <circle class="hot" cx="176" cy="79" r="4"/>
-          </svg>
-          <div class="proof"><span class="en-only"><b>live canon fetch</b> · World-Info lorebook · jieba</span><span class="zh-only"><b>实时正典抓取</b> · World-Info 词条 · jieba 分词</span></div>
-        </div>
-        <div class="pf-pillar">
-          <span class="pf-pillar-num">04</span>
-          <h3 class="pf-pillar-title"><span class="en-only">A voice, both ways</span><span class="zh-only">能听，也能说</span></h3>
-          <p class="pf-pillar-desc"><span class="en-only">Fish Audio S1 speaks; Whisper and Paraformer listen. Glossa pre-generates 40-minute narrated lectures — streamed, cached, resumable; SoulLink takes realtime voice calls.</span><span class="zh-only">Fish Audio S1 负责说，Whisper 与 Paraformer 负责听。Glossa 预生成 40 分钟讲解——边听边缓存、可断点续播；SoulLink 支持实时语音通话。</span></p>
-          <svg class="pf-pillar-svg" viewBox="0 0 220 100" aria-hidden="true">
-            <g class="s"><line x1="40" y1="42" x2="40" y2="58"/><line x1="56" y1="34" x2="56" y2="66"/><line x1="72" y1="26" x2="72" y2="74"/><line x1="88" y1="38" x2="88" y2="62"/><line x1="120" y1="30" x2="120" y2="70"/><line x1="136" y1="42" x2="136" y2="58"/><line x1="152" y1="22" x2="152" y2="78"/><line x1="168" y1="36" x2="168" y2="64"/><line x1="184" y1="44" x2="184" y2="56"/></g>
-            <line class="hots" x1="104" y1="18" x2="104" y2="82"/>
-          </svg>
-          <div class="proof"><span class="en-only"><b>Fish Audio S1</b> · Whisper / Paraformer STT</span><span class="zh-only"><b>Fish Audio S1</b> · Whisper / Paraformer STT</span></div>
-        </div>
-        <div class="pf-pillar">
-          <span class="pf-pillar-num">05</span>
-          <h3 class="pf-pillar-title"><span class="en-only">Personality cold-start</span><span class="zh-only">人格冷启动</span></h3>
-          <p class="pf-pillar-desc"><span class="en-only">A tarot onboarding bootstraps a deep, consistent character in minutes — worldview, voice and boundaries before the first chat.</span><span class="zh-only">塔罗开场，几分钟建立一个有深度、立得住的角色——第一句聊天之前，先有世界观、语气与边界。</span></p>
-          <svg class="pf-pillar-svg" viewBox="0 0 220 100" aria-hidden="true">
-            <g class="s"><rect x="64" y="28" width="32" height="50" rx="2" transform="rotate(-8 80 53)"/><rect x="142" y="28" width="32" height="50" rx="2" transform="rotate(8 158 53)"/></g>
-            <rect class="hots" x="100" y="22" width="32" height="56" rx="2"/>
-          </svg>
-          <div class="proof"><span class="en-only"><b>tarot onboarding</b> · live in SoulLink</span><span class="zh-only"><b>塔罗开场</b> · SoulLink 已上线</span></div>
-        </div>
-        <div class="pf-pillar">
-          <span class="pf-pillar-num">06</span>
-          <h3 class="pf-pillar-title"><span class="en-only">Reaches out first</span><span class="zh-only">会先开口</span></h3>
-          <p class="pf-pillar-desc"><span class="en-only">Companions write letters, send postcards, and notice when you've been away too long — a presence, not a chat box waiting for input.</span><span class="zh-only">角色会主动来信、寄明信片；你久未出现，它会先开口问候——它一直都在，而不是一个等待输入的对话框。</span></p>
-          <svg class="pf-pillar-svg" viewBox="0 0 220 100" aria-hidden="true">
-            <circle class="hot" cx="60" cy="50" r="6"/>
-            <path class="hots" d="M 70 50 L 184 50"/>
-            <path class="hots" d="M 168 42 L 184 50 L 168 58" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <div class="proof"><span class="en-only"><b>letters &amp; postcards</b> · live in SoulLink</span><span class="zh-only"><b>来信与明信片</b> · SoulLink 已上线</span></div>
-        </div>
-      </div>
+<!-- Oslian -->
+<section id="oslian" class="wrap section">
+<h2 class="h2 reveal" style="font-size: 1.75rem"><span data-zh>合作项目</span><span data-en>Partnership</span></h2>
+<div class="card feature-panel reveal" style="margin-top: 20px">
+<div class="text" style="gap: 14px">
+<div style="display: flex; align-items: center; gap: 12px">
+<img src="assets/img/oslian/apple-touch-icon.png" alt="" style="width: 44px; height: 44px; border-radius: 10px">
+<div style="display: flex; flex-direction: column">
+<b class="h3">Oslian</b>
+<span class="faint" style="font-size: 0.875rem"><span data-zh>医疗研究软件 · 与 Oslian LLC 合作</span><span data-en>Clinical research software · with Oslian LLC</span></span>
+</div>
+</div>
+<p class="soft" style="margin: 0"><span data-zh>Oslian 做的是临床预测方向的研究软件：读入 FHIR 格式的病历数据，预测病人全身各项指标接下来的走势，并且只说证据支持的部分。它包含两套彼此隔离的系统：</span><span data-en>Oslian builds research software for clinical forecasting: it reads FHIR records, forecasts a patient's whole-body trajectory, and never claims more than the evidence supports. It has two systems kept deliberately apart:</span></p>
+<div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px">
+<div class="sub-card"><b><span data-zh>监测</span><span data-en>Monitoring</span></b><p><span data-zh>把数据流画在人体图上，同一器官的信号放在一起。模型预测和沿用上次的数值分开标注，每个数都能追到原始记录。</span><span data-en>Signals drawn on an anatomical figure, grouped by organ. Model forecasts and carried-forward values are labelled apart, and every value traces back to its record.</span></p></div>
+<div class="sub-card"><b><span data-zh>用药安全</span><span data-en>Medication safety</span></b><p><span data-zh>用确定的规则给候选药物排序，每一步理由都画出来，安全规则对照药品说明书原句检查。</span><span data-en>A deterministic engine ranks drug candidates and draws the reasoning behind each step; safety rules are checked against label text.</span></p></div>
+</div>
+<p class="faint" style="margin: 0; font-size: 0.875rem"><span data-zh>仅供研究使用，不是医疗器械。只用合成数据，不接入任何医院系统；不做诊断、不给治疗建议、不发临床警报，也不会自动开药。</span><span data-en>Research use only; not a medical device. Synthetic data only, with no connection to any hospital system. No diagnosis, no treatment recommendation, no clinical alert, no automated prescribing.</span></p>
+<a class="btn" style="align-self: flex-start" href="https://oslian.net"><span data-zh>访问 oslian.net</span><span data-en>Visit oslian.net</span></a>
+</div>
+<div style="flex: 1 1 380px; min-width: 0">
+<img src="assets/img/oslian/demo-monitoring.webp" alt="Oslian 研究演示的监测界面，使用合成病人数据" data-alt-zh="Oslian 研究演示的监测界面，使用合成病人数据" data-alt-en="Oslian research demo, monitoring view, synthetic patient" data-src-en="assets/img/oslian/demo-monitoring.webp" loading="lazy" style="width: 100%; border-radius: 12px; border: 1px solid var(--line); box-shadow: 0 10px 24px rgba(42, 38, 32, 0.12)">
+<span class="mono" style="display: block; margin-top: 8px"><span data-zh>研究演示 · 合成病人数据</span><span data-en>Research demo · synthetic patient</span></span>
+</div>
+</div>
+</section>
 
-      <p class="pf-verticals-note" style="margin-top:36px"><b><span class="en-only">Model-agnostic underneath.</span><span class="zh-only">底层与模型无关。</span></b> <span class="en-only">We route across Gemini, GPT, Claude, and Grok — the best model for each job.</span><span class="zh-only">在 Gemini、GPT、Claude、Grok 之间路由，每件事都用最合适的模型。</span></p>
+<!-- Updates -->
+<section id="updates" class="wrap section">
+<h2 class="h2 reveal" style="font-size: 1.75rem"><span data-zh>最近更新</span><span data-en>Recent updates</span></h2>
+<div class="card list-card reveal" style="margin-top: 20px; overflow: hidden">
+<div><span class="mono"><span data-zh>10 月 5 日</span><span data-en>Oct 5</span></span><span><span data-zh>岁月书房网页版改版：新增氛围面板、底部播放条，支持 Apple 登录。</span><span data-en>Glossa web redesign: an ambience panel, a player that stays at the bottom, and Sign in with Apple.</span></span></div>
+<div><span class="mono"><span data-zh>10 月 3 日</span><span data-en>Oct 3</span></span><span><span data-zh>恩典书房重写了罗马书、马太福音、创世记的解经卡，每句都对得上亨利或蔡哲民的原文。</span><span data-en>Glossa Bible rewrote its commentary cards for Romans, Matthew and Genesis; every sentence now matches Henry's or Chua's own words.</span></span></div>
+<div><span class="mono"><span data-zh>9 月 29 日</span><span data-en>Sep 29</span></span><span><span data-zh>恩典书房加入司布真对诗篇的讲解。</span><span data-en>Spurgeon on the Psalms joins Glossa Bible.</span></span></div>
+<div><span class="mono"><span data-zh>9 月 23 日</span><span data-en>Sep 23</span></span><span><span data-zh>恩典书房在 App Store 上架，安卓版随后上架 Google Play。</span><span data-en>Glossa Bible launches on the App Store, followed by Google Play.</span></span></div>
+<div><span class="mono"><span data-zh>9 月 15 日</span><span data-en>Sep 15</span></span><span><span data-zh>岁月书房书架加入《2026 年入选书目》，恩典书房支持繁體中文。</span><span data-en>The 2026 reading list joins the Glossa shelf; Glossa Bible adds Traditional Chinese.</span></span></div>
+<div><span class="mono"><span data-zh>9 月 2 日</span><span data-en>Sep 2</span></span><span><span data-zh>《我们为什么要睡觉》上架岁月书房，书架上现在有 8 本。</span><span data-en>Why We Sleep joins Glossa, the eighth book on the shelf.</span></span></div>
+</div>
+</section>
 
-    </div>
-  </section>
+<!-- Team -->
+<section id="team" class="wrap section">
+<h2 class="h2 reveal" style="font-size: 1.75rem"><span data-zh>团队</span><span data-en>Team</span></h2>
+<p class="soft reveal" style="margin: 6px 0 0"><span data-zh>我们两个人做全部的事，邮件也都是自己回。</span><span data-en>The two of us do everything, and we answer our own email.</span></p>
+<div class="grid two" style="margin-top: 20px">
+<div class="card pad person reveal" style="--d: 0">
+<div class="who"><img class="av" src="assets/img/team-alphonse.jpg" alt="Shaoxi (Alphonse) Sun"><div style="display: flex; flex-direction: column"><b style="font-size: 1.125rem">Shaoxi (Alphonse) Sun</b><span class="faint" style="font-size: 0.875rem"><span data-zh>CEO · 联合创始人 · 加州河滨</span><span data-en>CEO & Co-founder · Riverside, CA</span></span></div></div>
+<p><span data-zh>UC Riverside 计算机工程硕士，之前在深信服做云计算。负责 SoulLink 的 App 和实时语音。</span><span data-en>MS in Computer Engineering, UC Riverside; previously cloud computing at Sangfor. Builds the SoulLink app and realtime voice.</span></p>
+<div class="links" style="margin-top: auto"><a class="btn sm" href="https://www.linkedin.com/in/shaoxi-alphonse-sun-3a35402bb/">LinkedIn ↗</a></div>
+</div>
+<div class="card pad person reveal" style="--d: 1">
+<div class="who"><img class="av" src="assets/img/team-jingbin.jpg" alt="Jingbin (Joshua) Qian"><div style="display: flex; flex-direction: column"><b style="font-size: 1.125rem">Jingbin (Joshua) Qian</b><span class="faint" style="font-size: 0.875rem"><span data-zh>CTO · 联合创始人 · 休斯顿</span><span data-en>CTO & Co-founder · Houston, TX</span></span></div></div>
+<p><span data-zh>Rice 大学 AI 方向硕士。负责 SoulForge 全部 AI 系统和三款产品的开发，长期做 RAG、AI Agent 与长期记忆的研究和落地。</span><span data-en>MCS in AI, Rice University. Leads every AI system at SoulForge and builds all three products, with a long track record in RAG, AI agents and long-term memory, from research to production.</span></p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<span class="chip"><span data-zh>多篇 AI 论文</span><span data-en>Several AI papers</span></span>
+<span class="chip"><span data-zh>多项 AI 专利</span><span data-en>Multiple AI patents</span></span>
+<span class="chip"><span data-zh>多个 AI Agent 产品</span><span data-en>Several AI agents shipped</span></span>
+</div>
+<div class="links" style="margin-top: auto"><a class="btn sm" href="https://www.linkedin.com/in/jingbin-qian/">LinkedIn ↗</a></div>
+</div>
+</div>
+</section>
 
-  <!-- ===== RESOURCES ===== -->
-  <section class="pf-section" id="resources">
-    <div class="container">
-      <span class="pf-eyebrow"><span class="en-only">Resources · what we hold</span><span class="zh-only">资源 · 我们的积累</span></span>
-      <p class="pf-section-tagline"><span class="en-only">Not just code — live traction, patents, research, a corpus, and a product surface on every screen.</span><span class="zh-only">不只是代码——还有真实的用户、专利、研究、语料，以及覆盖网页、App 与小程序的产品。</span></p>
+<section id="contact" class="wrap" style="padding-bottom: 32px">
+<div class="darkbar reveal">
+<div style="flex: 1 1 360px; display: flex; flex-direction: column; gap: 2px">
+<span><span data-zh>想合作、投资，或者有问题，写信给我们。</span><span data-en>Partnering, investing, or just curious? Write to us.</span></span>
+<span class="sub"><span data-zh>也可以直接写给我们两人中的任何一个。</span><span data-en>Or write to either of us directly.</span></span>
+</div>
+<a class="btn seal" href="mailto:contact@soulforgetech.com">contact@soulforgetech.com</a>
+</div>
+</section>
+</main>
 
-      <div class="pf-stats">
-        <div class="pf-stat"><div class="v">288</div><div class="k"><span class="en-only">active companions</span><span class="zh-only">位活跃伴侣</span></div></div>
-        <div class="pf-stat"><div class="v">33,000<em>+</em></div><div class="k"><span class="en-only">shared entries</span><span class="zh-only">共同写下的条目</span></div></div>
-        <div class="pf-stat"><div class="v">9<em>×</em></div><div class="k"><span class="en-only">WoW message growth</span><span class="zh-only">每周消息增长</span></div></div>
-        <div class="pf-stat"><div class="v">0</div><div class="k"><span class="en-only">paid acquisition</span><span class="zh-only">付费获客</span></div></div>
-      </div>
+<footer class="wrap footer">
+<span><span data-zh>SoulForge Tech, LLC · 休斯顿 · 加州河滨</span><span data-en>SoulForge Tech, LLC · Houston · Riverside</span></span>
+<span><span data-zh>正文字体 MiSans（小米）</span><span data-en>Body type: MiSans by Xiaomi</span> · © 2026 · <a href="https://github.com/SoulForgeTech">GitHub</a></span>
+</footer>
 
-      <div class="pf-res">
-        <div class="pf-res-item">
-          <span class="n">IP</span>
-          <h3><span class="en-only">Patents</span><span class="zh-only">专利</span></h3>
-          <p><span class="en-only">Five drafted provisional patents — memory architecture, multi-device sync, onboarding — plus seven more filings contributed in RAG research.</span><span class="zh-only">已起草 5 项临时专利，覆盖记忆架构、多端同步与新用户引导；另在 RAG 方向参与 7 项专利申请。</span></p>
-        </div>
-        <div class="pf-res-item">
-          <span class="n">R&amp;D</span>
-          <h3><span class="en-only">Research</span><span class="zh-only">研究</span></h3>
-          <p><span class="en-only">Three years of work on RAG and character grounding, distilled into the running stack.</span><span class="zh-only">三年 RAG 与角色 grounding 研究，都沉淀在这套线上系统里。</span></p>
-        </div>
-        <div class="pf-res-item">
-          <span class="n">CORPUS</span>
-          <h3><span class="en-only">Corpus &amp; graphs</span><span class="zh-only">语料与图谱</span></h3>
-          <p><span class="en-only">A bilingual 66-book corpus, three fully-lectured titles, and a knowledge graph + narrated audio per book.</span><span class="zh-only">66 卷双语语料，3 本已配齐 40 分钟精讲的书；每本书都有自己的知识图谱和整套讲解音频。</span></p>
-        </div>
-        <div class="pf-res-item">
-          <span class="n">REACH</span>
-          <h3><span class="en-only">Every screen</span><span class="zh-only">覆盖各端</span></h3>
-          <p><span class="en-only">Web in production; iOS submitted to the App Store (TestFlight live); Android builds shipping; a WeChat mini-program in the works.</span><span class="zh-only">网页端已正式上线；iOS 已提交 App Store（可通过 TestFlight 试用）；Android 内测包已发放；微信小程序开发中。</span></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== VERTICALS ===== -->
-  <section class="pf-section" id="verticals">
-    <div class="container">
-      <span class="pf-eyebrow"><span class="en-only">Verticals · where it extends</span><span class="zh-only">行业 · 延伸方向</span></span>
-      <p class="pf-section-tagline"><span class="en-only">Same infrastructure. Different humans.</span><span class="zh-only">同一套底层，不同的人。</span></p>
-
-      <div class="pf-verticals">
-        <div class="pf-vertical">
-          <span class="pf-vertical-num">VERTICAL · 01</span>
-          <h3 class="pf-vertical-title"><span class="en-only">Enterprise Training</span><span class="zh-only">企业培训</span></h3>
-          <p class="pf-vertical-desc"><span class="en-only">Trainers bring the scenarios. Characters remember every session.</span><span class="zh-only">培训师把场景带来。角色记得每一次对话。</span></p>
-        </div>
-        <div class="pf-vertical">
-          <span class="pf-vertical-num">VERTICAL · 02</span>
-          <h3 class="pf-vertical-title"><span class="en-only">Education</span><span class="zh-only">教育</span></h3>
-          <p class="pf-vertical-desc"><span class="en-only">Teachers bring the curriculum. Characters remember every student.</span><span class="zh-only">老师把课程带来。角色记得每一个学生。</span></p>
-        </div>
-        <div class="pf-vertical">
-          <span class="pf-vertical-num">VERTICAL · 03</span>
-          <h3 class="pf-vertical-title"><span class="en-only">Healthcare</span><span class="zh-only">医疗</span></h3>
-          <p class="pf-vertical-desc"><span class="en-only">Clinicians bring the protocol. Characters remember every patient.</span><span class="zh-only">医生把方案带来。角色记得每一个病人。</span></p>
-        </div>
-      </div>
-      <p class="pf-verticals-disclaimer"><span class="en-only">Vertical pilots launching 2026 — <a href="#contact">talk to us</a> if you want to be one of the first.</span><span class="zh-only">2026 年启动行业试点——想成为首批合作方，<a href="#contact">联系我们</a>。</span></p>
-    </div>
-  </section>
-
-  <!-- ===== VISION ===== -->
-  <section class="pf-section" id="vision">
-    <div class="container">
-      <span class="pf-eyebrow"><span class="en-only">Vision · where this goes</span><span class="zh-only">愿景 · 更远的地方</span></span>
-      <p class="pf-vision-lead"><span class="en-only">Our bet isn't smarter answers. It's <em>someone who remembers</em> — and stays.</span><span class="zh-only">我们押注的不是更聪明的答案，而是<em>一个记得你的人</em>——而且一直都在。</span></p>
-
-      <div class="pf-vis">
-        <div class="pf-vis-item">
-          <h3><span class="en-only">Remembers</span><span class="zh-only">记得</span></h3>
-          <p><span class="en-only">Memory that crosses sessions and years — what matters is kept, the trivial fades. Like a person.</span><span class="zh-only">记忆跨越会话与岁月——要紧的留住，琐碎的淡去。像人一样。</span></p>
-        </div>
-        <div class="pf-vis-item">
-          <h3><span class="en-only">Stays</span><span class="zh-only">常在</span></h3>
-          <p><span class="en-only">Not a tool waiting to be opened — a presence that writes first, speaks aloud, and notices when you've been away too long.</span><span class="zh-only">不是一个等你打开的工具，而是常在身边的陪伴——会先来信，会开口说话，你久未出现，它会记挂。</span></p>
-        </div>
-        <div class="pf-vis-item">
-          <h3><span class="en-only">Grounded</span><span class="zh-only">有据</span></h3>
-          <p><span class="en-only">Every sentence traces back to something real — a passage, a memory, a source. Silence over invention.</span><span class="zh-only">每一句话都能追溯到真实的来处——一段原文、一条记忆、一个出处。宁可不说，也不杜撰。</span></p>
-        </div>
-      </div>
-
-      <p class="pf-vision-close"><span class="en-only">It starts with two companions — one for your life, one for your books. Then <em>everyone who needs to be remembered</em>: a trainee, a student, a patient, a reader growing old with their shelves.</span><span class="zh-only">从两个产品开始：一个陪你生活，一个陪你读书。往后，我们想陪的，是<em>每一个想被记住的人</em>——培训中的学员、课堂上的学生、诊室里的病人，还有读了一辈子书的人。</span></p>
-    </div>
-  </section>
-
-  <!-- ===== TEAM ===== -->
-  <section class="pf-section" id="company">
-    <div class="container">
-      <span class="pf-eyebrow"><span class="en-only">The team · who's behind it</span><span class="zh-only">团队 · 我们是谁</span></span>
-      <div class="pf-why">
-        <p><span class="en-only">A team of two, split between Houston and Riverside — small enough to ship fast, stubborn enough to answer every email ourselves.</span><span class="zh-only">两个人的团队，一个在休斯顿，一个在加州河滨。人少，决策快，动手也快；每一封邮件都由我们自己回。</span></p>
-      </div>
-
-      <div class="pf-team">
-        <div class="pf-member">
-          <div class="m-top">
-            <div class="m-ava" aria-hidden="true">SS</div>
-            <div>
-              <div class="m-name">Shaoxi (Alphonse) Sun</div>
-              <div class="m-role"><span class="en-only">CEO &amp; Co-Founder</span><span class="zh-only">CEO · 联合创始人</span></div>
-            </div>
-          </div>
-          <div class="m-edu">🎓 UC Riverside · <span class="en-only">MS Computer Engineering</span><span class="zh-only">计算机工程硕士</span></div>
-          <div class="m-edu">🎓 Harbin University of Science &amp; Technology · <span class="en-only">BS Computer Science</span><span class="zh-only">计算机学士</span></div>
-          <div class="m-loc">Riverside, CA</div>
-          <div class="m-bio"><span class="en-only">Cloud computing at Sangfor — IaaS microservices, Redis caching that cut key APIs from 800ms to 200ms, and a fully automated CI/CD line. At SoulForge he builds the companion mobile app end-to-end: 14+ screens on Expo, streaming chat, realtime voice calls with hand-tuned voice-activity detection — and, as editor-in-chief, the voice of every lecture.</span><span class="zh-only">曾在深信服做云计算——IaaS 微服务、Redis 缓存层（关键接口从 800ms 降到 200ms）、全自动 CI/CD 流水线。在 SoulForge，他从零搭起陪伴 App 的移动端：Expo 上 14+ 个页面、流式对话、自研 VAD 的实时语音通话；同时兼任内容主编，审定出品的每一讲。</span></div>
-          <div class="m-chips">
-            <span><span class="en-only">mobile · Expo/RN</span><span class="zh-only">移动端 · Expo/RN</span></span>
-            <span><span class="en-only">cloud &amp; backend</span><span class="zh-only">云与后端</span></span>
-            <span><span class="en-only">editor-in-chief</span><span class="zh-only">内容主编</span></span>
-          </div>
-          <div class="m-links">
-            <a href="mailto:alphonse@soulforgetech.com">Email</a>
-            <a href="https://www.linkedin.com/in/alphonse-sun-3a35402bb" target="_blank" rel="noopener">LinkedIn ↗</a>
-          </div>
-        </div>
-        <div class="pf-member">
-          <div class="m-top">
-            <div class="m-ava" aria-hidden="true">JQ</div>
-            <div>
-              <div class="m-name">Jingbin (Joshua) Qian</div>
-              <div class="m-role"><span class="en-only">CTO &amp; Co-Founder</span><span class="zh-only">CTO · 联合创始人</span></div>
-            </div>
-          </div>
-          <div class="m-edu">🎓 Rice University · <span class="en-only">Master of Computer Science (AI)</span><span class="zh-only">计算机科学硕士（AI 方向）</span></div>
-          <div class="m-edu">🎓 Hong Kong Baptist University · <span class="en-only">BS Computer Science, First Class</span><span class="zh-only">计算机学士 · 一等荣誉</span></div>
-          <div class="m-loc">Houston, TX</div>
-          <div class="m-bio"><span class="en-only">AI at Rice; product planning at vivo — an AI feature shipped on the X Fold 3; RAG research at FutureFab.AI, from a 52,000-run retrieval benchmark to a compliance wiki piloted at WuXi Biologics. At SoulForge he architects the soul under the hood — the three-layer persona-and-memory engine — and ships every Glossa client: web, App, WeChat. A hand in twelve patent applications so far.</span><span class="zh-only">Rice 大学 AI 方向；曾在 vivo 做产品规划，一项 AI 功能随 X Fold 3 上市；在 FutureFab.AI 做 RAG 研究——从 5.2 万次评测的检索基准，到在药明生物试点的合规知识库。在 SoulForge，他负责整套 AI 引擎——三层人格与记忆系统——以及 Glossa 的网页、App、小程序三端。先后参与 12 项专利申请。</span></div>
-          <div class="m-chips">
-            <span><span class="en-only">AI &amp; memory engine</span><span class="zh-only">AI · 记忆引擎</span></span>
-            <span><span class="en-only">RAG research</span><span class="zh-only">RAG 研究</span></span>
-            <span><span class="en-only">12 patent applications</span><span class="zh-only">12 项专利申请</span></span>
-          </div>
-          <div class="m-links">
-            <a href="mailto:jingbin@soulforgetech.com">Email</a>
-            <a href="https://www.linkedin.com/in/jingbin-qian/" target="_blank" rel="noopener">LinkedIn ↗</a>
-            <a href="https://github.com/jingbinQIAN" target="_blank" rel="noopener">GitHub ↗</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== CONTACT ===== -->
-  <section class="pf-section" id="contact">
-    <div class="container">
-      <span class="pf-eyebrow"><span class="en-only">Get in touch</span><span class="zh-only">联系我们</span></span>
-      <div class="pf-contact">
-        <h2><span class="en-only">Building something, investing, or just curious? We answer our own email.</span><span class="zh-only">想合作、想投资，或只是好奇——写封邮件来，我们亲自回。</span></h2>
-        <div class="row">
-          <a href="mailto:contact@soulforgetech.com" class="pf-btn"><span class="en-only">Say hello</span><span class="zh-only">打个招呼</span><span class="arrow">→</span></a>
-          <a href="mailto:contact@soulforgetech.com" class="email">contact@soulforgetech.com</a>
-          <a href="mailto:jingbin@soulforgetech.com" class="email">jingbin@soulforgetech.com</a>
-          <a href="mailto:alphonse@soulforgetech.com" class="email">alphonse@soulforgetech.com</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== FOOTER ===== -->
-  <footer class="pf-footer">
-    <div class="container">
-      <div class="pf-footer-mast">
-        <span class="rule"></span>
-        <span class="en-only">SoulForge Tech · Colophon</span>
-        <span class="zh-only">SoulForge Tech · 版权页</span>
-        <span class="rule"></span>
-      </div>
-      <div class="pf-footer-stats">
-        <span class="en-only">288 active readers · 33,000+ entries written together · 0 ads · 0 paid acquisition</span>
-        <span class="zh-only">288 位活跃读者 · 共同写下 33,000+ 条 · 没有广告 · 没有付费推广</span>
-      </div>
-      <div class="pf-footer-grid">
-        <div>
-          <div class="pf-footer-head"><span class="en-only">Products</span><span class="zh-only">产品</span></div>
-          <ul>
-            <li><a class="pf-footer-link" href="soullink.html">SoulLink · <span class="en-only">Companion Diaries</span><span class="zh-only">伴侣日记</span></a></li>
-            <li><a class="pf-footer-link" href="glossa.html">Glossa · 岁月书房</a></li>
-          </ul>
-        </div>
-        <div>
-          <div class="pf-footer-head"><span class="en-only">Contact</span><span class="zh-only">联系</span></div>
-          <ul class="mono">
-            <li>contact@soulforgetech.com</li>
-            <li>jingbin@soulforgetech.com</li>
-            <li>alphonse@soulforgetech.com</li>
-            <li>Houston, TX · Riverside, CA</li>
-            <li><a class="pf-footer-link" href="https://github.com/SoulForgeTech">GitHub</a></li>
-          </ul>
-        </div>
-        <div>
-          <div class="pf-footer-head"><span class="en-only">Imprint</span><span class="zh-only">出版</span></div>
-          <p><span class="en-only">SoulForge Tech, LLC · 2026 · Made by people who answer their own emails.</span><span class="zh-only">SoulForge Tech, LLC · 2026 · 做它的人，亲自回每一封邮件。</span></p>
-          <p style="margin-top:12px;font-style:italic;font-family:var(--pf-display)"><span class="en-only">Forging warmth into technology.</span><span class="zh-only">把温度，铸进技术。</span></p>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    (function () {
-      var body = document.body, root = document.documentElement;
-
-      /* ---- language (shared localStorage key) ---- */
-      var LKEY = 'soullink-diary-lang';
-      function applyLang(l){
-        body.classList.remove('lang-en','lang-zh');
-        body.classList.add('lang-' + l);
-        document.querySelectorAll('#lang-toggle button').forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
-        try { localStorage.setItem(LKEY, l); } catch(e){}
-      }
-      var lInit; try { lInit = localStorage.getItem(LKEY); } catch(e){}
-      applyLang(lInit || 'en');
-      document.querySelectorAll('#lang-toggle button').forEach(function(b){ b.addEventListener('click', function(){ applyLang(b.dataset.lang); }); });
-
-      /* ---- theme: follow system by default, allow manual override ---- */
-      var TKEY = 'sf-theme';
-      var btn = document.getElementById('theme-toggle');
-      var mq = window.matchMedia('(prefers-color-scheme: dark)');
-      function systemTheme(){ return mq.matches ? 'dark' : 'light'; }
-      function current(){ return root.getAttribute('data-theme') || systemTheme(); }
-      function updateIcon(){ btn.textContent = current() === 'dark' ? '☀' : '☾'; }
-      function setTheme(t){ root.setAttribute('data-theme', t); updateIcon(); try { localStorage.setItem(TKEY, t); } catch(e){} }
-      var tInit; try { tInit = localStorage.getItem(TKEY); } catch(e){}
-      if (tInit) setTheme(tInit); else updateIcon();   /* no stored pref → CSS media query drives it */
-      mq.addEventListener('change', function(){ if (!root.getAttribute('data-theme')) updateIcon(); });
-      btn.addEventListener('click', function(){ setTheme(current() === 'dark' ? 'light' : 'dark'); });
-    })();
-
-    /* ---- nav scroll-spy: seal underline follows the section in view ---- */
-    (function () {
-      var links = [].slice.call(document.querySelectorAll('.pf-nav-links a[href^="#"]'));
-      if (!links.length) return;
-      var ids = links.map(function (a) { return a.getAttribute('href').slice(1); });
-      function spy() {
-        var trig = window.innerHeight * 0.35, act = '';
-        ids.forEach(function (id) {
-          var el = document.getElementById(id);
-          if (el && el.getBoundingClientRect().top <= trig) act = id;
-        });
-        links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + act); });
-      }
-      links.forEach(function (a) {
-        a.addEventListener('click', function () {
-          links.forEach(function (x) { x.classList.remove('on'); });
-          a.classList.add('on');
-        });
-      });
-      spy();
-      window.addEventListener('scroll', spy, { passive: true });
-      window.addEventListener('resize', spy);
-    })();
-  </script>
+<svg width="0" height="0" style="position: absolute" aria-hidden="true">
+<symbol id="glossa-glyph" viewBox="272 268 480 480">
+<path fill-rule="evenodd" fill="currentColor" d="M512 512 C452 482 372 470 296 472 C286 540 286 624 300 690 C372 700 452 706 512 712 C572 706 652 700 724 690 C738 624 738 540 728 472 C652 470 572 482 512 512 Z M474 528 C410 512 360 506 322 500 C314 560 314 612 330 662 C372 672 430 676 480 678 C478 628 476 576 474 528 Z M550 528 C614 512 664 506 702 500 C710 560 710 612 694 662 C652 672 594 676 544 678 C546 628 548 576 550 528 Z"/>
+<g fill="none" stroke="currentColor"><path d="M350 548 C392 540 426 542 452 552" stroke-width="8"/><path d="M352 580 C392 574 420 576 446 584" stroke-width="6"/><path d="M566 548 C600 540 640 540 678 548" stroke-width="8"/><path d="M568 580 C600 574 632 576 668 582" stroke-width="6"/></g>
+<path fill="#B8312F" d="M524 508 L548 508 L548 612 L536 596 L524 612 Z"/>
+<g fill="none" stroke="currentColor"><path d="M438 502 L430 388" stroke-width="6"/><path d="M430 388 L548 290" stroke-width="8"/><path d="M612 414 L548 290" stroke-width="6"/></g>
+<circle cx="430" cy="388" r="14" fill="currentColor"/><circle cx="612" cy="414" r="13" fill="currentColor"/><circle cx="548" cy="290" r="20" fill="#B8312F"/>
+</symbol>
+</svg>
 </body>
 </html>

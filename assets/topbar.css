@@ -1,0 +1,109 @@
+/* The new site's glass top bar, packaged for pages that keep their own design
+   (soullink.html). Everything is scoped under .sf-topbar so nothing else on the
+   page changes. Mirrors .topbar / .theme-btn / .lang-btn in site.css. */
+
+@import url("fonts/misans/MiSans-Regular.min.css");
+@import url("fonts/misans/MiSans-Bold.min.css");
+
+.sf-topbar {
+  --tb-ink: #2A2620;
+  --tb-ink-soft: rgba(42, 38, 32, 0.72);
+  --tb-ink-faint: rgba(42, 38, 32, 0.58);
+  --tb-line: rgba(42, 38, 32, 0.12);
+  --tb-line-strong: rgba(42, 38, 32, 0.22);
+  --tb-glass: rgba(243, 238, 226, 0.68);
+  --tb-btn-bg: #2A2620;
+  --tb-btn-fg: #F4EFE6;
+  --tb-spring: linear(0, 0.0476, 0.1527, 0.2777, 0.402, 0.5154, 0.6135, 0.6957, 0.7628, 0.8167, 0.8594, 0.8927, 0.9186, 0.9385, 0.9537, 0.9653, 0.9741, 0.9807, 0.9856, 0.9894, 0.9921, 0.9942, 0.9957, 0.9968, 0.9977, 0.9983, 0.9987, 0.9991, 0.9993, 0.9995, 0.9996, 0.9997, 0.9998, 0.9999, 1);
+  --tb-bounce: linear(0, 0.0276, 0.0964, 0.1891, 0.2931, 0.3993, 0.5013, 0.5954, 0.6793, 0.7519, 0.8134, 0.8642, 0.9051, 0.9375, 0.9623, 0.9809, 0.9943, 1.0036, 1.0096, 1.0131, 1.0148, 1.0152, 1.0146, 1.0135, 1.012, 1.0105, 1.0088, 1.0073, 1.0059, 1.0047, 1.0036, 1.0027, 1.0019, 1.0013, 1.0009, 1.0005, 1.0003, 1.0001, 0.9999, 0.9998, 1);
+
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: var(--tb-glass);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  backdrop-filter: blur(18px) saturate(1.4);
+  border-bottom: 1px solid transparent;
+  font-family: MiSans, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  color: var(--tb-ink);
+  transition: border-color 200ms ease, box-shadow 200ms ease, background-color 300ms ease;
+}
+body.theme-dark .sf-topbar {
+  --tb-ink: #EBE3D2;
+  --tb-ink-soft: rgba(235, 227, 210, 0.74);
+  --tb-ink-faint: rgba(235, 227, 210, 0.58);
+  --tb-line: rgba(235, 227, 210, 0.13);
+  --tb-line-strong: rgba(235, 227, 210, 0.28);
+  --tb-glass: rgba(26, 24, 20, 0.66);
+  --tb-btn-bg: #EBE3D2;
+  --tb-btn-fg: #1A1814;
+}
+@supports not (transition-timing-function: linear(0, 1)) {
+  .sf-topbar { --tb-spring: cubic-bezier(0.22, 1, 0.36, 1); --tb-bounce: cubic-bezier(0.34, 1.4, 0.64, 1); }
+}
+.sf-topbar.scrolled { border-bottom-color: var(--tb-line); box-shadow: 0 8px 24px rgba(42, 38, 32, 0.07); }
+.sf-topbar *, .sf-topbar *::before, .sf-topbar *::after { box-sizing: border-box; }
+.sf-topbar .tb-wrap { max-width: 1320px; margin: 0 auto; padding: 0 36px; min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.sf-topbar .tb-left { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.sf-topbar .tb-brand { display: flex; align-items: center; gap: 10px; color: var(--tb-ink); text-decoration: none; }
+.sf-topbar .tb-brand img { width: 32px; height: 32px; border-radius: 8px; display: block; }
+.sf-topbar .tb-brand b { font-family: Fraunces, "Noto Serif SC", Georgia, serif; font-size: 1.4375rem; font-weight: 700; }
+
+.sf-topbar .tb-nav { display: flex; gap: 2px; }
+.sf-topbar .tb-nav a {
+  height: 38px; padding: 0 13px; display: flex; align-items: center; border-radius: 999px;
+  color: var(--tb-ink-soft); text-decoration: none; font-size: 0.9375rem;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+.sf-topbar .tb-nav a:hover { background: rgba(127, 120, 108, 0.12); color: var(--tb-ink); }
+.sf-topbar .tb-nav a.active { background: rgba(127, 120, 108, 0.16); color: var(--tb-ink); }
+
+.sf-topbar .tb-actions { display: flex; align-items: center; gap: 6px; flex: 0 0 auto; }
+.sf-topbar .tb-btn {
+  height: 40px; padding: 0 16px; display: inline-flex; align-items: center; border-radius: 999px;
+  border: 1px solid var(--tb-line-strong); background: transparent; color: var(--tb-ink);
+  font: inherit; font-size: 0.9375rem; text-decoration: none; cursor: pointer; white-space: nowrap;
+  transition: transform 720ms var(--tb-spring), background-color 150ms ease, filter 150ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.sf-topbar .tb-btn.sm { height: 36px; padding: 0 12px; font-size: 0.875rem; }
+.sf-topbar .tb-btn:hover { background: rgba(127, 120, 108, 0.1); color: var(--tb-ink); }
+.sf-topbar .tb-btn:active { transform: scale(0.97); transition-duration: 100ms; }
+.sf-topbar .tb-btn.ink { background: var(--tb-btn-bg); border-color: var(--tb-btn-bg); color: var(--tb-btn-fg); }
+.sf-topbar .tb-btn.ink:hover { filter: brightness(1.15); color: var(--tb-btn-fg); }
+
+.sf-topbar .theme-btn {
+  position: relative; width: 40px; height: 40px; padding: 0; border: 0; border-radius: 50%;
+  background: transparent; color: var(--tb-ink); cursor: pointer; display: grid; place-items: center;
+  transition: background-color 150ms ease, transform 720ms var(--tb-spring);
+  -webkit-tap-highlight-color: transparent;
+}
+.sf-topbar .theme-btn:hover { background: rgba(127, 120, 108, 0.14); }
+.sf-topbar .theme-btn:active { transform: scale(0.9); transition-duration: 100ms; }
+.sf-topbar .theme-btn svg { position: absolute; transition: transform 640ms var(--tb-bounce), opacity 220ms ease; }
+.sf-topbar .theme-btn[data-mode="light"] [data-sun] { opacity: 0; transform: rotate(-90deg) scale(0.4); }
+.sf-topbar .theme-btn[data-mode="dark"] [data-moon] { opacity: 0; transform: rotate(90deg) scale(0.4); }
+
+.sf-topbar .lang-btn {
+  height: 40px; padding: 0 10px; border: 0; border-radius: 999px; background: transparent; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px; font: 500 0.8125rem/1 MiSans, system-ui, sans-serif; color: var(--tb-ink-faint);
+  transition: background-color 150ms ease, transform 720ms var(--tb-spring);
+  -webkit-tap-highlight-color: transparent;
+}
+.sf-topbar .lang-btn:hover { background: rgba(127, 120, 108, 0.14); }
+.sf-topbar .lang-btn:active { transform: scale(0.94); transition-duration: 100ms; }
+.sf-topbar .lang-btn .sep { opacity: 0.5; }
+.sf-topbar .lang-btn .on { color: var(--tb-ink); font-weight: 700; }
+.sf-topbar :focus-visible { outline: 2px solid #B8312F; outline-offset: 3px; }
+
+@media (max-width: 1180px) { .sf-topbar .tb-nav { display: none; } }
+@media (max-width: 720px) {
+  .sf-topbar .tb-wrap { padding: 0 16px; min-height: 60px; gap: 8px; }
+  .sf-topbar .tb-btn.ink { display: none; }
+  .sf-topbar .tb-brand b { font-size: 1.25rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sf-topbar .theme-btn svg { transition: opacity 150ms ease; transform: none !important; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .sf-topbar { background: #F3EEE2; -webkit-backdrop-filter: none; backdrop-filter: none; }
+  body.theme-dark .sf-topbar { background: #24211C; }
+}

@@ -1,21 +1,13 @@
-// Hand-drawn pen circle that loops around the active / hovered nav tab.
-// preserveAspectRatio="none" lets the oval stretch to fit any label width.
-function NavCircle() {
-  return (
-    <svg className="nav-circle" viewBox="0 0 100 36" preserveAspectRatio="none" aria-hidden="true">
-      <path d="M 8,18 C 10,7 28,3 50,4 C 74,5 92,10 95,18 C 96,28 80,33 50,33 C 22,33 5,30 6,20 C 6,15 9,13 16,11"
-            stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round"/>
-    </svg>
-  );
-}
-
-// Diary Nav — wax-seal red CTA, updated bilingual labels, scroll-spy underline.
+// Top bar for the SoulLink page — the same glass bar as the rest of soulforgetech.com
+// (back to SoulForge, brand, theme toggle, 中 / EN, open the app). Styles live in
+// assets/topbar.css so the page's own diary design underneath is untouched.
 function Nav({ theme, onToggleTheme, lang, onLang }) {
   const [scrolled, setScrolled] = React.useState(false);
   const [activeId, setActiveId] = React.useState('');
 
   React.useEffect(() => {
-    const h = () => setScrolled(window.scrollY > 40);
+    const h = () => setScrolled(window.scrollY > 4);
+    h();
     window.addEventListener('scroll', h, { passive: true });
     return () => window.removeEventListener('scroll', h);
   }, []);
@@ -33,7 +25,7 @@ function Nav({ theme, onToggleTheme, lang, onLang }) {
   // Scroll-spy: highlight the most recent chapter whose top has crossed the
   // viewport's trigger line.
   React.useEffect(() => {
-    const ids = ['soul-system','memory','postcards','voice','byoc','letters','patronage'];
+    const ids = links.map(l => l.id);
     const update = () => {
       const trigger = window.innerHeight * 0.35;
       let active = '';
@@ -51,48 +43,40 @@ function Nav({ theme, onToggleTheme, lang, onLang }) {
       window.removeEventListener('resize', update);
     };
   }, []);
+
+  const zh = lang === 'zh';
+  const dark = theme === 'dark';
   return (
-    <nav className={`nav ${scrolled ? 'scrolled' : ''}`}>
-      <div className="nav-inner">
-        <a href="#top" className="nav-logo">
-          <img src="public/logo.png" alt="SoulLink" className="mark"/>
-          <span>SoulLink</span>
-        </a>
-        <div className="nav-links">
-          {links.map(l => (
-            <a key={l.id} href={`#${l.id}`} className={`nav-link${activeId === l.id ? ' active' : ''}`}>
-              <span className="nav-link-text">
-                <span className="en-only">{l.en}</span>
-                <span className="zh-only">{l.zh}</span>
-                <NavCircle/>
-              </span>
-            </a>
-          ))}
-          <a href="glossa.html" className="nav-link platform">
-            <span className="en-only">Glossa</span>
-            <span className="zh-only">岁月书房</span>
-          </a>
-          <a href="index.html" className="nav-link platform">
-            <span className="en-only">SoulForge</span>
-            <span className="zh-only">主页</span>
+    <header className={`sf-topbar${scrolled ? ' scrolled' : ''}`}>
+      <div className="tb-wrap">
+        <div className="tb-left">
+          <a className="tb-btn sm" href="index.html">‹ SoulForge</a>
+          <a href="#top" className="tb-brand">
+            <img src="assets/img/brand/soullink-icon.png" alt=""/>
+            <b>SoulLink</b>
           </a>
         </div>
-        <div className="nav-actions">
-          <div className="lang-toggle">
-            <button className={lang==='en'?'active':''} onClick={()=>onLang('en')}>EN</button>
-            <span className="slash">/</span>
-            <button className={lang==='zh'?'active':''} onClick={()=>onLang('zh')}>中</button>
-          </div>
-          <button className="theme-toggle" aria-label="Theme" onClick={onToggleTheme}>
-            {theme === 'dark' ? '☀' : '☾'}
+        <nav className="tb-nav" aria-label={zh ? '章节' : 'Chapters'}>
+          {links.map(l => (
+            <a key={l.id} href={`#${l.id}`} className={activeId === l.id ? 'active' : ''}>{zh ? l.zh : l.en}</a>
+          ))}
+        </nav>
+        <div className="tb-actions">
+          <button type="button" className="theme-btn" data-mode={dark ? 'dark' : 'light'} onClick={onToggleTheme}
+                  aria-label={dark ? (zh ? '切换到浅色' : 'Switch to light') : (zh ? '切换到深色' : 'Switch to dark')}>
+            <svg data-moon width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg>
+            <svg data-sun width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
           </button>
-          <a href="https://prototype.soulforgetech.com" target="_blank" rel="noopener" className="btn-stamp" style={{padding:'8px 16px', fontSize:13}}>
-            <span className="en-only">Open the diary</span>
-            <span className="zh-only">开始读</span>
+          <button type="button" className="lang-btn" onClick={() => onLang(zh ? 'en' : 'zh')}
+                  aria-label={zh ? 'Switch to English' : '切换到中文'}>
+            <span className={zh ? 'on' : ''}>中</span><span className="sep">/</span><span className={zh ? '' : 'on'}>EN</span>
+          </button>
+          <a className="tb-btn ink" href="https://prototype.soulforgetech.com" target="_blank" rel="noopener">
+            {zh ? '打开 SoulLink' : 'Open SoulLink'}
           </a>
         </div>
       </div>
-    </nav>
+    </header>
   );
 }
 window.Nav = Nav;

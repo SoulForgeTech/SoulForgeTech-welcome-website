@@ -1,14 +1,20 @@
 // SoulLink — full landing assembly, lang + theme + tweaks
 function App() {
+  // Theme and language share the keys the rest of soulforgetech.com uses
+  // (sf_theme / sf_lang), so a choice made on one page carries to the others.
   const [theme, setTheme] = React.useState(() => {
-    try { const s = localStorage.getItem('sf-theme'); if (s === 'light' || s === 'dark') return s; } catch {}
+    try { const s = localStorage.getItem('sf_theme'); if (s === 'light' || s === 'dark') return s; } catch {}
     try { return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; } catch { return 'light'; }
   });
   const themeChosen = React.useRef(false);
   const [lang, setLang] = React.useState(() => {
-    try { return localStorage.getItem('soullink-diary-lang') || 'en'; }
-    catch { return 'en'; }
+    try {
+      const s = localStorage.getItem('sf_lang');
+      if (s) return s === 'en' ? 'en' : 'zh';
+    } catch {}
+    return /^zh/i.test(navigator.language || '') ? 'zh' : 'en'; // follow the browser until chosen
   });
+  const langChosen = React.useRef(false);
 
   // Tweaks — read defaults from inlined JSON token
   const tweakDefaults = window.__SOULLINK_TWEAKS || {
@@ -23,13 +29,19 @@ function App() {
 
   React.useEffect(() => {
     document.body.classList.toggle('theme-dark', theme === 'dark');
-    if (themeChosen.current) { try { localStorage.setItem('sf-theme', theme); } catch {} }
+    if (themeChosen.current) {
+      try {
+        const sys = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        // Picking what the system already shows means "follow the system" again.
+        if (theme === sys) localStorage.removeItem('sf_theme'); else localStorage.setItem('sf_theme', theme);
+      } catch {}
+    }
   }, [theme]);
 
   // Follow the system light/dark until the reader picks one by hand.
   React.useEffect(() => {
     let mq; try { mq = window.matchMedia('(prefers-color-scheme: dark)'); } catch (e) { return; }
-    const onChange = () => { try { if (!localStorage.getItem('sf-theme')) setTheme(mq.matches ? 'dark' : 'light'); } catch (e) {} };
+    const onChange = () => { try { if (!localStorage.getItem('sf_theme')) setTheme(mq.matches ? 'dark' : 'light'); } catch (e) {} };
     if (mq.addEventListener) mq.addEventListener('change', onChange); else mq.addListener(onChange);
     return () => { if (mq.removeEventListener) mq.removeEventListener('change', onChange); else mq.removeListener(onChange); };
   }, []);
@@ -37,7 +49,8 @@ function App() {
   React.useEffect(() => {
     document.body.classList.remove('lang-en','lang-zh');
     document.body.classList.add('lang-' + lang);
-    try { localStorage.setItem('soullink-diary-lang', lang); } catch {}
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    if (langChosen.current) { try { localStorage.setItem('sf_lang', lang === 'zh' ? 'zh-CN' : 'en'); } catch {} }
   }, [lang]);
 
   React.useEffect(() => {
@@ -63,7 +76,7 @@ function App() {
   return (
     <>
       <Nav theme={theme} onToggleTheme={() => { themeChosen.current = true; setTheme(x => x==='dark'?'light':'dark'); }}
-           lang={lang} onLang={setLang}/>
+           lang={lang} onLang={l => { langChosen.current = true; setLang(l); }}/>
       <Hero/>
       <SoulSystem/>
       <Memory/>
