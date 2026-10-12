@@ -381,6 +381,14 @@ html[lang="en"] .spine .label { font-family: var(--font-title); letter-spacing: 
 .bk-jxl { background-image: url("img/covers/jixianlin-life.jpg"); }
 .bk-edge { background-image: url("img/covers/life-edge.jpg"); }
 .bk-sleep { background-image: url("img/covers/why-we-sleep.jpg"); }
+/* English editions where one exists (the three Chinese-only titles keep their covers). */
+html[lang="en"] .bk-mans { background-image: url("img/covers/en/mans-search.jpg"); }
+html[lang="en"] .bk-walden { background-image: url("img/covers/en/walden.jpg"); }
+html[lang="en"] .bk-outlive { background-image: url("img/covers/en/outlive.jpg"); }
+html[lang="en"] .bk-mindset { background-image: url("img/covers/en/mindset.jpg"); }
+html[lang="en"] .bk-sleep { background-image: url("img/covers/en/why-we-sleep.jpg"); }
+/* The English Walden spine is dark, so its bands go light. */
+html[lang="en"] .spine.en-light .band { background: #EFE2BF; }
 
 /* the book card that pops out of a spine — grows from the spine it came from */
 .book-pop {

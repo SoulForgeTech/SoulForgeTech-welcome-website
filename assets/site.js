@@ -165,7 +165,7 @@
     var d = spine.dataset;
     pop.setAttribute('aria-label', lang === 'en' ? d.titleEn : d.title);
     pop.innerHTML =
-      '<img alt="" src="' + d.cover + '">' +
+      '<img alt="" src="' + (lang === 'en' && d.coverEn ? d.coverEn : d.cover) + '">' +
       '<div class="info"><span class="t"></span><span class="a"></span><span class="d"></span>' +
       '<a class="btn seal sm" href="' + (d.href || 'https://glossa.soulforgetech.com/shelf') + '"></a></div>';
     pop.querySelector('.t').textContent = lang === 'en' ? d.titleEn : d.title;
